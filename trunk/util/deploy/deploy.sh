@@ -1,21 +1,14 @@
 #!/bin/bash
-REPO=$1
-cd $REPO
+WWWROOT=$1
+REV=$2
 
-if [ $# -eq 2 ]
-then
-        REV=$2
-else
-        REV=$(svn info |grep Revision: |cut -c11-)
-fi
-
-WWWROOT=/var/www/.staging/sos/rc
+URLREPO=http://esophie-soslab.googlecode.com/svn/trunk
 
 echo '***************** DEPLOYING TO WEB ****************'
-echo "SOS REV $REV -> $WWWROOT"
+echo "WWW REV $REV -> $WWWROOT"
 
-sudo rm -Rf $WWWROOT
-sudo -u sos svn export --force -r $REV http://esophie-soslab.googlecode.com/svn/trunk/www/sos $WWWROOT
-sudo -u sos touch $WWWROOT/REV$REV
+sudo rm -Rf $WWWROOT/rc
+sudo -u sos svn export --force -r $REV $URLREPO/www/sos $WWWROOT/rc
+sudo -u sos touch $WWWROOT/rc/REV-$REV
 
 echo '***************** DEPLOYMENT END   ****************'
