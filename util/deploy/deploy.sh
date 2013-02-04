@@ -9,13 +9,13 @@ else
         REV=$(svn info |grep Revision: |cut -c11-)
 fi
 
-WWWROOT=/var/www/.staging/sos/r$REV
+WWWROOT=/var/www/.staging/sos/rc
 
 echo '***************** DEPLOYING TO WEB ****************'
-echo "$REPO -> $WWWROOT"
+echo "SOS REV $REV -> $WWWROOT"
 
-rm -Rf $WWWROOT
-mkdir $WWWROOT
-sudo -u sos svn export -r $REV www/sos $WWWROOT
+sudo rm -Rf $WWWROOT
+sudo -u sos svn export --force -r $REV http://esophie-soslab.googlecode.com/svn/trunk/www/sos $WWWROOT
+sudo -u sos touch $WWWROOT/REV$REV
 
 echo '***************** DEPLOYMENT END   ****************'
