@@ -156,9 +156,7 @@
 			$rs = new rsMsSQL();
 
 			$rs->rId= $this->link->query($sql);
-
 			// echo $sql . '<br>';
-			
 			/*                        
 			if ( strtoupper(mssql_get_last_message()) != strtoupper("Changed database context to '".$this->DBName."'.") )
 				//$this->errmsg = mssql_get_last_message();

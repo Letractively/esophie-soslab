@@ -33,10 +33,10 @@
 			parent::setsysparam();
 			
 			//db setting
-			$this->sysparam['db']['server'] 		= '192.168.10.201';
-			$this->sysparam['db']['name'] 			= 'SOS2';
-			$this->sysparam['db']['user'] 			= 'sa';
-			$this->sysparam['db']['password'] 		= 'sa123';	
+			$this->sysparam['db']['server'] 		= 'NSUDBS';
+			$this->sysparam['db']['name'] 			= 'webdev';
+			$this->sysparam['db']['user'] 			= 'sos';
+			$this->sysparam['db']['password'] 		= 'S0s#0k';	
 			
 			//database to send short message service
 			$this->sysparam['dbsms']['server'] 		= '192.168.10.201';
@@ -45,7 +45,7 @@
 			$this->sysparam['dbsms']['password'] 	= 'sa123';	
 			
 			//application parameter			
-			$this->sysparam['app']['bcurl']				= "http://192.168.10.203/sos/index.php";
+			$this->sysparam['app']['bcurl']				= "http://webdev.sophiemartin.com/sos/index.php";
 			$this->sysparam['app']['mbrurl']			= "http://www.sophiemobile.com";
 			$this->sysparam['app']['mbrdisclaimer'] 	= "Persyaratannya sebagai berikut bla...bla...bla..."; 
 			
@@ -55,6 +55,7 @@
 			$this->sysparam['email']['bcneworder']['subject'] 		= "New Order from [mbrname]";
 			$this->sysparam['email']['bcneworder']['body']			= 
 				"Member #[mbrno] ([mbrname]) baru pesan online lewat BC anda. " . 
+
 			    "Silahkan ke backoffice anda supaya pesanannya bisa divalidasikan:\n\n" .
 				"[bcurl]";
 				

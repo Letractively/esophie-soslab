@@ -28,7 +28,7 @@
 		<th width="100" align="right">Total</th>
 		<th width="100" align="right">Sisa Waktu</th>
 	</tr>
-	<?=$ctrl->neworders();?>
+	<tbody id="bodyneworders"></tbody>
 </table>
 
 <br>
@@ -42,7 +42,7 @@
 		<th width="100" align="right">Total</th>
 		<th width="100" align="center">Status</th>
 	</tr>
-	<?=$ctrl->orderstofollowup();?>
+	<tbody id="bodyorderinprogress"></tbody>
 </table>
 
 <br>
@@ -56,14 +56,21 @@
 		<th width="100" align="right">Total</th>
 		<th width="100" align="center">Status</th>
 	</tr>
-	<?=$ctrl->orderstodeliver();?>
+	<tbody id="bodypendingorders"></tbody>
 </table>
+
 <script language="javascript">
 var oTime;
-var RefreshEvery = 180; //in seconds
+var RefreshEvery = 60; //in seconds 
 var ErrorRefreshEvery = 20*60; //in seconds
 oTime = setTimeout(function(){requestupdatedata()},RefreshEvery * 1000);
 
+
+window.onload = function()
+                {
+                   requestupdatedata();
+                };
+		
 function requestupdatedata() {  
 	clearInterval(oTime);
 	AJAXRequest(refreshdata,"process/bconlineorder_refresh.php");	
@@ -74,6 +81,10 @@ function refreshdata() {
 	this.ajx = ajx;
 	switch(ajx.status) {
 		case "complete" :
+			var bodyneworders=document.getElementById("bodyneworders");
+			var bodyorderinprogress=document.getElementById("bodyorderinprogress");
+			var bodypendingorders=document.getElementById("bodypendingorders");
+
 			arr = ajx.respon.split('--datasplit--');
 			bodyneworders.innerHTML = arr[0];
 			bodyorderinprogress.innerHTML = arr[1];

@@ -21,7 +21,7 @@
 		{
 			parent::setsysparam();
 				
-			$this->sysparam['memberstatus']['firstlogin']	= "firstlogin";
+			$this->sysparam['memberstatus']['firstlogin']		= "firstlogin";
 			$this->sysparam['memberstatus']['suspend']		= "suspend";
 			$this->sysparam['memberstatus']['neworder']		= "neworder";			
 		}
@@ -34,11 +34,11 @@
 			if ($this->disclaimercheck)
 			{
 				switch($this->disclaimerchecking())
-				{
+				{	
 					case 'disclaimer': $this->gotopage('disclaimer'); break;
 					case 'suspend' : $this->gotopage('suspend');break;
 					case 'continue' : break; 
-					default: $this->gotopage('login');						
+					default: $this->gotopage('login');
 				}
 			}
 			
@@ -57,7 +57,10 @@
 					else $ret = 'continue';					
 				}
 				else $ret = 'suspend';
-			}		
+			}
+			else
+			$ret = 'disclaimer';
+				
 			$rs->close();
 			return $ret;
 		}

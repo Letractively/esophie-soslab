@@ -16,6 +16,7 @@
 					{
 						// Create or update the BC mapping for this new member
 						$sql = "exec sp_sos_IMPORTMEMBER " . $this->queryvalue($this->userid());
+						//echo $sql;
 						if ($this->debug()) echo $sql;
 						$this->db->execute($sql);
 						$this->gotopage('orderhistory');
