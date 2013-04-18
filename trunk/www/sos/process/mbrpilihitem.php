@@ -1,0 +1,191 @@
+<?
+	class mbrpilihitem extends controller
+	{
+		var $maxitem;
+		
+		function run() 
+		{
+			$this->maxitem = 5;
+			$this->salesid = isset($this->param['salesid']) ? $this->param['salesid'] : '';
+			
+			parent::run();
+			
+			switch($this->action)
+			{			
+				case "save" :			
+					if ($this->isvaliddata())
+						$this->savedata();
+					break;
+				case "none" :
+					if (isset($this->param['salesid']))
+					{
+						$this->salesid = $this->param['salesid'];
+						$sql = 'select count(*) from salestable ';
+						$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
+						$sql.= ' and status = ' . $this->queryvalue($this->sysparam['salesstatus']['openorder']);
+						$sql.= ' and salesid = ' . $this->queryvalue($this->salesid);
+						
+						if(!$this->db->executeScalar($sql)) $this->gotohomepage();					
+					}
+					else
+					{
+						$sql = 'select count(*) from salestable ';
+						$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
+						$sql.= ' and status < ' . $this->queryvalue($this->sysparam['salesstatus']['paid']);
+						$sql.= ' and salesid = ' . $this->queryvalue($this->salesid);
+						
+						if($this->db->executeScalar($sql)) $this->gotohomepage();		
+						
+						
+						$sql = 'select salesid from salestable ';
+						$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
+						$sql.= ' and status = ' . $this->queryvalue($this->sysparam['salesstatus']['openorder']);
+						
+						$rs = $this->db->query($sql);			
+						if ($rs->fetch()) 
+						{
+							$this->param['salesid'] = $rs->value('salesid');
+							$this->salesid = $rs->value('salesid');
+						}
+						//else $this->gotohomepage();
+					}
+					break;
+			}			
+			//if ($this->salesid == '') $this->gotohomepage();
+		}
+		
+		function isvaliddata()
+		{
+			$ret = true;
+					
+			for ($i=1;$i<=$this->maxitem;$i++)
+			{
+				$errname = "item".$i."err";
+				$this->param[$errname] = '';
+				if ($this->param["item".$i] != '') 
+				{					
+					$sql = "select count(itemid) as total from inventTable with (nolock)";
+					$sql.= " where itemid = " . $this->queryvalue($this->param["item".$i]);
+					$sql.= " and deadstyle = 0";
+
+					if ( !$this->db->executeScalar($sql) )
+					{
+						$this->param[$errname] = 'kode item tidak ada';
+					}
+				        else
+					{	
+						if ($this->param["item".$i."qty"] == '')		
+						{
+							if ($this->param[$errname] == '')
+								$this->param[$errname] = "quantity harus di isi";										
+						}
+						else
+						{
+							if (!is_numeric($this->param["item".$i."qty"]))
+							{
+								$this->param[$errname] .= ($this->param[$errname] ? " dan " : "");
+								$this->param[$errname] .= "quantity harus numeric";										
+							}
+							else
+							{
+								if (floatval($this->param["item".$i."qty"]) <= 0)
+								{
+									$this->param[$errname] .= ($this->param[$errname] ? " dan " : "");
+									$this->param[$errname] .= "quantity harus lebih besar dari 0";										
+								}
+								else
+								{
+									$sql = "exec sp_checkQuantity" . $this->queryvalue($this->param["item".$i]);
+									$qtyStock = $this->db->executeScalar($sql);
+									$qtyOrder = $this->param["item".$i."qty"];
+									if ($qtyStock - $qtyOrder < 0 )
+									{
+										$this->param[$errname] = 'stock item tidak mencukupi';
+									}						
+								}
+							}
+						}
+					}
+				}
+				else
+				{			
+					if (!$this->param["item".$i."qty"] == '')	
+					{
+						$this->param[$errname] = "kode item tidak boleh kosong";
+						
+						if (!is_numeric($this->param["item".$i."qty"]))
+						{
+							$this->param[$errname] .= ($this->param[$errname] ? " dan " : "");
+							$this->param[$errname] .= "quantity harus numeric";
+						}
+						else
+						{
+							if (floatval($this->param["item".$i."qty"]) <= 0)
+							{
+								$this->param[$errname] .= ($this->param[$errname] ? " dan " : "");
+								$this->param[$errname] .= "quantity harus lebih besar dari 0";										
+							}
+						}
+					}
+				}
+				if ($this->param[$errname] != '' )
+				{
+					$this->param[$errname] = ucfirst($this->param[$errname]) . ".";
+					$ret = false;
+				}
+			}
+			return $ret;			
+		}
+		
+		function savedata() 
+		{					
+			$dataupdate = false;
+			for ($i=1;$i<=$this->maxitem;$i++)
+			{
+				if ($this->param["item".$i] != '') 
+				{
+					$dataupdate = true;
+					$sql = "exec sp_updateSalesLine " . $this->queryvalue($this->salesid) . "," . $this->queryvalue($this->param["item".$i]) . "," . $this->param["item".$i."qty"];				
+					$this->db->execute($sql);
+				}
+			}
+			
+			if ($dataupdate)
+			{			
+				if ($this->salesid == '')
+				{
+					$sql = 'select name from membertable where kodemember = ' . $this->queryvalue($this->userid());
+					$namamember = $this->db->executescalar($sql);
+					
+					$sql = "exec sp_getNextNo 'SALES'";				
+					$this->salesid = $this->db->executeScalar($sql);
+					$this->param['salesid'] = $this->salesid;
+							
+					$sql = 'insert into salesTable ';
+					$sql.= '(salesid, kodemember, namamember, status, createddate) values (';
+					$sql.= $this->queryvalue($this->salesid) . ',' ;
+					$sql.= $this->queryvalue($this->userid()) . ',' ;
+					$sql.= $this->queryvalue($namamember) . ',' ;		
+					$sql.= $this->sysparam['salesstatus']['openorder'] . ',getdate())' ;			
+					
+					$this->db->execute($sql);
+				}
+			
+				$sql = "exec sp_updateSalesTotal " . $this->queryvalue($this->salesid);					
+				$this->db->execute($sql);					
+			}
+
+			$sql = "select count(itemid) as total from salesline ";
+			$sql.= " where salesid = " . $this->queryvalue($this->salesid);
+			
+			if (!$this->db->executeScalar($sql))
+			{
+				$this->param["errmsg"] = "Silahkan isi item yang ingin di pesan.";
+			}
+			else
+			{ 
+				header('location:mbrordercheck.php?salesid='.$this->salesid);
+			}
+		}
+	}
+?>

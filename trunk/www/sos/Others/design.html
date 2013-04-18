@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml">
+<meta name="viewport" content="width=360;"> 
+<style>
+table {
+    *border-collapse: collapse; /* IE7 and lower */
+    border-spacing: 0;
+    width: 100%;    
+	background-color: #FFFFFF;
+}
+
+table.bordered {
+    border-radius: 10px;
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    box-shadow: 0 0 2px #c8c8c8;         
+    -webkit-box-shadow: 0 0 2px #c8c8c8;
+    -moz-box-shadow: 0 0 2px #c8c8c8; 
+}
+
+table.bordered td, table.bordered th {
+    border: none;
+    padding: 6px;
+    text-align: left;  
+	color:#7a7a7a;
+}
+
+table.bordered tr.pink td {
+	background-color:#f173ac;
+	color:#FFFFFF;
+} 
+
+table.bordered th {
+	color:#FFFFFF;
+    background-color: #b2b2b2;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#b2b2b2), to(#b2b2b2));
+    background-image: -webkit-linear-gradient(top, #b2b2b2, #b2b2b2);
+    background-image:    -moz-linear-gradient(top, #b2b2b2, #b2b2b2);
+    background-image:     -ms-linear-gradient(top, #b2b2b2, #b2b2b2);
+    background-image:      -o-linear-gradient(top, #b2b2b2, #b2b2b2);
+    background-image:         linear-gradient(top, #b2b2b2, #b2b2b2);
+}
+
+table.bordered th:first-child {
+    border-radius: 10px 0 0 0;
+	-moz-border-radius: 10px 0 0 0;
+    -webkit-border-radius: 10px 0 0 0;
+}
+
+table.bordered th:last-child {
+    border-radius: 0 10px 0 0;
+	-moz-border-radius: 0 10px 0 0;
+    -webkit-border-radius: 0 10px 0 0;
+}
+
+table.bordered th:only-child{
+    border-radius: 10px 10px 0 0;
+	-moz-border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+}
+
+table.bordered tr:last-child td:first-child {
+    -moz-border-radius: 0 0 0 10px;
+    -webkit-border-radius: 0 0 0 10px;
+    border-radius: 0 0 0 10px;
+}
+
+table.bordered tr:last-child td:last-child {
+    -moz-border-radius: 0 0 10px 0;
+    -webkit-border-radius: 0 0 10px 0;
+    border-radius: 0 0 10px 0;
+}
+
+.box1{
+	background-color:#ededed;
+	padding: 10px;
+}
+
+.boxstyled1 {
+	width:300px;
+	color: #7a7a7a;
+	font-family: tahoma;
+	font-size:15px;
+    background-color: #FFFFFF;
+	padding-left:8px;
+	padding-top:4px;
+	padding-bottom:4px;
+	margin-bottom:12px;
+	box-shadow: 1px 2px 3px #c8c8c8;
+	-webkit-box-shadow: 1px 2px 3px #c8c8c8;
+    -moz-box-shadow: 1px 2px 3px #c8c8c8; 
+	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+.boxstyled1 input {
+	border:0px;
+	height:18px;
+	width:210px;
+}
+
+.boxstyled1 textarea {
+	border:0px;
+	width:210px;	
+	height:64px;
+}
+
+.boxstyled1 select {
+	border:0px solid #FFFFFF;
+	height:18px;
+	width:210px;	
+}
+
+.boxstyled1 div {
+	padding-top:1px;
+	float:left;
+	display:inline;
+	text-align:left;
+	width:80px;
+}
+
+.styledcheckbox {
+	box-shadow: 0 0 3px #c8c8c8;
+	-webkit-box-shadow: 0 0 3px #c8c8c8;
+    -moz-box-shadow: 0 0 3px #c8c8c8; 
+	border:1px solid #FFFFFF;
+}
+</style>
+
+<body >
+<input type="checkbox" class="styledcheckbox">testing
+<div class="box1" style="width:350px;">
+<div class="boxstyled1"><div>Member #</div><input type="text" value="" placeholder=""></div>
+<div class="boxstyled1"><div>Nama</div><input type="text" value="" placeholder="Nama"></div>
+<div class="boxstyled1" style="height:68px"><div>Alamat</div><textarea rows="4" placeholder="Alamat"></textarea><br><Br></div>
+<div class="boxstyled1"><div>Telepon</div><input type="text" value="" placeholder="Telepon"></div>
+<div class="boxstyled1"><div>Email</div><input type="text" value="" placeholder="Email"></div>
+<div class="boxstyled1"><div>BC</div><select><option value="A">a<option value="A">a<option value="A">a</select></div>
+
+<br><br>
+
+	<table class="bordered" width="400" >
+		<tr>
+			<th>#</th>        
+			<th>IMDB Top 10 Movies</th>
+			<th>Year</th>
+		</tr>
+		<tr>
+			<td>1</td>        
+			<td>The Shawshank Redemption</td>
+
+			<td>1994</td>
+		</tr>        
+		<tr class="pink">
+			<td>2</td>         
+			<td>The Godfather</td>
+			<td>1972</td>
+		</tr>
+		<tr>
+
+			<td>3</td>         
+			<td>The Godfather: Part II</td>
+			<td>1974</td>
+		</tr>    
+		<tr>
+			<td>4</td> 
+			<td>The Good, the Bad and the Ugly</td>
+			<td>1966</td>
+
+		</tr>
+		<tr>
+			<td>5</td> 
+			<td>Pulp Fiction</td>
+			<td>1994</td>
+		</tr>
+		<tr>
+			<td>6</td> 
+			<td>12 Angry Men</td>
+
+			<td>1957</td>
+		</tr>
+		<tr>
+			<td>7</td> 
+			<td>Schindler's List</td>
+			<td>1993</td>
+		</tr>    
+		<tr>
+
+			<td>8</td> 
+			<td>One Flew Over the Cuckoo's Nest</td>
+			<td>1975</td>
+		</tr>
+		<tr>
+			<td>9</td> 
+			<td>The Dark Knight</td>
+
+			<td>2008</td>
+		</tr>
+		<tr class="pink">
+			<td>10</td> 
+			<td>The Lord of the Rings: The Return of the King</td>
+			<td>2003</td>
+		</tr> 
+
+	</table>
+<div>
+	
+</html>
