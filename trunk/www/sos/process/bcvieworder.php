@@ -25,6 +25,7 @@
 		var $errmsg;
 		var $pageview;
 		var $productrevisi;
+		var $salesidsmi;
 		
 		function run() 
 		{
@@ -153,7 +154,7 @@
 			$rs = $this->db->query($sql);			
 			if ($rs->fetch()) 
 			{
-				
+				$this->salesidsmi = $rs->value('salesidsmi');
 			}
 			$rs->close();
 			
@@ -185,7 +186,7 @@
 			{
 				$qty = is_numeric($this->param["itemqty"][$i]) ? $this->param["itemqty"][$i] : "0";
 				
-				if ( $qty > 0 )
+				if ( $qty >= 0 )
 				{
 					$sql = "update salesline set qtybc = case when " . $qty ;
 					$sql.= " > qty then qty else " . $qty . " end ";

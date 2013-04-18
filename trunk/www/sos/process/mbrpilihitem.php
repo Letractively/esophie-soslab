@@ -93,6 +93,7 @@
 									$this->param[$errname] .= ($this->param[$errname] ? " dan " : "");
 									$this->param[$errname] .= "quantity harus lebih besar dari 0";										
 								}
+								/*
 								else
 								{
 									$sql = "exec sp_checkQuantity" . $this->queryvalue($this->param["item".$i]);
@@ -103,6 +104,7 @@
 										$this->param[$errname] = 'stock item tidak mencukupi';
 									}						
 								}
+								*/
 							}
 						}
 					}
@@ -183,7 +185,7 @@
 				$this->param["errmsg"] = "Silahkan isi item yang ingin di pesan.";
 			}
 			else
-			{ 
+			{
 				header('location:mbrordercheck.php?salesid='.$this->salesid);
 			}
 		}

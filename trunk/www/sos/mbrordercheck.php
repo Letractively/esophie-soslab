@@ -40,6 +40,7 @@
 		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i></div>
 	</div>
 	<br>
+	<?if ( $ctrl->errormsg != "" ) echo '<div class="boxerr1">'.$ctrl->errormsg.'</div>'; ?>
 	<button type="button" onclick="setaction('confirmorder');">Konfirmasi</button>
 	<?=$ctrl->printerrors();?>
 <?include "mbrfooter.php";?>

@@ -113,7 +113,7 @@
 					$ret.= '</tr>';
 				}
 			} else {
-				$ret.= '<td colspan="6" align="center">no new order</td>';
+				$ret.= '<tr><td colspan="6" align="center">no new order</td></tr>';
 			}
 			return $ret;
 		}
@@ -141,7 +141,7 @@
 					$ret.= "</tr>";
 				}
 			} else {
-				$ret.= '<td colspan="6" align="center">no order to follow up</td>';
+				$ret.= '<tr><td colspan="6" align="center">no order to follow up</td></tr>';
 			}		
 			return $ret;			
 		}
@@ -170,7 +170,7 @@
 					$ret.= "</tr>";
 				}
 			} else {
-				$ret.= '<td colspan="6" align="center">no order to deliver</td>';
+				$ret.= '<tr><td colspan="6" align="center">no order to deliver</td></tr>';
 			}
 			return $ret;
 		}
