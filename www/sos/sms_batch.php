@@ -68,5 +68,3 @@
 	$rs->close();
 ?>
 
-</body>
-</html>

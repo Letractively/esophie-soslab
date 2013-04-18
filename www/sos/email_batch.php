@@ -60,6 +60,3 @@
 	}
 	$rs->close();
 ?>
-
-</body>
-</html>
