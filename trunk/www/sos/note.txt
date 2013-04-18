@@ -1,3 +1,0 @@
-- kalo bypassed maka qty smi akan sama dengan qty order kemudian di sync
-- SMI akan mengupdate status online order menggunakan sp_updatesalesstatus
-
