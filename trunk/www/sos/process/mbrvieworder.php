@@ -9,6 +9,8 @@
 		var $mbrno;
 		var $mbrname;
 		var $mbraddress;
+		var $mbrphone;
+		var $mbremail;
 		var $totalorder;
 		var $discount;
 		var $paymentcharge;
@@ -17,6 +19,7 @@
 		var $totalbayar;
 		var $status;
 		var $orderdate;
+		var $createddate;
 		var $items;
 		var $pageview;
 		var $timeleft;
@@ -43,6 +46,9 @@
 				case "tambah":
 					$this->savebc();
 					$this->gotopage('inputitem','salesid='.urlencode($this->salesid));
+					break;
+				case "neworder":
+					$this->gotopage('neworder');
 					break;
 				
 				//orderconfirm
@@ -98,6 +104,8 @@
 				$this->mbrno 			= $rs->value('kodemember'); 
 				$this->mbrname 			= $rs->value('namamember'); 
 				$this->mbraddress 		= $rs->value('alamat'); 
+				$this->mbrphone 		= $rs->value('telp'); 
+				$this->mbremail 		= $rs->value('email'); 
 				
 				$this->paymentcharge 	= $rs->value('paymentcharge'); 
 				$this->paymentname 		= $rs->value('paymentname'); 
@@ -124,6 +132,8 @@
 				$this->param["bc"]		= $this->bcno;
 				
 				$this->orderdate 	= $this->valuedatetime($rs->value('orderdate')); 
+				$this->createddate 	= $this->valuedatetime($rs->value('createddate')); 
+				
 				$this->status 		= $rs->value('userstatus'); 
 				
 				$sql = "select * from vw_salesline where salesid = " . $this->queryvalue($this->salesid);
@@ -210,7 +220,13 @@
 			$sql.= ',email = ' . $this->queryvalue($this->param['email']);
 			$sql.= 'from salestable where salesid=' . $this->queryvalue($this->salesid);			
 			$this->db->execute($sql);
-			
+
+			$sql = 'update membertable set ';
+			$sql.= 'phone = ' . $this->queryvalue($this->param['handphone']);
+			$sql.= ',email = ' . $this->queryvalue($this->param['email']);
+			$sql.= 'where kodemember=(select top 1 kodemember from salesTable where salesid=' . $this->queryvalue($this->salesid). ')';
+			$this->db->execute($sql);
+
 			$status = $this->sysparam['salesstatus']['ordered'];
 			$this->updatesalesstatus($this->salesid,$status);
 			$this->gotopage('orderhistory','salesid='.urlencode($this->salesid));
@@ -282,7 +298,6 @@
 				$sql = "update mappingTable set ";
 				$sql.= " defaultbc = 1 where kodemember = " . $this->queryvalue($this->userid());
 				$sql.= " and kodebc = " . $this->queryvalue($this->param["bc"]);
-				
 				$this->db->execute($sql);
 			}
 						

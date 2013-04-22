@@ -156,18 +156,27 @@
 			{			
 				if ($this->salesid == '')
 				{
-					$sql = 'select name from membertable where kodemember = ' . $this->queryvalue($this->userid());
-					$namamember = $this->db->executescalar($sql);
+					$sql = 'select top 1 name, phone, email from membertable where kodemember = ' . $this->queryvalue($this->userid());
+					$rs = $this->db->query($sql);
+					if ($rs->fetch()) 
+					{
+						$namamember = $rs->value('name');
+						$mobilemember = $rs->value('phone');
+						$emailmember = $rs->value('email');
+					}
+					$rs->close();
 					
 					$sql = "exec sp_getNextNo 'SALES'";				
 					$this->salesid = $this->db->executeScalar($sql);
 					$this->param['salesid'] = $this->salesid;
 							
 					$sql = 'insert into salesTable ';
-					$sql.= '(salesid, kodemember, namamember, status, createddate) values (';
+					$sql.= '(salesid, kodemember, namamember, telp, email, status, createddate) values (';
 					$sql.= $this->queryvalue($this->salesid) . ',' ;
 					$sql.= $this->queryvalue($this->userid()) . ',' ;
 					$sql.= $this->queryvalue($namamember) . ',' ;		
+					$sql.= $this->queryvalue($mobilemember) . ',' ;		
+					$sql.= $this->queryvalue($emailmember) . ',' ;		
 					$sql.= $this->sysparam['salesstatus']['openorder'] . ',getdate())' ;			
 					
 					$this->db->execute($sql);
@@ -185,7 +194,7 @@
 				$this->param["errmsg"] = "Silahkan isi item yang ingin di pesan.";
 			}
 			else
-			{
+			{ 
 				header('location:mbrordercheck.php?salesid='.$this->salesid);
 			}
 		}

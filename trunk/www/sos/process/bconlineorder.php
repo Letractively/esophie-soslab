@@ -56,6 +56,7 @@
 						$this->neworders[$count1]['salesid'] = $rs->value('salesid');
 						$this->neworders[$count1]['orderdate'] = $this->valuedatetime($rs->value('orderdate'));
 						$this->neworders[$count1]['kodemember'] = $rs->value('kodemember');
+						$this->neworders[$count1]['member'] = '#'.$rs->value('kodemember').' '.$rs->value('namamember');
 						$this->neworders[$count1]['totalbayar'] = $rs->value('totalbayar');
 						$this->neworders[$count1]['timeleft'] = $rs->value('timeleft');
 						$this->neworders[$count1]['statuscode'] = $rs->value('status');
@@ -74,6 +75,7 @@
 						else
 							$this->orderstofollowup[$count2]['orderdate'] = $this->valuedatetime($rs->value('orderdate'));						
 						$this->orderstofollowup[$count2]['kodemember'] = $rs->value('kodemember');
+						$this->orderstofollowup[$count2]['member'] = '#'.$rs->value('kodemember').' '.$rs->value('namamember');
 						$this->orderstofollowup[$count2]['totalbayar'] = $rs->value('totalbayar');
 						$this->orderstofollowup[$count2]['userstatus'] = $rs->value('userstatus');
 						$this->orderstofollowup[$count2]['statuscode'] = $rs->value('syncstatuscode');
@@ -85,6 +87,7 @@
 						$this->orderstodeliver[$count3]['salesid'] = $rs->value('salesid');
 						$this->orderstodeliver[$count3]['orderdate'] = $this->valuedatetime($rs->value('orderdate'));
 						$this->orderstodeliver[$count3]['kodemember'] = $rs->value('kodemember');
+						$this->orderstodeliver[$count3]['member'] = '#'.$rs->value('kodemember').' '.$rs->value('namamember');
 						$this->orderstodeliver[$count3]['totalbayar'] = $rs->value('totalbayar');
 						$this->orderstodeliver[$count3]['userstatus'] = $rs->value('userstatus');
 						$this->orderstodeliver[$count3]['statuscode'] = $rs->value('status');
@@ -103,11 +106,11 @@
 				$i=0;
 				foreach ($this->neworders as $orders)
 				{
-					$ret.= $i++%2?"<tr class=\"pink\">":"<tr>";
+					$ret.= $i++%2?"<tr class=\"pinkrow\">":"<tr>";
 					$ret.= '<td align="center"><a href="bcvieworder.php?backpage=1&salesid=' . urlencode($orders['salesid']) . '"><div class="color' . $this->colorstatus($orders['statuscode']) . '"></a></td>';
 					$ret.= '<td align="left"><a href="bcvieworder.php?backpage=1&salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';
 					$ret.= '<td align="left">' . $orders['orderdate'] . '</td>';
-					$ret.= '<td align="left">' . $orders['kodemember'] . '</td>';
+					$ret.= '<td align="left">' . $orders['member'] . '</td>';
 					$ret.= '<td align="right">' . $this->valuenumber($orders['totalbayar']) . '</td>';
 					$ret.= '<td align="right">' . $orders['timeleft'] . '</td>';
 					$ret.= '</tr>';
@@ -130,7 +133,7 @@
 					$ret.= '<td align="center"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '"><div class="color' . $this->colorstatus($orders['statuscode']) . '"></a></td>';
 					$ret.= '<td align="left"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';
 					$ret.= "<td align=\"left\">" . $orders['orderdate'] . "</td>";
-					$ret.= "<td align=\"left\">" . $orders['kodemember'] . "</td>";
+					$ret.= "<td align=\"left\">" . $orders['member'] . "</td>";
 					$ret.= "<td align=\"right\">" . $this->valuenumber($orders['totalbayar']) . "</td>";
 					if ( $orders['statuscode'] == 0 )
 						$ret.= "<td align=\"center\" class=\"red\">" . $orders['userstatus'] . "</td>";
@@ -154,11 +157,11 @@
 				$i=0;
 				foreach ($this->orderstodeliver as $orders)
 				{
-					$ret.= $i++%2?"<tr class=\"pink\">":"<tr>";
+					$ret.= $i++%2?"<tr class=\"pinkrow\">":"<tr>";
 					$ret.= '<td align="center"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '"><div class="color' . $this->colorstatus($orders['statuscode']) . '"></a></td>';
 					$ret.= '<td align="left"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';				
 					$ret.= "<td align=\"left\">" . $orders['orderdate'] . "</td>";
-					$ret.= "<td align=\"left\">" . $orders['kodemember'] . "</td>";
+					$ret.= "<td align=\"left\">" . $orders['member'] . "</td>";
 					$ret.= "<td align=\"right\">" . $this->valuenumber($orders['totalbayar']) . "</td>";
 					if ( $orders['statuscode'] == 0 )
 						$ret.= "<td align=\"center\" class=\"red\">" . $orders['userstatus'] . "</td>";

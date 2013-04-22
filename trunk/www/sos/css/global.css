@@ -64,6 +64,21 @@ a:hover{
 	color:#ef0099;
 }
 
+a.normal{
+	color:#727274;
+	text-decoration: none;
+}
+
+a.normal:visited {
+	color:#727274;
+}
+a.normal:active {
+	color:#727274;
+}
+a.normal:hover{
+	color:#727274;
+}
+
 .boxcommand {
 	margin-bottom:10px;
 	text-align:left;
@@ -81,21 +96,18 @@ a:hover{
 	font-family: helvetica, sans-serif, arial;
 	font-size: 12px;
 	color:red;
-	font-style:italic;
 }
 
 .orange {
 	font-family: helvetica, sans-serif, arial;
 	font-size: 12px;
 	color:orange;
-	font-style:italic;
 }
 
 .green {
 	font-family: helvetica, sans-serif, arial;
 	font-size: 12px;
 	color:green;
-	font-style:italic;
 }
 
 .boxmain{
@@ -108,6 +120,12 @@ a:hover{
 .boxmenu {
 	float:left;
 	text-align:left;
+	padding-right:3px;
+}
+
+.boxmenu2 {
+	float:right;
+	text-align:right;
 	padding-right:3px;
 }
 
@@ -340,8 +358,9 @@ table.dataview td, table.dataview th {
 }
 
 table.dataview tr.pinkrow td {
-	background-color:#f173ac;
-	color:#FFFFFF;
+	/*background-color:#f173ac;*/
+	background-color:#eeeeee;
+	/*color:#FFFFFF;*/
 	font-size: 12px;
 } 
 

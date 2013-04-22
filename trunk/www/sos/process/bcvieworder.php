@@ -9,6 +9,10 @@
 		var $userstatus;
 		var $userstatusinfo;
 		var $orderdate;
+		var $validatedate;
+		var $paiddate;
+		var $canceldate;
+		var $deliverdate;
 		var $totalorder;
 		var $discount;
 		var $totalbayar;
@@ -25,7 +29,9 @@
 		var $errmsg;
 		var $pageview;
 		var $productrevisi;
+		var $purchid;
 		var $salesidsmi;
+		var $cancelcode;
 		
 		function run() 
 		{
@@ -84,6 +90,12 @@
 				else
 					$this->orderdate 			= $this->valuedatetime($rs->value('orderdate')); 
 					
+				$this->validatedate			= (is_null($rs->value('validatedate')) ? null : $this->valuedatetime($rs->value('validatedate')));
+				$this->paiddate				= (is_null($rs->value('paiddate')) ? null : $this->valuedatetime($rs->value('paiddate')));
+				$this->canceldate			= (is_null($rs->value('canceldate')) ? null : $this->valuedatetime($rs->value('canceldate'))); 
+				$this->deliverdate			= (is_null($rs->value('deliverdate')) ? null : $this->valuedatetime($rs->value('deliverdate'))); 	
+				
+				$this->cancelcode			= $rs->value('cancelcode');
 				$this->userstatus			= $rs->value('userstatus');
 				$this->userstatusinfo		= $rs->value('statusinfo'); 
 				$this->status				= $rs->value('status'); 
@@ -103,7 +115,7 @@
 				if ($this->status == $this->sysparam['salesstatus']['edited'] ||
 					$this->status == $this->sysparam['salesstatus']['ordered'])
 				{
-					$this->totalorder 			= 0;
+					$this->totalorderedited		= 0;
 					$this->discount 			= 0;
 					$this->totalbayar 			= 0;
 				}				
@@ -134,9 +146,9 @@
 					if ($this->status == $this->sysparam['salesstatus']['edited'] ||
 					    $this->status == $this->sysparam['salesstatus']['ordered'])
 					{
-						$this->totalorder 	+= $rs1->value('totalorderedited'); 
-						$this->discount 	+= $rs1->value('discountedited'); 
-						$this->totalbayar 	+= $rs1->value('totalbayaredited');					
+						$this->totalorderedited	+= $rs1->value('totalorderedited'); 
+						$this->discount 		+= $rs1->value('discountedited'); 
+						$this->totalbayar 		+= $rs1->value('totalbayaredited');					
 					}
 					$i++;
 				}
@@ -150,14 +162,14 @@
 			$sql = "select * from vw_purchtable ";
 			$sql.= " where purchid = " . $this->queryvalue($this->param['salesid']);
 			$sql.= " and kodebc = " . $this->queryvalue($this->userid());
-							   
+			
 			$rs = $this->db->query($sql);			
 			if ($rs->fetch()) 
 			{
+				$this->purchid =  $rs->value('purchid');
 				$this->salesidsmi = $rs->value('salesidsmi');
 			}
 			$rs->close();
-			
 		}
 
 		function createPurchTable()
@@ -186,7 +198,7 @@
 			{
 				$qty = is_numeric($this->param["itemqty"][$i]) ? $this->param["itemqty"][$i] : "0";
 				
-				if ( $qty >= 0 )
+				if ( $qty > 0 )
 				{
 					$sql = "update salesline set qtybc = case when " . $qty ;
 					$sql.= " > qty then qty else " . $qty . " end ";
