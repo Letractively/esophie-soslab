@@ -104,6 +104,30 @@
 					$ret = 'Clear';
 					break;
 			}
+			return strtoupper($ret);
+		}
+		
+		function cancelreason($cancelcode)
+		{
+			$ret = '';
+			switch($cancelcode)
+			{
+				case $this->sysparam['cancelcode']['bymember']: 
+					$ret = 'Member telah membatalkan pesanan tersebut.';
+					break;
+				case $this->sysparam['cancelcode']['latepayment']:
+					$ret = 'Member tidak membayar dalam waktu yang ditentukan.';
+					break;
+				case $this->sysparam['cancelcode']['emptystock'] :
+					$ret = 'Stock Sophie lagi kosong.';
+					break;
+				case $this->sysparam['cancelcode']['revisi']:
+					$ret = 'Member tidak confirm edited order.';
+					break;
+				case $this->sysparam['cancelcode']['technicalerror']:
+					$ret = 'ada masalah teknis.';
+					break;
+			}
 			return $ret;
 		}
 	}

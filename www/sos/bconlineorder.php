@@ -3,57 +3,57 @@
 	<center>
 	<table width="100%">
 		<tr>
-			<td width="12px"><div class="color01"></div></td><td width="70"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['ordered'])?> (<?=$ctrl->statuscount['orderbaru'] ?>)</td>
-			<td width="12px"><div class="color02"></div></td><td width="70"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['bypassed'])?> (<?=$ctrl->statuscount['dalamproses'] ?>)</td>
-			<td width="12px"><div class="color05"></div></td><td width="50"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['edited'])?> (<?=$ctrl->statuscount['revisi'] ?>)</td>
-			<td width="12px"><div class="color06"></div></td><td width="70"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['validated'])?> (<?=$ctrl->statuscount['belumbayar'] ?>)</td>
+			<td width="12px"><div class="color01"></div></td><td width="70"><a href="#neworder" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['ordered'])?> (<?=$ctrl->statuscount['orderbaru'] ?>)</a></td>
+			<td width="12px"><div class="color02"></div></td><td width="70"><a href="#followup" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['bypassed'])?> (<?=$ctrl->statuscount['dalamproses'] ?>)</a></td>
+			<td width="12px"><div class="color05"></div></td><td width="50"><a href="#followup" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['edited'])?> (<?=$ctrl->statuscount['revisi'] ?>)</a></td>
+			<td width="12px"><div class="color06"></div></td><td width="70"><a href="#followup" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['validated'])?> (<?=$ctrl->statuscount['belumbayar'] ?>)</a></td>
 		</tr>
 		<tr>
-			<td><div class="color08"></div></td><td><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['paid'])?> (<?=$ctrl->statuscount['telahbayar'] ?>)</td>
-			<td><div class="color09"></div></td><td><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['ready'])?> (<?=$ctrl->statuscount['siap'] ?>)</td>
-			<td><div class="color10"></div></td><td><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['delivered'])?> (<?=$ctrl->statuscount['delivered'] ?>)</td>
-			<td><div class="color00"></div></td><td><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['cancelled'])?> (<?=$ctrl->statuscount['batal'] ?>)</td>
+			<td><div class="color08"></div></td><td><a href="#deliverorder" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['paid'])?> (<?=$ctrl->statuscount['telahbayar'] ?>)</a></td>
+			<td><div class="color09"></div></td><td><a href="#deliverorder" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['ready'])?> (<?=$ctrl->statuscount['siap'] ?>)</a></td>
+			<td><div class="color10"></div></td><td><a href="#deliverorder" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['delivered'])?> (<?=$ctrl->statuscount['delivered'] ?>)</a></td>
+			<td><div class="color00"></div></td><td><a href="#followup" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['cancelled'])?> (<?=$ctrl->statuscount['batal'] ?>)</a></td>
 		</tr>
 	</table>
 	</center>
 </div>
 <br><br>
-<div class="title">New Orders</div>
+<div class="title">New Orders<a id="neworder">&nbsp;</a></div>
 <table class="dataview">
 	<tr>
 		<th width="20">&nbsp;</th>
-		<th width="120" align="left">Order #</th>
-		<th width="150" align="left">Date / Time</th>
-		<th width="100" align="left">Member</th>
-		<th width="100" align="right">Total</th>
+		<th width="100" align="left">Order #</th>
+		<th width="110" align="left">Date / Time</th>
+		<th width="180" align="left">Member</th>
+		<th width="80" align="right">Total</th>
 		<th width="100" align="right">Sisa Waktu</th>
 	</tr>
 	<tbody id="bodyneworders"></tbody>
 </table>
 
 <br>
-<div class="title">Orders to follow up</div>
+<div class="title">Orders to follow up<a id="followup">&nbsp;</a></div>
 <table class="dataview">
 	<tr>
 		<th width="20">&nbsp;</th>
-		<th width="120" align="left">Order #</th>
-		<th width="150" align="left">Date / Time</th>
-		<th width="100" align="left">Member</th>
-		<th width="100" align="right">Total</th>
+		<th width="100" align="left">Order #</th>
+		<th width="110" align="left">Date / Time</th>
+		<th width="180" align="left">Member</th>
+		<th width="80" align="right">Total</th>
 		<th width="100" align="center">Status</th>
 	</tr>
 	<tbody id="bodyorderinprogress"></tbody>
 </table>
 
 <br>
-<div class="title">Orders to deliver</div>
+<div class="title">Orders to deliver<a id="deliverorder">&nbsp;</a></div>
 <table class="dataview">
 	<tr>
 		<th width="20">&nbsp;</th>
-		<th width="120" align="left">Order #</th>
-		<th width="150" align="left">Date / Time</th>
-		<th width="100" align="left">Member</th>
-		<th width="100" align="right">Total</th>
+		<th width="100" align="left">Order #</th>
+		<th width="110" align="left">Date / Time</th>
+		<th width="180" align="left">Member</th>
+		<th width="80" align="right">Total</th>
 		<th width="100" align="center">Status</th>
 	</tr>
 	<tbody id="bodypendingorders"></tbody>

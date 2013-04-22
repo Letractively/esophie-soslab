@@ -209,6 +209,7 @@
 				case 'paymentmethod'	: header("location:mbrpaymentmethod.php" . ($param != '' ? '?' . $param : ''));  break;
 				case 'paymentconfirm' 	: header("location:mbrpaymentconfirm.php" . ($param != '' ? '?' . $param : ''));  break;
 				case 'paymentreceived' 	: header("location:mbrpaymentreceived.php" . ($param != '' ? '?' . $param : ''));  break;
+				case 'neworder'	 		: header("location:mbrneworder.php" . ($param != '' ? '?' . $param : ''));  break;
 			}
 			exit;
 		}

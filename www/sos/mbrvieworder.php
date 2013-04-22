@@ -45,8 +45,8 @@
 				Konfirmasi order yang sudah di validasi oleh BC atau pembayaran yang sudah diterima akan dikirimkan melalui SMS dan email.
 			</div>
 			<?=$ctrl->printerrors();?>
-			<div class="boxstyled1"><div>Handphone (ex: 081234567890)</div><input type="textbox" name="handphone" id="handphone" maxlength="50" placeholder="Handphone Number" value="<?=$ctrl->value("handphone")?>"></div>
-			<div class="boxstyled1"><div>Email (optional)</div><input type="textbox" name="email" id="email" maxlength="80" placeholder="Email Address" value="<?=$ctrl->value("email")?>"></div>	
+			<div class="boxstyled1"><div>Handphone (ex: 081234567890)</div><input type="textbox" name="handphone" id="handphone" maxlength="50" placeholder="Handphone Number" value="<?=$ctrl->mbrphone?>"></div>
+			<div class="boxstyled1"><div>Email (optional)</div><input type="textbox" name="email" id="email" maxlength="80" placeholder="Email Address" value="<?=$ctrl->mbremail?>"></div>	
 <?			break;
 
 		case "confirmqtychange" : 
@@ -82,7 +82,11 @@
 			</tr>
 			<tr>
 				<td><?=$ctrl->varvalue('salesid')?></td>
+				<?if ($ctrl->pageview == 'orderconfirm') { ?>
+				<td><?=$ctrl->varvalue('createddate')?></td>
+				<? } else { ?>
 				<td><?=$ctrl->varvalue('orderdate')?></td>
+				<? } ?>
 				<td><?=$ctrl->valuenumber($ctrl->varvalue('totalbayar'));?></td>
 				<td><?=$ctrl->varvalue('status')?></td>
 				
@@ -172,6 +176,7 @@
 	switch ($ctrl->pageview) 
 	{ 
 		case "orderedit" : ?>
+			<button type="button" onclick="setaction('neworder');">Order Baru</button>
 			<button type="button" onclick="setaction('confirmorder');">Konfirmasi</button>
 <?		break;
 

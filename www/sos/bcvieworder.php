@@ -23,7 +23,7 @@
 	 
 <div class="boxcon" style="border-bottom:1px solid black">
 	<div class="boxleft" style="width:330px">
-		Online Orders > Order #<?=$ctrl->value('salesid')?>
+		<a href="bconlineorder.php">Online Orders</a> > Order #<?=$ctrl->value('salesid')?>
 	</div>
 	<div class="boxright" style="width:350px;padding-right:10px;">
 		<div style="float:right;padding-left:7px"><?=$ctrl->colorstatuslabel($ctrl->status)?></div>
@@ -42,6 +42,10 @@
 	</div>
 	<div class="boxright" style="width:350px; text-align:right; padding-right:10px">
 		Dibuat pada <?=$ctrl->varvalue('orderdate')?>
+		<? if ($ctrl->varvalue('validatedate')) { ?><br>Validasi BC pada <?echo $ctrl->varvalue('validatedate'); } ?> 
+		<? if ($ctrl->varvalue('paiddate')) { ?><br>Dibayar pada <?echo $ctrl->varvalue('paiddate'); } ?> 
+		<? if ($ctrl->varvalue('canceldate')) { ?><br>Batal pada <?echo $ctrl->varvalue('canceldate'); } ?> 
+		<? if ($ctrl->varvalue('deliverdate')) { ?><br>Dikirim pada <?echo $ctrl->varvalue('deliverdate'); } ?> 
 	</div>
 </div>
 <div class="boxcon">
@@ -79,7 +83,7 @@
 					?>
 					<td align="right">
 						<input type="hidden" name="itemid[]" id="itemid[]" value="<?=$item['itemid']?>">
-						<input type="textbox" name="itemqty[]" id="itemqty[]" value="<?=$item['qtybc']?>" maxlength="3" style="width:30px;text-align:right"  onblur="refresh(event);">
+						<input type="textbox" name="itemqty[]" id="itemqty[]" value="<?=$item['qtybc']?>" maxlength="3" style="width:30px;text-align:right" onkeypress="refresh(event);" onblur="refreshLostFocus();">
 					</td>
 					<?					
 				} else {
@@ -119,6 +123,11 @@
 </table>
 <br>
 <div class="boxcon">
+	<div class="boxleft" style="width:340px;color:red;">
+		<? if($ctrl->status == $ctrl->sysparam['salesstatus']['cancelled']) {?>
+		Order ini telah ditolak karena <?=$ctrl->cancelreason($ctrl->cancelcode)?>		
+		<? } ?>
+	</div>
 	<div class="boxright" style="width:380px;padding-right:6px">
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:200px">Total Order</div>
@@ -135,10 +144,10 @@
 			<div class="boxright1-1" style="margin-left:20px"><?=$ctrl->valuenumber($ctrl->varvalue('totalbayarbc'));?></div>
 			<div class="boxright1" style="margin-right:2px"><?=$ctrl->valuenumber($ctrl->varvalue('totalbayar'));?></div>
 		</div>
-		<? if ($ctrl->status >= $ctrl->sysparam['salesstatus']['edited']) { ?>
+		<? if ($ctrl->status >= $ctrl->sysparam['salesstatus']['edited'] && $ctrl->purchid <> "") { ?>
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:200px">Tambahan Order BC</div>
-			<div class="boxright1" style="width:150px;margin-right:0px"><?='<a href="bcviewmyorder.php?backpage=1&purchid=' . $ctrl->value('salesid') .'">' . $ctrl->salesidsmi . '</a>';?></div>
+			<div class="boxright1" style="width:150px;margin-right:0px"><?='<a href="bcviewmyorder.php?backpage=1&purchid=' . $ctrl->purchid .'">' . $ctrl->purchid . '</a>';?></div>
 		</div>
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:200px">Total Kredit Note BC</div>
@@ -149,6 +158,7 @@
 </div>
 <div style="width:703px;text-align:right">	
 	<button type="button" onclick="setaction('cancel');" style="width:80px;">Kembali</button>
+	<a href="#" onclick="setaction('cancel');">&lt&lt Kembali</a>
 	<?
 		switch ($ctrl->status)
 		{
@@ -173,13 +183,15 @@
 <?include "bcfooterright.php";?>
 <script language="javascript">
 	function refresh(e)
-	{	/*
+	{
 		if (!e) e = window.event;   // resolve event instance
 		if (e.keyCode == 13)
 		{
-		    setaction('refresh');
+			setaction('refresh');
 		}
-		*/
-	setaction('refresh');
+	}
+	function refreshLostFocus()
+	{
+		setaction('refresh');
 	}
 </script>
