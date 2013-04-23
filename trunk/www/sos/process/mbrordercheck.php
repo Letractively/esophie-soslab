@@ -183,6 +183,31 @@
 				}
 			}
 			
+			// Checking min order and max order
+			$sql = "select top 1 isnull(totalbayar,0) as totalbayar from vw_salestable where salesid = " . $this->queryvalue($this->salesid);
+			$rs = $this->db->query($sql);			
+			if ($rs->fetch()) 
+			{
+			    $this->totalbayar = $rs->value('totalbayar'); 
+			}
+			$rs->close ();
+			
+			$sql = "select top 1 mintotalsales, maxtotalsales from sysparamTable";
+			$rs = $this->db->query($sql);			
+			if ($rs->fetch()) 
+			{
+			    $mintotalsales = $rs->value('mintotalsales'); 
+			    $maxtotalsales = $rs->value('maxtotalsales'); 
+			}
+			$rs->close ();
+			
+			//echo $this->totalbayar . '-' .$maxtotalsales . '-' . $mintotalsales;
+			if ( $this->totalbayar > $maxtotalsales || $this->totalbayar < $mintotalsales )
+			{
+			    $this->errormsg = 'Minimum order harus diatas IDR ' . $this->valuenumber($mintotalsales) . ' dan maximum order IDR ' . $this->valuenumber($maxtotalsales);
+			    $ret = false;    
+			}
+			
 			return $ret;			
 		}
 
