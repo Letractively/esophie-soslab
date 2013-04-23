@@ -5,7 +5,7 @@
 				<a href="mbrviewhistory.php">Online Orders</a>
 			<? } ?>
 			&nbsp;&nbsp;|&nbsp;&nbsp; 
-			<?if ($ctrl->filename() == 'mbrcekdata.php' || $ctrl->filename() == 'mbrpilihitem.php') { ?>
+			<?if ($ctrl->filename() == 'mbrcekdata.php' || $ctrl->filename() == 'mbrpilihitem.php' || $ctrl->filename() == 'mbrordercheck.php') { ?>
 				Pesan Online 
 			<? } else { ?>
 				<a href="mbrpilihitem.php">Pesan Online</a>

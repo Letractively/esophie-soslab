@@ -12,6 +12,9 @@
 				case "confirmorder":
 					$this->confirmorder();				
 					break;
+				case "orderbaru":
+					$this->orderbaru();
+					break;
 				case "refresh":
 					$this->refresh();
 					break;
@@ -34,6 +37,17 @@
 				header('location:mbrpaymentmethod.php?salesid=' . $this->salesid);
 				exit;
 			}
+		}
+		
+		function orderbaru ()
+		{
+			$sql = "delete from salesline where salesid=".$this->queryvalue($this->salesid);
+			$this->db->query($sql);
+
+			$sql = "delete from salesTable where salesid=".$this->queryvalue($this->salesid);
+			$this->db->query($sql);
+			
+			$this->gotopage("inputitem");
 		}
 		
 		function savebc() 
@@ -82,8 +96,9 @@
 				$sql = "select kodebc from vw_BCMapping where KodeMember = " . $this->queryvalue($this->userid());
 				$sql.= " and defaultbc = 1";
 				$this->param["bc"] = $this->db->executeScalar($sql);
+				$this->defaultbckode = $this->param["bc"];
 			}
-			
+
 			$sql = "select* from vw_BCMapping ";
 			$sql.= "where KodeMember = " . $this->queryvalue($this->userid());
 			$this->setselectoption('bc', $sql, 'kodebc', 'label', $this->param["bc"]);
@@ -204,7 +219,7 @@
 			//echo $this->totalbayar . '-' .$maxtotalsales . '-' . $mintotalsales;
 			if ( $this->totalbayar > $maxtotalsales || $this->totalbayar < $mintotalsales )
 			{
-			    $this->errormsg = 'Minimum order harus diatas IDR ' . $this->valuenumber($mintotalsales) . ' dan maximum order IDR ' . $this->valuenumber($maxtotalsales);
+			    $this->errmsg = 'Minimum order harus diatas IDR ' . $this->valuenumber($mintotalsales) . ' dan maximum order IDR ' . $this->valuenumber($maxtotalsales);
 			    $ret = false;    
 			}
 			

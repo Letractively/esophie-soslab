@@ -48,6 +48,7 @@
 			$this->sysparam['app']['bcurl']				= "http://webdev.sophiemartin.com/sos/index.php";
 			$this->sysparam['app']['mbrurl']			= "http://www.sophiemobile.com";
 			$this->sysparam['app']['mbrdisclaimer'] 	= "Persyaratannya sebagai berikut bla...bla...bla..."; 
+			$this->sysparam['app']['custservicenumber']	= "+6221 5781345"; 
 			
 			$this->sysparam['appmsg']['bcaccountsuspend']	= "account member anda ditangguhkan, silahkan hubungi admin Sophie Online Shopping";
 			
