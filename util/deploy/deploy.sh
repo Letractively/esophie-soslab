@@ -8,7 +8,8 @@ echo '***************** DEPLOYING TO WEB ****************'
 echo "WWW REV $REV -> $WWWROOT"
 
 sudo rm -Rf $WWWROOT/rc
-sudo -u sos svn export --force -r $REV $URLREPO/www/sos $WWWROOT/rc
+sudo -u sos svn export --force -r $REV $URLREPO/www/sos $WWWROOT/rc/www
+sudo -u sos svn export --force -r $REV $URLREPO/util/sh $WWWROOT/rc/sh
 sudo -u sos touch $WWWROOT/rc/REV-$REV
 
 echo '***************** DEPLOYMENT END   ****************'

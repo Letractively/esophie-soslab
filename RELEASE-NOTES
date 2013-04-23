@@ -1,3 +1,7 @@
+Revision r16: 23/04/2013
+ - Added full deployment scripts with sh scripts
+ - Integrates the bug corrections from Ivan
+
 Revision r10: 18/04/2013
  - First merge of Ivan devs 
 
