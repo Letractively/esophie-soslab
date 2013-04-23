@@ -19,7 +19,7 @@
 						//echo $sql;
 						if ($this->debug()) echo $sql;
 						$this->db->execute($sql);
-						$this->gotopage('orderhistory');
+						$this->gotopage('inputitem');
 					}
 					else
 					{

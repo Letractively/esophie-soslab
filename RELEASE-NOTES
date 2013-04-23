@@ -1,3 +1,6 @@
+Revision r17: 24/04/2013
+ - Bugfix issue no 14-40
+ 
 Revision r16: 23/04/2013
  - Added full deployment scripts with sh scripts
  - Integrates the bug corrections from Ivan

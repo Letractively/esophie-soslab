@@ -49,7 +49,7 @@
 				if ($rs->value('chargeratio') > 0 && $rs->value('chargefee') > 0)
 				{
 					$chargefee = ($totalbayar * $rs->value('chargeratio')) / (100 + $rs->value('chargeratio'));
-					$this->items[$i]["fee"] = 'Charge fee: Rp. ' . $this->valuenumber($chargefee) . '';
+					$this->items[$i]["fee"] = 'Charge fee: ' .$rs->value('chargeratio'). '% x Rp ' . $this->valuenumber($totalbayar) . ' = Rp. ' . $this->valuenumber($chargefee) . '';
 					$this->items[$i]["fee"].= '<br>Fixed fee: Rp. ' . $this->valuenumber($rs->value('chargefee')) . ' per transaksi';
 					$this->items[$i]["fee"].= '<br>Total fee: Rp. ' . $this->valuenumber($chargefee+$rs->value('chargefee')) . '';
 					$this->items[$i]["totalfee"] = $chargefee+$rs->value('chargefee');
@@ -59,12 +59,14 @@
 					if ($rs->value('chargeratio') > 0)
 					{
 						$chargefee = ($totalbayar * $rs->value('chargeratio')) / (100 + $rs->value('chargeratio'));
-						$this->items[$i]["fee"] = 'Charge fee: Rp. ' . $this->valuenumber($chargefee) . '';
+						$this->items[$i]["fee"] = 'Charge fee: ' .$rs->value('chargeratio'). '% x Rp ' . $this->valuenumber($totalbayar) . ' = Rp. ' . $this->valuenumber($chargefee) . '';
+						$this->items[$i]["fee"].= '<br>Total fee: Rp. ' . $this->valuenumber($chargefee) . '';
 						$this->items[$i]["totalfee"] = $chargefee;
 					}
 					if ($rs->value('chargefee') > 0)
 					{
 						$this->items[$i]["fee"] = 'Fixed fee: Rp. ' . $this->valuenumber($rs->value('chargefee')) . ' per transaksi';
+						$this->items[$i]["fee"].= '<br>Total fee: Rp. ' . $this->valuenumber($rs->value('chargefee')) . '';
 						$this->items[$i]["totalfee"] = $rs->value('chargefee');
 					}
 				}	

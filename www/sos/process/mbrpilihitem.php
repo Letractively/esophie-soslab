@@ -9,12 +9,15 @@
 			$this->salesid = isset($this->param['salesid']) ? $this->param['salesid'] : '';
 			
 			parent::run();
-			
+
 			switch($this->action)
 			{			
 				case "save" :			
 					if ($this->isvaliddata())
 						$this->savedata();
+					break;
+				case "reset":
+					$this->reset ();		
 					break;
 				case "none" :
 					if (isset($this->param['salesid']))
@@ -137,6 +140,15 @@
 				}
 			}
 			return $ret;			
+		}
+		
+		function reset () 
+		{
+			for ($i=1;$i<=$this->maxitem;$i++)
+			{
+				$this->param["item".$i] = '';
+				$this->param["item".$i."qty"] = '';
+			}
 		}
 		
 		function savedata() 

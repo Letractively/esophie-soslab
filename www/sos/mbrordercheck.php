@@ -1,14 +1,18 @@
 <?include "mbrheader.php";?>
 	<div class="boxcon5">1 - Silahkan pilih BC yang akan proses order Anda</div>
 	<div class="boxcon">
+		<? if ( $ctrl->errorbcmsg != "" ) { ?>
+		<div class="boxerr1"><?=$ctrl->errorbcmsg?></div>
+		<? } else {?>
 		<div class="boxleft" style="width:150px">
 			<div class="boxstyled2"><select name="bc" id="bc" onchange="setaction('refreshbc')"><? $ctrl->getbc(); ?></select></div>
-			<input type="checkbox" name="defaultbc" id="defaultbc" value="1" <?if ($ctrl->value('defaultbc') == '1') echo 'checked';?>> set sebagai <font class="pink">default BC</font>.
+			<input type="checkbox" name="defaultbc" id="defaultbc" value="1" <?if ($ctrl->value('defaultbc') == '1' || $ctrl->defaultbckode != '' ) echo 'checked';?>> set sebagai <font class="pink">default BC</font>.
 		</div>
 		<div class="boxright" style="width:150px">
 			<?=$ctrl->varvalue('bcaddress')?>
 			<br><?=$ctrl->varvalue('bcphone')?>
 		</div>
+		<? } ?>
 	</div>
 	<div class="boxcon5">2 - Silahkan cek kembali order Anda</div>	
 			
@@ -40,6 +44,17 @@
 		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i></div>
 	</div>
 	<br>
-	<button type="button" onclick="setaction('confirmorder');">Konfirmasi</button>
+	<? if ( $ctrl->errorbcmsg == "" ) { ?>
+	<table border="0" width="100%">
+	<tr>
+	<td>
+		<a href="#" onclick="setaction('orderbaru');" ><< Order Baru</a>
+	</td>
+	<td  align="right">
+		<button type="button" onclick="setaction('confirmorder');" >Konfirmasi Order</button>
+	</td>
+	</tr>
+	</table>
+	<? } ?>
 	<?=$ctrl->printerrors();?>
 <?include "mbrfooter.php";?>

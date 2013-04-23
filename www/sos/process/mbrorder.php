@@ -22,7 +22,8 @@
 		var $timeleft;
 		var $isanyitemsold;
 		var $validatesameday;
-		
+		var $errorbcmsg;
+		var $defaultbckode;
 		
 		function run() 
 		{	
@@ -70,6 +71,11 @@
 				$this->gotohomepage();				
 			}
 			$rs->close();
+			
+			$sql = "select count(*) from vw_BCMapping ";
+			$sql.= "where KodeMember = " . $this->queryvalue($this->userid());
+			if ( $this->db->executeScalar($sql) <= 0 )
+				$this->errorbcmsg = "Silahkan hubungi Customer Care di " . $this->sysparam['app']['custservicenumber'] . " untuk pilih BC dahulu.";
 		}
 		
 		function loaddata_update($rs) {}
@@ -131,7 +137,7 @@
 				{
 					$ret.=  $i++%2?'<tr class="pinkrow"':'<tr';
 					$ret.=  ' style="cursor:pointer" onclick="setaction(\'tambah\');">';
-					$ret.=  '<td colspan="5" align="center">Tambah item</td>';
+					$ret.=  '<td colspan="5" align="center" style="text-decoration: underline;">Tambah Product</td>';
 					$ret.=  '</tr>';					
 				}
 			}

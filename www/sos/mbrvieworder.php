@@ -181,16 +181,32 @@
 <?		break;
 
 		case "orderconfirm" : ?>
-			<button type="button" onclick="setaction('back');" style="width:80px">Kembali</button>
-			<!--<button type="button" onclick="setaction('batalorder');">Batal Order</button>-->
-			<button type="button" onclick="setaction('sendordertobc');">Kirim ke BC</button>
+			<table border="0" width="100%">
+			<tr>
+			<td>
+				<a href="#" onclick="setaction('back');" ><< Kembali</a>
+			</td>
+			<td align="right">
+				<button type="button" onclick="setaction('sendordertobc');" >Kirim ke BC</button>
+			</td>
+			</tr>
+			</table>
 <?		break;
 
 		case "confirmqtychange" : ?>
-			<button type="button" onclick="setaction('cancel');">Batal</button>
-<? 		if ( $ctrl->varvalue('isanyitemsold') > 0 ) { ?>
-				<button type="button" onclick="setaction('confirmqtychange');">Konfirm dan bayar</button>
-<? 		} ?>
+			<table border="0" width="100%">
+			<tr>
+			<td>
+				<a href="#" onclick="setaction('back');" ><< Kembali</a>
+			</td>
+			<td align="right">
+				<button type="button" onclick="setaction('cancel');">Batal</button>
+	<? 		if ( $ctrl->varvalue('isanyitemsold') > 0 ) { ?>
+					<button type="button" onclick="setaction('confirmqtychange');">Konfirm dan bayar</button>
+	<? 		} ?>
+			</td>
+			</tr>
+			</table>
 <?		break;
 
 		case "pembayaran" : ?>
