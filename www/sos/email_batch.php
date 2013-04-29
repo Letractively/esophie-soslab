@@ -26,7 +26,7 @@
 			$mail->Username   = "victor@sophieparis.com"; 		// SMTP account username
 
 			// Mail Address
-			$mail->SetFrom('victor@sophieparis.com', 'SOS (NO REPLY)');
+			$mail->SetFrom('victor@sophieparis.com', 'Sophie Online Orders (NO REPLY)');
 			$mail->AddAddress( trim($rs->value('to')), trim($rs->value('toname')) );
 			if ( trim($rs->value('cc')) != '' )
 				$mail->AddCC(trim($rs->value('cc')));
@@ -40,10 +40,9 @@
 				<div style="width: 640px; font-family: Arial, Helvetica, sans-serif; font-size: 11px;">'
 				. $rs->value('body') . 
 				'<br><br>
-				Regards,<br><br>
-				<b>Sophie Martin Indonesia</b>
+				<b>Sophie Paris Indonesia</b>
 				</div>
-				<div align="left"><img src="images/logo.gif" style="height: 90px; width: 340px"></div><br>
+				<div align="left"><img src="images/logo.png" style="height: 53px; width: 333px"></div><br>
 				</body>';
 			$mail->Subject = $rs->value('subject');
 			$mail->MsgHTML($varBody);

@@ -1,5 +1,48 @@
 <?include "bcheaderleft.php";?>
-<div class="boxcon5" style="width:660px">
+
+<div class="title">New orders<a id="neworder">&nbsp;</a></div>
+<table class="dataview">
+	<tr>
+		<th width="20">&nbsp;</th>
+		<th width="100" align="left">Order #</th>
+		<th width="110" align="left">Date / Time</th>
+		<th width="230" align="left">Member</th>
+		<th width="80" align="right">Total</th>
+		<th width="100" align="right">Sisa Waktu</th>
+	</tr>
+	<tbody id="bodyneworders"></tbody>
+</table>
+
+<br>
+<div class="title">Orders in progress<a id="followup">&nbsp;</a></div>
+<table class="dataview">
+	<tr>
+		<th width="20">&nbsp;</th>
+		<th width="100" align="left">Order #</th>
+		<th width="110" align="left">Date / Time</th>
+		<th width="230" align="left">Member</th>
+		<th width="80" align="right">Total</th>
+		<th width="100" align="center">Status</th>
+	</tr>
+	<tbody id="bodyorderinprogress"></tbody>
+</table>
+
+<br>
+<div class="title">Orders to deliver<a id="deliverorder">&nbsp;</a></div>
+<table class="dataview">
+	<tr>
+		<th width="20">&nbsp;</th>
+		<th width="100" align="left">Order #</th>
+		<th width="110" align="left">Date / Time</th>
+		<th width="230" align="left">Member</th>
+		<th width="80" align="right">Total</th>
+		<th width="100" align="center">Status</th>
+	</tr>
+	<tbody id="bodypendingorders"></tbody>
+</table>
+
+<br><br>
+<div class="boxcon5" style="width:710px">
 	<center>
 	<table width="100%">
 		<tr>
@@ -17,47 +60,6 @@
 	</table>
 	</center>
 </div>
-<br><br>
-<div class="title">New Orders<a id="neworder">&nbsp;</a></div>
-<table class="dataview">
-	<tr>
-		<th width="20">&nbsp;</th>
-		<th width="100" align="left">Order #</th>
-		<th width="110" align="left">Date / Time</th>
-		<th width="180" align="left">Member</th>
-		<th width="80" align="right">Total</th>
-		<th width="100" align="right">Sisa Waktu</th>
-	</tr>
-	<tbody id="bodyneworders"></tbody>
-</table>
-
-<br>
-<div class="title">Orders to follow up<a id="followup">&nbsp;</a></div>
-<table class="dataview">
-	<tr>
-		<th width="20">&nbsp;</th>
-		<th width="100" align="left">Order #</th>
-		<th width="110" align="left">Date / Time</th>
-		<th width="180" align="left">Member</th>
-		<th width="80" align="right">Total</th>
-		<th width="100" align="center">Status</th>
-	</tr>
-	<tbody id="bodyorderinprogress"></tbody>
-</table>
-
-<br>
-<div class="title">Orders to deliver<a id="deliverorder">&nbsp;</a></div>
-<table class="dataview">
-	<tr>
-		<th width="20">&nbsp;</th>
-		<th width="100" align="left">Order #</th>
-		<th width="110" align="left">Date / Time</th>
-		<th width="180" align="left">Member</th>
-		<th width="80" align="right">Total</th>
-		<th width="100" align="center">Status</th>
-	</tr>
-	<tbody id="bodypendingorders"></tbody>
-</table>
 
 <script language="javascript">
 var oTime;

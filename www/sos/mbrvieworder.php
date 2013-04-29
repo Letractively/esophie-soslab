@@ -7,13 +7,7 @@
 			<div class="color<?=$ctrl->mbrmsg['color']?>"></div>
 			<?}?>
 		</div>
-		<div class="boxright3"><b><?=$ctrl->mbrmsg['title']?></b><br><?=$ctrl->mbrmsg['body']?></div>
-		<? if (isset($ctrl->mbrmsg['link1'])) { ?>
-		<div class="boxcon3-1">
-			<?if (isset($ctrl->mbrmsg['link1'])) {?><a href="<?=$ctrl->mbrmsg['link1']?>"><?=$ctrl->mbrmsg['link1label']?></a><?}?>
-			<?if (isset($ctrl->mbrmsg['link2'])) {?>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?=$ctrl->mbrmsg['link2']?>"><?=$ctrl->mbrmsg['link2label']?></a><?}?>
-		</div>
-		<? } ?>
+		<div class="boxright3"><em><?=$ctrl->mbrmsg['title']?></em><br><?=$ctrl->mbrmsg['body']?></div>
 	</div>
 	<? } ?>
 

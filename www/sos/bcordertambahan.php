@@ -79,7 +79,7 @@
 	</div>
 	
 	<div style="width:705px;text-align:right">
-		<button type="button" onclick="setaction('kembali');" style="width:80px;">Kembali</button>
+		<button type="button" class="back" onclick="setaction('kembali');" style="width:80px;">Kembali</button>
 		<button type="button" onclick="setaction('setuju');" style="width:80px;">Setuju</button>
 	</div>
 </div>
