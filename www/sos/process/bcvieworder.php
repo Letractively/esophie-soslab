@@ -32,11 +32,20 @@
 		var $purchid;
 		var $salesidsmi;
 		var $cancelcode;
+		var $sc;
 		
 		function run() 
 		{
 			parent::run();	
-
+		
+			$this->sc = "";
+			if ( isset($this->param['sc']) )
+				if ( $this->param['sc'] != '' )
+				{
+					$this->sc = $this->param["sc"];
+					$this->sc = str_replace(";","&",str_replace(":", "=", $this->sc)) ;
+				}
+			
 			if (!isset($this->param['salesid']) || $this->param['salesid'] == '')
 				$this->gotopage('onlineorder');
 				
@@ -53,7 +62,9 @@
 					$this->nextpage();
 					break;
 				case "delivered":	
-					$this->delivered();
+					// $this->delivered();
+					// SMI want if delivered the data order will disapprear from BC page 
+					$this->clearorder();
 					break;
 				case "clear":	
 					$this->clearorder();
@@ -216,7 +227,9 @@
 			switch($this->param['backpage'])
 			{
 				case '2' :
-					$this->gotopage('report2');
+					$searchvalue = $this->param['sc'];
+					$searchvalue = str_replace(";","&",str_replace(":", "=", $searchvalue));
+					$this->gotopage('report2', ($searchvalue == "" ? "" : $searchvalue . "&pageaction=search") );
 					break;
 				default:
 					$this->gotopage('onlineorder');

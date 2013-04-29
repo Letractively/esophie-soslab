@@ -1,5 +1,5 @@
 <?include "bcheader.php";?>
-<div class="boxcon4">
+<div class="boxcon4" >
 <div class="title">Search Orders History</div>
 <input type="hidden" id="sortby" name="sortby" value="<?=$ctrl->sortby?>">
 <input type="hidden" id="sortorder" name="sortorder" value="<?=$ctrl->sortorder?>">
@@ -13,9 +13,14 @@
 			<tr><td>Order BC #</td><td><input type="text" id="search_salesidsmi" name="search_salesidsmi" value="<?=$ctrl->value("search_salesidsmi")?>"></td></tr>
 			<tr><td>Status</td><td>
 				<select id="search_status" name="search_status">
-					<option value="" <?=($ctrl->value("search_status") == "" ? "selected" : "")?>>All
-					<option value="10" <?=($ctrl->value("search_status") == "10" ? "selected" : "")?>>Clear
-					<option value="0" <?=($ctrl->value("search_status") == "0" ? "selected" : "")?>>Cancelled
+					<option value="2,3,4,5,6,7,8,9,10,11" <?=($ctrl->value("search_status") == "2,3,4,5,6,7,8,9,10,11" ? "selected" : "")?>>All
+					<option value="2" <?=($ctrl->value("search_status") == "2" ? "selected" : "")?>>On Order
+					<option value="3,4" <?=($ctrl->value("search_status") == "3,4" ? "selected" : "")?>>Dalam Proses
+					<option value="5" <?=($ctrl->value("search_status") == "5" ? "selected" : "")?>>Revisi
+					<option value="6,7" <?=($ctrl->value("search_status") == "6,7" ? "selected" : "")?>>Belum Bayar
+					<option value="8" <?=($ctrl->value("search_status") == "8" ? "selected" : "")?>>Telah Bayar
+					<option value="9" <?=($ctrl->value("search_status") == "9" ? "selected" : "")?>>Siap
+					<option value="10" <?=($ctrl->value("search_status") == "10	" ? "selected" : "")?>>Delivered
 				</select>
 			</td></tr>
 		</table>
@@ -54,7 +59,7 @@
 		<th width="110" align="left"><a href="#" class="colname" onclick="setaction('sortby_orderdate');">Tanggal Order<?=$ctrl->sortimage('orderdate')?></a></th>
 		<th width="60" align="left"><a href="#" class="colname" onclick="setaction('sortby_kodemember');">Member<?=$ctrl->sortimage('kodemember')?></a></th>
 		<th width="120" align="left"><a href="#" class="colname" onclick="setaction('sortby_namamember');">Member Name<?=$ctrl->sortimage('namamember')?></a></th>
-		<th width="110" align="right"><a href="#" class="colname" onclick="setaction('sortby_totalbayar');">Total<?=$ctrl->sortimage('totalbayar')?></a></th>
+		<th width="110" align="right"><a href="#" class="colname" onclick="setaction('sortby_totalbayar');">Total Member<?=$ctrl->sortimage('totalbayar')?></a></th>
 		<th width="100" align="left"><a href="#" class="colname" onclick="setaction('sortby_salesidsmi');">Order BC<?=$ctrl->sortimage('salesidsmi')?></a></th>
 		<th width="100" align="left"><a href="#" class="colname" onclick="setaction('sortby_statusname');">Status<?=$ctrl->sortimage('statusname')?></a></th>
 	</tr>
@@ -66,12 +71,15 @@
 		{
 			echo $i++%2?'<tr class="pinkrow">':'<tr>';
 			echo '<td><div class="color' . $ctrl->colorstatus($item['status']) . '"></div></td>';			
-			echo '<td align="left"><a href="bcvieworder.php?backpage=2&salesid=' . $item['salesid'] .'">' . $item['salesid'] . '</a></td>';
+			echo '<td align="left"><a href="bcvieworder.php?backpage=2&salesid=' . $item['salesid'] . '&sc=' . $ctrl->searchcriteria .'">' . $item['salesid'] . '</a></td>';
 			echo '<td align="left">' . $item['orderdate']. '</td>';
 			echo '<td align="left">' . htmlspecialchars($item['kodemember']). '</td>';
 			echo '<td align="left">' . htmlspecialchars($item['namamember']). '</td>';
 			echo '<td align="right">' . $ctrl->valuenumber($item['totalbayar']) . '</td>';
-			echo '<td align="left"><a href="bcviewmyorder.php?backpage=2&purchid=' . $item['salesid'] .'">' . $item['salesidsmi'] . '</a></td>';
+			if ( strtolower($item['salesidsmi']) != "no order" )
+				echo '<td align="left"><a href="bcviewmyorder.php?backpage=2&purchid=' . $item['salesid'] .'">' . $item['salesidsmi'] . '</a></td>';
+			else
+			echo '<td align="left">No Order</td>';
 			//echo '<td align="left">' . htmlspecialchars($item['salesidsmi']). '</td>';
 			echo '<td align="left">' . htmlspecialchars($item['statusname']). '</td>';
 			echo '</tr>';

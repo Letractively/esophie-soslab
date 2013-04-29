@@ -35,8 +35,7 @@
 						$sql = 'select count(*) from salestable ';
 						$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
 						$sql.= ' and status < ' . $this->queryvalue($this->sysparam['salesstatus']['paid']);
-						$sql.= ' and salesid = ' . $this->queryvalue($this->salesid);
-						
+
 						if($this->db->executeScalar($sql)) $this->gotohomepage();		
 						
 						

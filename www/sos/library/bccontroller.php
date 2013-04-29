@@ -85,19 +85,20 @@
 					$ret = 'Order Baru';
 					break;
 				case $this->sysparam['salesstatus']['cancelled'] : 
-					$ret = 'Batal'; break; //'00';
+					$ret = 'Cancelled'; break; //'00';
 				case $this->sysparam['salesstatus']['bypassed'] : 
 				case $this->sysparam['salesstatus']['inprogress'] : 
 					$ret =  'Dalam Proses'; break; //'02';
 				case $this->sysparam['salesstatus']['edited'] :  
-					$ret =  'Revisi'; break; //'05';
+					$ret =  'Edited'; break; //'05';
 				case $this->sysparam['salesstatus']['validated'] : 
+					$ret = 'Waiting payment'; break; //'06';
 				case $this->sysparam['salesstatus']['confirmed'] : 
-					$ret = 'Belum Bayar'; break; //'06';
+					$ret = 'Payment confirmed'; break; //'06';
 				case $this->sysparam['salesstatus']['paid'] : 
-					$ret = 'Telah Bayar'; break; //'08'; 
+					$ret = 'Paid'; break; //'08'; 
 				case $this->sysparam['salesstatus']['ready'] : 
-					$ret = 'Siap'; break; //'09';
+					$ret = 'Ready for Pickup'; break; //'09';
 				case $this->sysparam['salesstatus']['delivered'] : 
 					$ret = 'Delivered'; break; //'10';
 				case $this->sysparam['salesstatus']['clear']:

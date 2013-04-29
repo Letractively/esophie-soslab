@@ -1,13 +1,19 @@
 <?include "mbrheader.php";?>
 <input type="hidden" id="edit" name="edit" value="<?=$ctrl->value("edit")?>">
-	<?if ($ctrl->pageview != 'orderedit' && $ctrl->pageview != 'orderconfirm') { ?>
+	<?if ($ctrl->pageview != 'orderedit' && $ctrl->pageview != 'orderconfirm' && $ctrl->pageview != 'pembayaran') { ?>
 	<div class="boxcon3">
 		<div class="boxleft3">
 			<?if ($ctrl->mbrmsg['color'] != '') {?>
 			<div class="color<?=$ctrl->mbrmsg['color']?>"></div>
 			<?}?>
 		</div>
-		<div class="boxright3"><em><?=$ctrl->mbrmsg['title']?></em><br><?=$ctrl->mbrmsg['body']?></div>
+		<div class="boxright3"><b><?=$ctrl->mbrmsg['title']?></b><br><?=$ctrl->mbrmsg['body']?></div>
+		<? if (isset($ctrl->mbrmsg['link1'])) { ?>
+		<div class="boxcon3-1">
+			<?if (isset($ctrl->mbrmsg['link1'])) {?><a href="<?=$ctrl->mbrmsg['link1']?>"><?=$ctrl->mbrmsg['link1label']?></a><?}?>
+			<?if (isset($ctrl->mbrmsg['link2'])) {?>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?=$ctrl->mbrmsg['link2']?>"><?=$ctrl->mbrmsg['link2label']?></a><?}?>
+		</div>
+		<? } ?>
 	</div>
 	<? } ?>
 
@@ -158,14 +164,19 @@
 	<div class="boxcon1">
 		<div class="boxleft1">Total Setelah Diskon</div><div class="boxright1-1"><?=$ctrl->valuenumber($ctrl->varvalue('totalorder')+$ctrl->varvalue('discount'));?></div>
 	</div>
+	<? if ($ctrl->statuscode == 1) { ?>
+	<div class="boxcon1">
+		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i></div>
+	</div>
+	<? } ?>	
 	<?if ($ctrl->varvalue('paymentmode') != '') { ?>
 	<div class="boxcon1">
 		<div class="boxleft1">Payment Charge (<?=$ctrl->varvalue('paymentname')?>)</div><div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('paymentcharge'));?></div>
 	</div>
-	<? } ?>
 	<div class="boxcon1">
 		<div class="boxleft1">Total Pembayaran</div><div class="boxright1-1"><?=$ctrl->valuenumber($ctrl->varvalue('totalbayar'));?></div>
 	</div>
+	<? } ?>
 <? 
 	switch ($ctrl->pageview) 
 	{ 
