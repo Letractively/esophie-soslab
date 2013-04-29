@@ -192,10 +192,11 @@ img.logo {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	width:330px;
-	height:66px;
+	height:53px;
 }
 
 button {
+	margin-top: 8px;
 	padding-bottom:2px;
 	border:1px solid #d4457c;
 	color:#ffffff;

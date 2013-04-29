@@ -12,7 +12,7 @@
 	<body>
 	<form id="frmmain" name="frmmain" action="<?=$ctrl->filename()?>" method="post">
 		<center>
-		<img src="images/logo.jpg" class="logo" alt="Sophie Online Shopping"/>
+		<img src="images/logo.png" class="logo" alt="Sophie Online Shopping"/>
 		<input type="hidden" id="pageaction" name="pageaction">		
 		<?include_once "bcmenu.php";?>
 		<div class="boxmain" style="width:1000px;padding-right:0px;">
