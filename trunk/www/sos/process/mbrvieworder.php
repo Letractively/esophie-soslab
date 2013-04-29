@@ -18,6 +18,7 @@
 		var $paymentmode;
 		var $totalbayar;
 		var $status;
+		var $statuscode;
 		var $orderdate;
 		var $createddate;
 		var $items;
@@ -135,6 +136,7 @@
 				$this->createddate 	= $this->valuedatetime($rs->value('createddate')); 
 				
 				$this->status 		= $rs->value('userstatus'); 
+				$this->statuscode 	= $rs->value('status'); 
 				
 				$sql = "select * from vw_salesline where salesid = " . $this->queryvalue($this->salesid);
 				
@@ -339,6 +341,7 @@
 							{
 								$this->errmsg[$itemid] = 'Item ' . $itemid . ' quantity harus lebih besar dari 0';									
 							}
+							/*
 							else
 							{
 								$sql = "exec sp_checkQuantity" . $this->queryvalue($itemid);
@@ -349,6 +352,7 @@
 									$this->errmsg[$itemid] = 'Item ' . $itemid . ' stock item tidak mencukupi';
 								}						
 							}
+							*/
 						}
 				}
 			}

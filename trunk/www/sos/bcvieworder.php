@@ -18,6 +18,7 @@
 		</div>
 	</div>
 </div>
+<input type="hidden" name="sc" id ="backpage" value="<?=$ctrl->value('sc')?>">
 <input type="hidden" name="backpage" id ="backpage" value="<?=$ctrl->value('backpage')?>">
 <input type="hidden" name="salesid" id ="salesid" value="<?=$ctrl->value('salesid')?>">
 	 
@@ -49,77 +50,122 @@
 	</div>
 </div>
 <div class="boxcon">
-	<div class="boxcon6" style="width:180px; margin-left:340px;float:left;">Stock</div>
+	<div class="boxcon6" style="width:190px; margin-left:325px;float:left;">Stock</div>
 	<div class="boxcon6" style="width:160px; margin-right:10px;float:right;">Total</div>
 </div>
-<table class="dataview">
-	<tr>
-		<th width="40" align="right">Kode</th>
-		<th width="150" align="left">Nama Barang</th>
-		<th width="60" align="right">Harga</th>
-		<th width="40" align="right">Jumlah</th>		
-		<th width="50" align="right">Sophie</th>
-		<th width="50" align="right">BC</th>		
-		<th width="50" align="right">Total</th>		
-		<th width="20" align="left">&nbsp;</th>		
-		<!--<th width="50" align="right">Order -</th>-->
-		<th width="80" align="right">Order MBR</th>
-		<th width="80" align="right">Order BC</th>		
-	</tr>
-	<?
-		if (is_array($ctrl->items))
-		{
-			$i=0;
-			foreach ($ctrl->items as $item)
+<table>
+<tr>
+<td>
+	<table class="dataview">
+		<tr>
+			<th width="40" align="right">Kode</th>
+			<th width="150" align="left">Nama Barang</th>
+			<th width="60" align="right">Harga</th>
+			<th width="40" align="right">Jumlah</th>	
+		</tr>
+		<?
+			if (is_array($ctrl->items))
 			{
-				echo $i++%2?"<tr class=\"pinkrow\">":"<tr>";
-				echo "<td align=\"right\">" . $item['itemid'] . "</td>";
-				echo "<td align=\"left\">" . htmlspecialchars($item['itemname']). "</td>";
-				echo "<td align=\"right\">" . $ctrl->valuenumber($item['price']) . "</td>";
-				echo "<td align=\"right\">" . $ctrl->valuenumber($item['salesqty']) . "</td>";				
-				echo "<td align=\"right\">" . $ctrl->valuenumber($item['purchqty']) . "</td>";
-				if ($ctrl->status == $ctrl->sysparam['salesstatus']['ordered']) 
+				$i=0;
+				foreach ($ctrl->items as $item)
 				{
-					?>
-					<td align="right">
-						<input type="hidden" name="itemid[]" id="itemid[]" value="<?=$item['itemid']?>">
-						<input type="textbox" name="itemqty[]" id="itemqty[]" value="<?=$item['qtybc']?>" maxlength="3" style="width:30px;text-align:right" onkeypress="refresh(event);" onblur="refreshLostFocus();">
-					</td>
-					<?					
-				} else {
-					echo "<td align=\"right\">" . $ctrl->valuenumber($item['qtybc']) . "</td>";
-				}				
-				$color = '';
-				if ($item['shortageqty'] != 0) $color = "color=\"FF0000\"";
-								
-				echo "<td align=\"right\">" . ($ctrl->valuenumber($item['purchqty']) + $ctrl->valuenumber($item['qtybc'])) . "</td>";
-				
-				if($ctrl->status == $ctrl->sysparam['salesstatus']['ordered'] ) { 	
-					if ($item['salesqty'] == $item['purchqty'] + $item['qtybc'])
+					echo $i++%2?"<tr class=\"pinkrow\" >":"<tr>";
+					echo "<td align=\"right\" height='25'>" . $item['itemid'] . "</td>";
+					echo "<td align=\"left\">" . htmlspecialchars($item['itemname']). "</td>";
+					echo "<td align=\"right\">" . $ctrl->valuenumber($item['price']) . "</td>";
+					echo "<td align=\"right\">" . $ctrl->valuenumber($item['salesqty']) . "</td>";		
+					echo "</tr>";
+				}
+			}
+			else
+			{
+				echo '<td colspan="10" align="center">no items</td>';
+			}
+		?>
+	</table>
+</td>
+<td>
+	<table class="dataview">
+		<tr>
+			<th width="50" align="right">Sophie</th>
+			<th width="50" align="right">BC</th>		
+			<th width="50" align="right">Total</th>
+			<th width="20" align="left">&nbsp;</th>
+		</tr>
+	<?
+			if (is_array($ctrl->items))
+			{
+				$i=0;
+				foreach ($ctrl->items as $item)
+				{
+					echo $i++%2?"<tr class=\"pinkrow\">":"<tr>";
+					echo "<td align=\"right\"  height='25'>" . $ctrl->valuenumber($item['purchqty']) . "</td>";
+					if ($ctrl->status == $ctrl->sysparam['salesstatus']['ordered']) 
 					{
-						echo '<td><img src="images/ok.gif"/></td>';
-					}
+						?>
+						<td align="right">
+							<input type="hidden" name="itemid[]" id="itemid[]" value="<?=$item['itemid']?>">
+							<input type="textbox" name="itemqty[]" id="itemqty[]" value="<?=$item['qtybc']?>" maxlength="3" style="width:30px;text-align:right" onkeypress="refresh(event);" onblur="refreshLostFocus();">
+						</td>
+						<?					
+					} else {
+						echo "<td align=\"right\">" . $ctrl->valuenumber($item['qtybc']) . "</td>";
+					}				
+					$color = '';
+					if ($item['shortageqty'] != 0) $color = "color=\"FF0000\"";
+									
+					echo "<td align=\"right\">" . ($ctrl->valuenumber($item['purchqty']) + $ctrl->valuenumber($item['qtybc'])) . "</td>";
+					
+					if($ctrl->status == $ctrl->sysparam['salesstatus']['ordered'] ) { 	
+						if ($item['salesqty'] == $item['purchqty'] + $item['qtybc'])
+						{
+							echo '<td><img src="images/ok.gif"/></td>';
+						}
+						else
+						{
+							echo '<td><img src="images/warning.gif"/></td>';
+						}
+					} 
 					else
 					{
-						echo '<td><img src="images/warning.gif"/></td>';
+						echo '<td>&nbsp;</td>';
 					}
-				} 
-				else
-				{
-					echo '<td>&nbsp;</td>';
+					echo "</tr>";
 				}
-				//echo "<td align=\"right\"><font " . $color . ">" . $ctrl->valuenumber($item['shortageqty']) . "</font></td>";
-
-				echo '<td align="right">' . $ctrl->valuenumber($item['totalordermember']) . '</td>';					
-				echo "<td align=\"right\">" . $ctrl->valuenumber($item['totalorderbc']) . "</td>";
-				echo "</tr>";
 			}
-		}
-		else
-		{
-			echo '<td colspan="10" align="center">no items</td>';
-		}
-	?>
+			else
+			{
+				echo '<td colspan="10" align="center">no items</td>';
+			}
+		?>
+	</table>
+</td>
+<td>
+	<table class="dataview">
+		<tr>
+			<th width="80" align="right">Order MBR</th>
+			<th width="80" align="right">Order BC</th>		
+		</tr>
+		<?
+			if (is_array($ctrl->items))
+			{
+				$i=0;
+				foreach ($ctrl->items as $item)
+				{
+					echo $i++%2?"<tr class=\"pinkrow\">":"<tr>";
+					echo '<td align="right"  height="25">' . $ctrl->valuenumber($item['totalordermember']) . '</td>';					
+					echo "<td align=\"right\">" . $ctrl->valuenumber($item['totalorderbc']) . "</td>";
+					echo "</tr>";
+				}
+			}
+			else
+			{
+				echo '<td colspan="10" align="center">no items</td>';
+			}
+		?>
+	</table>
+</td>
+</tr>
 </table>
 <br>
 <div class="boxcon">
@@ -157,7 +203,7 @@
 	</div>
 </div>
 <div style="width:703px;text-align:right">	
-	<button type="button" class="back" onclick="setaction('cancel');" style="width:80px;">Kembali</button>
+	<a href="#" onclick="setaction('cancel');">&lt&lt Kembali&nbsp;&nbsp;</a>
 	<?
 		switch ($ctrl->status)
 		{

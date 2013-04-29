@@ -15,7 +15,7 @@
 	$execute = new emailsmscontroller();
 			
 	$query = new emailsmscontroller();
-	$sql = "select [noseq], isnull(phone,'') as phone, Replace(message,' ','%20') as message from smsTable with (NOLOCK) where sendDate is null";
+	$sql = "select [noseq], isnull(phone,'') as phone, Replace(message,' ','%20') as message from smsTable with (NOLOCK) where sendDate is null and isnull(retrynumber,0) < 3";
 	$rs	= $query->db->query($sql);
 	while ( $rs->fetch() )
 	{
@@ -55,6 +55,11 @@
 				if ( $status == '0' )
 				{
 					$sqlUpdate = "update smsTable set sendDate=getdate(), messageid='" . $msgid . "' where noseq =" . $rs->value('noseq');
+					$execute->db->execute($sqlUpdate);
+				}
+				else
+				{
+					$sqlUpdate = "update smsTable set retrynumber = isnull(retrynumber,0) + 1 where noseq =" . $rs->value('noseq');
 					$execute->db->execute($sqlUpdate);
 				}
 				
