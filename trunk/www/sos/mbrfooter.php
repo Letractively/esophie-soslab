@@ -37,6 +37,7 @@
 				<a href="mbrdisclaimer.php">Terms and Conditions</a>
 			<? } ?>			
 			</div>
+			<div>Contact Customer Care: +62 01234567 | Sen-Jum 08:00-17:00</div>
 		</div>
 		</center>
 	</form>

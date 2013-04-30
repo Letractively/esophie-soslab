@@ -203,7 +203,7 @@
 	</div>
 </div>
 <div style="width:703px;text-align:right">	
-	<a href="#" onclick="setaction('cancel');">&lt&lt Kembali&nbsp;&nbsp;</a>
+	<button type="button" class="back" onclick="setaction('cancel');" style="width:80px;">Kembali</button>
 	<?
 		switch ($ctrl->status)
 		{
