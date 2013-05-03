@@ -56,26 +56,45 @@
 			$day = 0;
 			$month = 0;
 			$year = 0;
+			$hour = 0;
+			$minute = 0;
+			$second = 0;
+			
 			$set = false;
 			$ret = "null";
 			
 			switch(strtolower($format))
 			{
 				case "dmy":
-					list($day, $month, $year) = split('[/.-]', $value);
+					if (strpos($value,' ')) 
+						list($day, $month, $year, $hour, $minute, $second) = split('[ :/.-]', $value);
+					else
+						list($day, $month, $year) = split('[ :/.-]', $value);						
+					//list($day, $month, $year) = split('[/.-]', $value);
 					$set = true;
 					break;
 				case "mdy":
-					list($month, $day, $year) = split('[/.-]', $value);
+					if (strpos($value,' ')) 
+						list($month, $day, $year, $hour, $minute, $second) = split('[ :/.-]', $value);
+					else
+						list($month, $day, $year) = split('[ :/.-]', $value);
+					//list($month, $day, $year) = split('[/.-]', $value);
 					$set = true;
 					break;					
 			}
 			if ($set)
 			{
-				$ret = "'" . $year . "-" . substr("0".$month,-2) . "-" . substr("0".$day,-2) . "'";
+				if (strpos($value,' ')) 
+				{
+					$ret = "'" . $year . "-" . substr("0".$month,-2) . "-" . substr("0".$day,-2) . " ";
+					$ret.= substr("0".$hour,-2) . ":" . substr("0".$minute,-2) . ":" . substr("0".$second,-2) . "'" ;
+				}
+				else
+					$ret = "'" . $year . "-" . substr("0".$month,-2) . "-" . substr("0".$day,-2) . "'";
 			}
 			return $ret;
 		}
+		
 		function log($value)
 		{
 			$handle = fopen($this->sysparam['log']['file'], "a");

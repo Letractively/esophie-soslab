@@ -1,10 +1,11 @@
 <?include "bcheaderright.php";?>
 <div class="boxcon">
+	<input type="hidden" name="sc" id ="backpage" value="<?=$ctrl->value('sc')?>">
 	<input type="hidden" name="backpage" id ="backpage" value="<?=$ctrl->value('backpage')?>">
 	<input type="hidden" name="purchid" id ="purchid" value="<?=$ctrl->value('purchid')?>">
 	<div class="boxcon" style="border-bottom:1px solid black;">
 		<div class="boxleft" style="width:380px">
-			<a href="bconlineorder.php">Online Orders</a> > Order #<?=$ctrl->value('purchid')?> > Tambahan Order BC
+			<a href="bconlineorder.php">Online Orders</a> > <a href="#" onclick="setaction('bcorder');"> Order #<?=$ctrl->value('purchid')?></a> > Tambahan Order BC
 		</div>
 		<div class="boxright" style="width:300px;padding-right:10px;">
 			<div style="float:right;padding-left:7px"><?=$ctrl->colorstatuslabel($ctrl->status)?></div>
@@ -77,7 +78,7 @@
 		</div>
 	</div>
 	<div style="width:695px;text-align:right">
-		<button type="button" class="back" onclick="setaction('cancel');" style="width:80px;">Kembali</button>
+		<a href="#" onclick="setaction('cancel');">&lt&lt Kembali&nbsp;&nbsp;</a>
 	</div>
 </div>
 <?include "bcfooterright.php";?>

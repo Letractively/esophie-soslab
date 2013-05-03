@@ -27,6 +27,7 @@
 				case 'myorder'			: header('location:bcmyorder.php' . ($param != '' ? '?' . $param : '')); break;
 				case 'vieworder'		: header('location:bcvieworder.php' . ($param != '' ? '?' . $param : '')); break;
 				case 'report2'			: header('location:bcreport02.php' . ($param != '' ? '?' . $param : '')); break;
+				case 'report3'			: header('location:bcreport03.php' . ($param != '' ? '?' . $param : '')); break;
 			}
 		}
 		

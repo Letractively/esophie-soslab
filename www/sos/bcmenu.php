@@ -9,7 +9,7 @@
 	</div>
 	<div class="boxright" style="width:430px;">
 		<div class="boxmenu2"><a href="bclogout.php" class="menuselect">LOGOUT</a></div>		
-		<div class="boxmenu2" style="padding-right:10px;"><img src="images/menuright.jpg"/></div>		
+		<div class="boxmenu2" style="padding-right:10px;">&nbsp;&nbsp;|</div>		
 		<div class="boxmenu2">BC #<?=$ctrl->userid()?></div>
 	</div>
 </div>

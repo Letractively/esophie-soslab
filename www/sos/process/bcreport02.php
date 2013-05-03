@@ -55,20 +55,25 @@
 			}
 			if ( isset($this->param["search_orderdate_from"]) && trim($this->param["search_orderdate_from"]) != "")
 			{
-				$sql.= " and orderdate >= " . $this->querydatevalue($this->param["search_orderdate_from"]);
+				$sql.= " and DATEADD(dd, DATEDIFF(dd, 0, orderdate), 0) >= " . $this->querydatevalue($this->param["search_orderdate_from"]);
 				$this->searchcriteria .= ($this->searchcriteria != "" ? ";" : "") . "search_orderdate_from:". $this->param["search_orderdate_from"];
 			}
 			if ( isset($this->param["search_orderdate_to"]) && trim($this->param["search_orderdate_to"]) != "")
 			{
-				$sql.= " and orderdate <= " . $this->querydatevalue($this->param["search_orderdate_to"]);
+				$sql.= " and DATEADD(dd, DATEDIFF(dd, 0, orderdate), 0) <= " . $this->querydatevalue($this->param["search_orderdate_to"]);
 				$this->searchcriteria .= ($this->searchcriteria != "" ? ";" : "") . "search_orderdate_to:". $this->param["search_orderdate_to"];
 			}
 			if ( $this->action == "none" )
 			{
 				$sql.= " and orderdate >= DateAdd(Day,-7,DATEADD(dd, DATEDIFF(dd, 0, getdate()), 0))";
+				$date0 = strtotime ( '+0 days' ) ;
+				$date0 = date ( 'd/m/Y' , $date0 );
 				$date7 = strtotime ( '-7 days' ) ;
 				$date7 = date ( 'd/m/Y' , $date7 );
 				$this->searchcriteria .= ($this->searchcriteria != "" ? ";" : "") . "search_orderdate_from:" . $date7;
+				
+				$this->param['search_orderdate_from'] = $date7 ;
+				$this->param['search_orderdate_to'] = $date0 ;
 			}
 			
 			if ( $this->sortby == "" )	
@@ -84,8 +89,6 @@
 			
 			while($rs->fetch())
 			{	
-				for( $i=0; $i<5;$i ++ )
-				{
 				$this->items[$count]['salesid'] = $rs->value('salesid');
 				$this->items[$count]['orderdate'] = (is_null($rs->value('orderdate')) ? '-' : $this->valuedatetime($rs->value('orderdate')));
 				$this->items[$count]['kodemember'] = $rs->value('kodemember');
@@ -94,8 +97,7 @@
 				$this->items[$count]['salesidsmi'] = $rs->value('salesidsmi');
 				$this->items[$count]['statusname'] = $rs->value('statusname');
 				$this->items[$count]['status'] = $rs->value('status');
-				$count++;				
-				}
+				$count++;
 			}
 			$rs->close();
 		}

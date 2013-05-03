@@ -3,7 +3,7 @@
 
 <div class="boxcon" style="border-bottom:1px solid black;">
 	<div class="boxleft" style="width:480px">
-		Online Orders > Order #<?=$ctrl->value('salesid')?> > Tambahan Order BC
+		<a href="bconlineorder.php" >Online Orders</a> > <a href="#" onclick="setaction('bcorder');" > Order #<?=$ctrl->value('salesid')?> </a> > Tambahan Order BC
 	</div>
 	<div class="boxright" style="width:200px;padding-right:10px;">
 		<div style="float:right;padding-left:7px"><?=$ctrl->colorstatuslabel($ctrl->status)?></div>

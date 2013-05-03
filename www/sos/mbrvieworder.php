@@ -1,6 +1,6 @@
 <?include "mbrheader.php";?>
 <input type="hidden" id="edit" name="edit" value="<?=$ctrl->value("edit")?>">
-	<?if ($ctrl->pageview != 'orderedit' && $ctrl->pageview != 'orderconfirm' && $ctrl->pageview != 'pembayaran') { ?>
+	<?if ($ctrl->pageview != 'orderedit' && $ctrl->pageview != 'orderconfirm') { ?>
 	<div class="boxcon3">
 		<div class="boxleft3">
 			<?if ($ctrl->mbrmsg['color'] != '') {?>
@@ -8,7 +8,7 @@
 			<?}?>
 		</div>
 		<div class="boxright3"><b><?=$ctrl->mbrmsg['title']?></b><br><?=$ctrl->mbrmsg['body']?></div>
-		<? if (isset($ctrl->mbrmsg['link1'])) { ?>
+		<? if (isset($ctrl->mbrmsg['link1']) && $ctrl->pageview != 'pembayaran') { ?>
 		<div class="boxcon3-1">
 			<?if (isset($ctrl->mbrmsg['link1'])) {?><a href="<?=$ctrl->mbrmsg['link1']?>"><?=$ctrl->mbrmsg['link1label']?></a><?}?>
 			<?if (isset($ctrl->mbrmsg['link2'])) {?>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?=$ctrl->mbrmsg['link2']?>"><?=$ctrl->mbrmsg['link2label']?></a><?}?>
@@ -169,7 +169,7 @@
 		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i></div>
 	</div>
 	<? } ?>	
-	<?if ($ctrl->varvalue('paymentmode') != '') { ?>
+	<?if ($ctrl->varvalue('paymentmode') != '' && $ctrl->statuscode > 1) { ?>
 	<div class="boxcon1">
 		<div class="boxleft1">Payment Charge (<?=$ctrl->varvalue('paymentname')?>)</div><div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('paymentcharge'));?></div>
 	</div>
@@ -181,7 +181,7 @@
 	switch ($ctrl->pageview) 
 	{ 
 		case "orderedit" : ?>
-			<button type="button" onclick="setaction('neworder');">Order Baru</button>
+			<button type="button" onclick="setaction('neworder');" class="back">Order Baru</button>
 			<button type="button" onclick="setaction('confirmorder');">Konfirmasi</button>
 <?		break;
 
@@ -189,7 +189,7 @@
 			<table border="0" width="100%">
 			<tr>
 			<td>
-				<a href="#" onclick="setaction('back');" ><< Kembali</a>
+				<button type="button" onclick="setaction('back');" class="back">Kembali</button>
 			</td>
 			<td align="right">
 				<button type="button" onclick="setaction('sendordertobc');" >Kirim ke BC</button>
@@ -202,12 +202,12 @@
 			<table border="0" width="100%">
 			<tr>
 			<td>
-				<a href="#" onclick="setaction('back');" ><< Kembali</a>
+				<button type="button" onclick="setaction('back');" class="back">Kembali</button>
 			</td>
 			<td align="right">
 				<button type="button" onclick="setaction('cancel');">Batal</button>
 	<? 		if ( $ctrl->varvalue('isanyitemsold') > 0 ) { ?>
-					<button type="button" onclick="setaction('confirmqtychange');">Konfirm dan bayar</button>
+					<button type="button" onclick="setaction('confirmqtychange');" class="buttonbig" >Konfirm dan bayar</button>
 	<? 		} ?>
 			</td>
 			</tr>
@@ -215,8 +215,18 @@
 <?		break;
 
 		case "pembayaran" : ?>
-			<div class="errmsg"style="text-align:center;padding-left:9px">Waktu anda tinggal <? echo $ctrl->varvalue("timeleft"); ?> untuk melakukan pembayaran online</div><br>
-			<button type="button" onclick="setaction('pembayaran');">Bayar</button>
+			<div class="boxerr1" style="text-align:center;padding-left:9px">Waktu anda tinggal <? echo $ctrl->varvalue("timeleft"); ?> untuk melakukan pembayaran online</div><br>
+			<table border="0" width="100%">
+			<tr>
+			<td>
+				<button type="button" onclick="setaction('back');" class="back" >Kembali</button>
+			</td>
+			<td align="right">
+				<button type="button" onclick="setaction('pembayaran');">Bayar</button>
+			</td>
+			</tr>
+			</table>
+
 <?		break; 		
 	}
 ?>	

@@ -15,4 +15,4 @@
 		<img src="images/logo.png" class="logo" alt="Sophie Online Shopping"/>
 		<input type="hidden" id="pageaction" name="pageaction">		
 		<?include_once "bcmenu.php";?>
-		<div class="boxmain" style="width:1000px;padding-right:0px;">
+		<div class="boxmain" <? if ($ctrl->filename() == 'index.php') { echo 'style="width:325px;padding-right:0px;"'; } else { echo 'style="width:1000px;padding-right:0px;"';} ?> >

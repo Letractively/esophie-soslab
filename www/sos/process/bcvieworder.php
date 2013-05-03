@@ -33,6 +33,7 @@
 		var $salesidsmi;
 		var $cancelcode;
 		var $sc;
+		var $insufficientitems;
 		
 		function run() 
 		{
@@ -129,7 +130,8 @@
 					$this->totalorderedited		= 0;
 					$this->discount 			= 0;
 					$this->totalbayar 			= 0;
-				}				
+				}
+				$this->insufficientitems = '';
 				while ($rs1->fetch()) 
 				{
 					$this->items[$i]['itemid'] 				= $rs1->value('itemid');
@@ -148,6 +150,9 @@
 					$this->items[$i]['shortageqty'] 		= $rs1->value('shortageqty');
 					$this->items[$i]['totalorderbc'] 		= $rs1->value('totalorderbc');					
 					$this->items[$i]['totalbayarbc'] 		= $rs1->value('totalbayarbc');
+					
+					if ($this->items[$i]['shortageqty'])
+						$this->insufficientitems .= ($this->insufficientitems?', ':'') . $this->items[$i]['itemid'] ;
 					
 					if ($this->items[$i]['salesqty'] > $this->items[$i]['purchqty'] + $this->items[$i]['qtybc'])
 					{
@@ -185,12 +190,13 @@
 
 		function createPurchTable()
 		{			
-			$sql = "if not exists(select purchid from PurchTable where PurchId = " . $this->queryvalue($this->param['salesid']) . ")";
+			$this->updatePurchLine();
+
+			$sql = "if ( not exists(select purchid from PurchTable where PurchId = " . $this->queryvalue($this->param['salesid']) . ") ";
+			$sql.= "and exists(select top 1 purchid from Purchline where PurchId = " . $this->queryvalue($this->param['salesid']) . ") ) ";
 			$sql.= " insert into PurchTable (purchid, kodebc, orderdate, status) values (" . $this->queryvalue($this->param['salesid']);
 			$sql.= "," . $this->queryvalue($this->userid()) . ",getdate(),1)" ;
-			$this->db->execute($sql);
-			
-			$this->updatePurchLine();
+			$this->db->execute($sql);			
 		}
 		
 		function updatePurchLine()
@@ -209,7 +215,7 @@
 			{
 				$qty = is_numeric($this->param["itemqty"][$i]) ? $this->param["itemqty"][$i] : "0";
 				
-				if ( $qty > 0 )
+				if ( $qty >= 0 )
 				{
 					$sql = "update salesline set qtybc = case when " . $qty ;
 					$sql.= " > qty then qty else " . $qty . " end ";
@@ -230,6 +236,11 @@
 					$searchvalue = $this->param['sc'];
 					$searchvalue = str_replace(";","&",str_replace(":", "=", $searchvalue));
 					$this->gotopage('report2', ($searchvalue == "" ? "" : $searchvalue . "&pageaction=search") );
+					break;
+				case '3' :
+					$searchvalue = $this->param['sc'];
+					$searchvalue = str_replace(";","&",str_replace(":", "=", $searchvalue));
+					$this->gotopage('report3', ($searchvalue == "" ? "" : $searchvalue . "&pageaction=search") );
 					break;
 				default:
 					$this->gotopage('onlineorder');

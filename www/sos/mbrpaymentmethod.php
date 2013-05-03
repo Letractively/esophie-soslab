@@ -45,7 +45,7 @@
 		?>
 	</div>
 	<br>
-	<button type="button" onclick="setaction('back');" style="width:80px">Kembali</button>
+	<button type="button" onclick="setaction('back');" class="back">Kembali</button>
 	<button type="button" onclick="setaction('confirm');" style="width:80px">Validasi</button>
 </center>
 <?include "mbrfooter.php";?>

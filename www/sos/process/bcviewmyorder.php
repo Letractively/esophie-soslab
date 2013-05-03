@@ -25,6 +25,9 @@
 				case "cancel":
 					$this->cancel();
 					break;
+				case "bcorder":
+					$this->bcorder();
+					break;
 			}
 			$this->purchid = $this->param['purchid'];
 			$this->loaddata();
@@ -79,13 +82,26 @@
 					$this->gotopage('vieworder','salesid='.urlencode($this->param['purchid']));
 					break;
 				case '2' :
-					$this->gotopage('report2');
+					$searchvalue = $this->param['sc'];
+					$searchvalue = str_replace(";","&",str_replace(":", "=", $searchvalue));
+					$this->gotopage('report2', ($searchvalue == "" ? "" : $searchvalue . "&pageaction=search") );
+					break;
+				case '3' :
+					$searchvalue = $this->param['sc'];
+					$searchvalue = str_replace(";","&",str_replace(":", "=", $searchvalue));
+					$this->gotopage('report3', ($searchvalue == "" ? "" : $searchvalue . "&pageaction=search") );
 					break;
 				default:
 					$this->gotopage('onlineorder');
 			}
 			
 		}
+		
+		function bcorder()
+		{
+			$this->gotopage('vieworder', 'salesid='.$this->param['purchid']);
+		}
+
 
 	}
 ?>

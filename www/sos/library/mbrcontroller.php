@@ -122,7 +122,20 @@
 					case $this->sysparam['salesstatus']['inprogress'] :
 						$this->mbrmsg['title'] = 'Order #' . $this->salesid . ' dikirim ke BC untuk di validasi...';  
 						$this->mbrmsg['body'] = 'Validasi order anda sedang diproses oleh BC #' . $rs->value('kodebc') . '.';
-						$this->mbrmsg['body'].= ' Anda akan menerima confirmation order dalam waktu 30-60 menit...';
+						$this->mbrmsg['body'].= ' Anda akan menerima confirmation order ';
+						
+						$todaydate = date_parse(date('Y-m-d'));
+						$maxvalidate = date_parse($rs->value('maxvalidatedate'));
+						
+						if ($maxvalidate['year'] == $todaydate['year'] &&
+						    $maxvalidate['month'] == $todaydate['month'] &&
+							$maxvalidate['day'] == $todaydate['day'])
+						{
+							$this->mbrmsg['body'].= 'dalam waktu 30-60 menit...';
+						} else {
+							$this->mbrmsg['body'].= ' besok sebelum jam ' . $maxvalidate['hour'] .':'. $maxvalidate['minute'];
+						}
+						
 						break;
 						
 					case $this->sysparam['salesstatus']['edited'] : 
@@ -284,12 +297,13 @@
 				case $this->sysparam['salesstatus']['edited'] :  
 					$ret =  'Revisi'; break; //'05';
 				case $this->sysparam['salesstatus']['validated'] : 
-				case $this->sysparam['salesstatus']['confirmed'] : 
 					$ret = 'Validasi BC'; break; //'06';
+				case $this->sysparam['salesstatus']['confirmed'] : 
+					$ret = 'Sudah bayar'; break; //'06';
 				case $this->sysparam['salesstatus']['paid'] : 
 					$ret = 'Telah Bayar'; break; //'08'; 
 				case $this->sysparam['salesstatus']['ready'] : 
-					$ret = 'Siap'; break; //'09';
+					$ret = 'Siap diambil'; break; //'09';
 				case $this->sysparam['salesstatus']['delivered'] : 
 					$ret = 'Delivered'; break; //'10';
 			}

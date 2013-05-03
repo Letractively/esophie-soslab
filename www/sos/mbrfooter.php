@@ -5,10 +5,34 @@
 				<a href="mbrviewhistory.php">Online Orders</a>
 			<? } ?>
 			&nbsp;&nbsp;|&nbsp;&nbsp; 
-			<?if ($ctrl->filename() == 'mbrcekdata.php' || $ctrl->filename() == 'mbrpilihitem.php' || $ctrl->filename() == 'mbrordercheck.php' ) { ?>
+			<?if ($ctrl->filename() == 'mbrcekdata.php' || $ctrl->filename() == 'mbrpilihitem.php' || $ctrl->filename() == 'mbrordercheck.php' || $ctrl->filename() == 'mbrpaymentconfirm.php' ) { ?>
 				Pesan Online 
 			<? } else { 
-				if ( isset($ctrl->statuscode) )
+				if ($ctrl->filename() == 'mbrviewhistory.php') 
+				{
+					if ( isset($ctrl->lastorderstatus) )
+					{
+						if ( $ctrl->lastorderstatus >= 1 && $ctrl->lastorderstatus <= 6 )
+						{
+			?>
+							Pesan Online
+			<?
+						}
+						else
+						{
+			?>
+							<a href="mbrpilihitem.php">Pesan Online</a>
+			<?
+						}
+					}
+					else
+					{
+			?>
+						Pesan Online
+			<?
+					}
+				}
+				else if ( isset($ctrl->statuscode) )
 				{
 					if ( $ctrl->statuscode == "1" )
 					{

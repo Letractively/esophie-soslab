@@ -10,5 +10,5 @@
 		</div>
 	<? } ?>	
 	<!--<button type="button" onclick="setaction('back');" style="width:60px;">Back</button>-->
-	<button type="reset" style="width:60px;" onclick="setaction('reset');">Reset</button>&nbsp;<button type="button" onclick="setaction('save');" style="width:60px;">OK</button>	
+	<button type="reset" style="width:60px;" onclick="setaction('reset');" class="back">Reset</button>&nbsp;<button type="button" onclick="setaction('save');" style="width:60px;">OK</button>	
 <?include "mbrfooter.php";?>

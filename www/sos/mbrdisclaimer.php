@@ -1,7 +1,7 @@
 <?include "mbrheader.php";?>
-	<p>Selamat datang di website Sophie Online Shopping.<br>
+	<p>Selamat datang di website <font class="fontpink">Sophie Online Shopping.</font><br>
 	Sebelum anda bisa melakukan order online, <br>
-	Persyaratan dibawah ini harus anda setujui terlebih dahulu:</p>
+	<font class="fontpink">Persyaratan</font> dibawah ini harus anda setujui terlebih dahulu:</p>
 	
 	<p><?=$ctrl->varvalue("disclaimer")?></p>
 	
