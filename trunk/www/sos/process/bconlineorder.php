@@ -106,14 +106,15 @@
 				$i=0;
 				foreach ($this->neworders as $orders)
 				{
-					$ret.= $i++%2?"<tr class=\"pinkrow\">":"<tr>";
+					$ret.= $i%2?"<tr class=\"pinkrow\">":"<tr>";
 					$ret.= '<td align="center"><a href="bcvieworder.php?backpage=1&salesid=' . urlencode($orders['salesid']) . '"><div class="color' . $this->colorstatus($orders['statuscode']) . '"></a></td>';
-					$ret.= '<td align="left"><a href="bcvieworder.php?backpage=1&salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';
+					$ret.= '<td align="left"><a ' . ($i%2?'class="grid"':'') . ' href="bcvieworder.php?backpage=1&salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';
 					$ret.= '<td align="left">' . $orders['orderdate'] . '</td>';
 					$ret.= '<td align="left">' . $orders['member'] . '</td>';
 					$ret.= '<td align="right">' . $this->valuenumber($orders['totalbayar']) . '</td>';
 					$ret.= '<td align="right">' . $orders['timeleft'] . '</td>';
 					$ret.= '</tr>';
+					$i++;
 				}
 			} else {
 				$ret.= '<tr><td colspan="6" align="center">no new order</td></tr>';
@@ -129,9 +130,9 @@
 				$i=0;
 				foreach ($this->orderstofollowup as $orders)
 				{
-					$ret.= $i++%2?"<tr class=\"pinkrow\">":"<tr>";		
+					$ret.= $i%2?"<tr class=\"pinkrow\">":"<tr>";		
 					$ret.= '<td align="center"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '"><div class="color' . $this->colorstatus($orders['statuscode']) . '"></a></td>';
-					$ret.= '<td align="left"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';
+					$ret.= '<td align="left"><a ' . ($i%2?'class="grid"':'') . ' href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';
 					$ret.= "<td align=\"left\">" . $orders['orderdate'] . "</td>";
 					$ret.= "<td align=\"left\">" . $orders['member'] . "</td>";
 					$ret.= "<td align=\"right\">" . $this->valuenumber($orders['totalbayar']) . "</td>";
@@ -142,6 +143,8 @@
 					else
 						$ret.= "<td align=\"center\" class=\"green\">" . $orders['userstatus'] . "</td>";
 					$ret.= "</tr>";
+					
+					$i++;
 				}
 			} else {
 				$ret.= '<tr><td colspan="6" align="center">no order to follow up</td></tr>';
@@ -157,9 +160,9 @@
 				$i=0;
 				foreach ($this->orderstodeliver as $orders)
 				{
-					$ret.= $i++%2?"<tr class=\"pinkrow\">":"<tr>";
+					$ret.= $i%2?"<tr class=\"pinkrow\">":"<tr>";
 					$ret.= '<td align="center"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '"><div class="color' . $this->colorstatus($orders['statuscode']) . '"></a></td>';
-					$ret.= '<td align="left"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';				
+					$ret.= '<td align="left"><a ' . ($i%2?'class="grid"':'') . ' href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';				
 					$ret.= "<td align=\"left\">" . $orders['orderdate'] . "</td>";
 					$ret.= "<td align=\"left\">" . $orders['member'] . "</td>";
 					$ret.= "<td align=\"right\">" . $this->valuenumber($orders['totalbayar']) . "</td>";
@@ -171,6 +174,7 @@
 						$ret.= "<td align=\"center\" class=\"green\">" . $orders['userstatus'] . "</td>";
 						
 					$ret.= "</tr>";
+					$i++;
 				}
 			} else {
 				$ret.= '<tr><td colspan="6" align="center">no order to deliver</td></tr>';

@@ -69,9 +69,9 @@
 		$i=0;
 		foreach ($ctrl->items as $item)
 		{
-			echo $i++%2?'<tr class="pinkrow">':'<tr>';
+			echo $i%2?'<tr class="pinkrow">':'<tr>';
 			echo '<td><div class="color' . $ctrl->colorstatus($item['status']) . '"></div></td>';			
-			echo '<td align="left"><a href="bcvieworder.php?backpage=2&salesid=' . $item['salesid'] . '&sc=' . $ctrl->searchcriteria .'">' . $item['salesid'] . '</a></td>';
+			echo '<td align="left"><a ' . ($i%2?'class="grid"':'') . ' href="bcvieworder.php?backpage=2&salesid=' . $item['salesid'] . '&sc=' . $ctrl->searchcriteria .'">' . $item['salesid'] . '</a></td>';
 			echo '<td align="left">' . $item['orderdate']. '</td>';
 			echo '<td align="left">' . htmlspecialchars($item['kodemember']). '</td>';
 			echo '<td align="left">' . htmlspecialchars($item['namamember']). '</td>';
@@ -79,10 +79,11 @@
 			if ( strtolower($item['salesidsmi']) != "no order" )
 				echo '<td align="left"><a href="bcviewmyorder.php?backpage=2&purchid=' . $item['salesid'] .'">' . $item['salesidsmi'] . '</a></td>';
 			else
-			echo '<td align="left">No Order</td>';
+				echo '<td align="left">No Order</td>';
 			//echo '<td align="left">' . htmlspecialchars($item['salesidsmi']). '</td>';
 			echo '<td align="left">' . htmlspecialchars($item['statusname']). '</td>';
 			echo '</tr>';
+			$i++;
 		}
 	}
 	else

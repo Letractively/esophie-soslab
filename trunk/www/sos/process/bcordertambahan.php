@@ -26,6 +26,9 @@
 				case 'setuju':
 					$this->nextpage();
 					break;
+				case 'bcorder':
+					$this->bcorder();
+					break;
 			}
 			$this->loaddata();
 		}		
@@ -78,6 +81,11 @@
 		{
 			$this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['inprogress']);
 			$this->gotopage('onlineorder');
+		}
+		
+		function bcorder()
+		{
+			$this->gotopage('vieworder', 'salesid='.$this->param['salesid']);
 		}
 		
 		function kembali()

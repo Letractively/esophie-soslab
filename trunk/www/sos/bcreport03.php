@@ -63,6 +63,7 @@
 
 <table class="dataview">
 	<tr>
+		<th>&nbsp;</th>
 		<th width="100" align="left"><a href="#" class="colname" onclick="setaction('sortby_salesid');">Order #<?=$ctrl->sortimage('salesid')?></a></th>
 		<th width="110" align="left"><a href="#" class="colname" onclick="setaction('sortby_paiddate');">Tgl Bayar<?=$ctrl->sortimage('paiddate')?></a></th>
 		<th width="70" align="left"><a href="#" class="colname" onclick="setaction('sortby_kodemember');">Member #<?=$ctrl->sortimage('kodemember')?></a></th>
@@ -80,18 +81,22 @@
 		$i=0;
 		foreach ($ctrl->items as $item)
 		{
-			echo $i++%2?"<tr class=\"pinkrow\">":"<tr>";
-			echo "<td align=\"left\">" . $item['salesid'] . "</td>";
-			echo "<td align=\"left\">" . $item['paiddate']. "</td>";
-			echo "<td align=\"left\">" . htmlspecialchars($item['kodemember']). "</td>";
-			//echo "<td align=\"left\">" . htmlspecialchars($item['namamember']). "</td>";
-			echo "<td align=\"right\">" . $ctrl->valuenumber($item['totalbayarmbr']) . "</td>";
-			echo "<td align=\"right\">" . $ctrl->valuenumber($item['totalbayarbc']) . "</td>";
-			//echo "<td align=\"right\">" . $ctrl->valuenumber($item['paymentcharge']) . "</td>";
-			echo "<td align=\"left\">" . htmlspecialchars($item['salesidsmi']). "</td>";			
-			echo "<td align=\"right\">" . $ctrl->valuenumber($item['kreditbc']) . "</td>";
-			echo "<td align=\"left\">" . htmlspecialchars($item['statusname']). "</td>";
-			echo "</tr>";
+			echo $i%2?'<tr class="pinkrow">':'<tr>';
+			echo '<td><div class="color' . $ctrl->colorstatus($item['status']) . '"></div></td>';
+			echo '<td align="left"><a ' . ($i%2?'class="grid"':'') . ' href="bcvieworder.php?backpage=3&salesid=' . $item['salesid'] . '&sc=' . $ctrl->searchcriteria .'">' . $item['salesid'] . '</a></td>';
+			//echo '<td align="left">' . $item['salesid'] . '</td>';
+			echo '<td align="left">' . $item['paiddate']. '</td>';
+			echo '<td align="left">' . htmlspecialchars($item['kodemember']). '</td>';
+			//echo '<td align="left">' . htmlspecialchars($item['namamember']). '</td>';
+			echo '<td align="right">' . $ctrl->valuenumber($item['totalbayarmbr']) . '</td>';
+			echo '<td align="right">' . $ctrl->valuenumber($item['totalbayarbc']) . '</td>';
+			//echo '<td align="right">' . $ctrl->valuenumber($item['paymentcharge']) . '</td>';
+			echo '<td align="left"><a href="bcviewmyorder.php?backpage=3&purchid=' . $item['salesid'] . '&sc=' . $ctrl->searchcriteria .'">' . $item['salesidsmi'] . '</a></td>';
+			//echo '<td align="left">' . htmlspecialchars($item['salesidsmi']). '</td>';			
+			echo '<td align="right">' . $ctrl->valuenumber($item['kreditbc']) . '</td>';
+			echo '<td align="left">' . htmlspecialchars($item['statusname']). '</td>';
+			echo '</tr>';
+			$i++;
 		}
 	}
 	else
@@ -100,8 +105,15 @@
 	}
 ?>
 </table>
+<div class="boxright" style="width:350px;padding-right:127px;padding-top:10px">
+	<div class="boxcon1">
+		<div class="boxleft1" style="width:240px">Total Kredit BC</div>
+		<div class="boxright1" style="margin-left:20px"><?=$ctrl->valuenumber($ctrl->varvalue('totalkredit'));?></div>
+	</div>
 </div>
-<?include "bcfooterleft.php";?>
+<br><br>
+</div>
+<?include "bcfooter.php";?>
 
 <script language="javascript">
 function validsearch()

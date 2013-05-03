@@ -48,10 +48,10 @@
 	<table border="0" width="100%">
 	<tr>
 	<td>
-		<a href="#" onclick="setaction('orderbaru');" ><< Order Baru</a>
+		<button type="button" onclick="setaction('orderbaru');" class="back">Order Baru</button>
 	</td>
 	<td  align="right">
-		<button type="button" onclick="setaction('confirmorder');" >Konfirmasi Order</button>
+		<button type="button" onclick="setaction('confirmorder');" class="buttonbig">Konfirmasi Order</button>
 	</td>
 	</tr>
 	</table>
