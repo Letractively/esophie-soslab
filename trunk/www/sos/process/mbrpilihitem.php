@@ -34,15 +34,14 @@
 					{
 						$sql = 'select count(*) from salestable ';
 						$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
-						$sql.= ' and status < ' . $this->queryvalue($this->sysparam['salesstatus']['paid']);
+						$sql.= ' and status < ' . $this->sysparam['salesstatus']['paid'];
 						$sql.= ' and status > 0';
-						
+
 						if($this->db->executeScalar($sql)) $this->gotohomepage();		
-						
-						
+											
 						$sql = 'select salesid from salestable ';
 						$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
-						$sql.= ' and status = ' . $this->queryvalue($this->sysparam['salesstatus']['openorder']);
+						$sql.= ' and status = ' . $this->sysparam['salesstatus']['openorder'];
 						
 						$rs = $this->db->query($sql);			
 						if ($rs->fetch()) 
@@ -153,6 +152,13 @@
 		
 		function savedata() 
 		{					
+			if ($this->salesid == '')
+			{
+				$sql = "exec sp_getNextNo 'SALES'";				
+				$this->salesid = $this->db->executeScalar($sql);
+				$this->param['salesid'] = $this->salesid;
+			}	
+			
 			$dataupdate = false;
 			for ($i=1;$i<=$this->maxitem;$i++)
 			{
@@ -166,33 +172,26 @@
 			
 			if ($dataupdate)
 			{			
-				if ($this->salesid == '')
+				$sql = 'select top 1 name, phone, email from membertable where kodemember = ' . $this->queryvalue($this->userid());
+				$rs = $this->db->query($sql);
+				if ($rs->fetch()) 
 				{
-					$sql = 'select top 1 name, phone, email from membertable where kodemember = ' . $this->queryvalue($this->userid());
-					$rs = $this->db->query($sql);
-					if ($rs->fetch()) 
-					{
-						$namamember = $rs->value('name');
-						$mobilemember = $rs->value('phone');
-						$emailmember = $rs->value('email');
-					}
-					$rs->close();
-					
-					$sql = "exec sp_getNextNo 'SALES'";				
-					$this->salesid = $this->db->executeScalar($sql);
-					$this->param['salesid'] = $this->salesid;
-							
-					$sql = 'insert into salesTable ';
-					$sql.= '(salesid, kodemember, namamember, telp, email, status, createddate) values (';
-					$sql.= $this->queryvalue($this->salesid) . ',' ;
-					$sql.= $this->queryvalue($this->userid()) . ',' ;
-					$sql.= $this->queryvalue($namamember) . ',' ;		
-					$sql.= $this->queryvalue($mobilemember) . ',' ;		
-					$sql.= $this->queryvalue($emailmember) . ',' ;		
-					$sql.= $this->sysparam['salesstatus']['openorder'] . ',getdate())' ;			
-					
-					$this->db->execute($sql);
+					$namamember = $rs->value('name');
+					$mobilemember = $rs->value('phone');
+					$emailmember = $rs->value('email');
 				}
+				$rs->close();
+					
+				$sql = 'insert into salesTable ';
+				$sql.= '(salesid, kodemember, namamember, telp, email, status, createddate) values (';
+				$sql.= $this->queryvalue($this->salesid) . ',' ;
+				$sql.= $this->queryvalue($this->userid()) . ',' ;
+				$sql.= $this->queryvalue($namamember) . ',' ;		
+				$sql.= $this->queryvalue($mobilemember) . ',' ;		
+				$sql.= $this->queryvalue($emailmember) . ',' ;		
+				$sql.= $this->sysparam['salesstatus']['openorder'] . ',getdate())' ;			
+				
+				$this->db->execute($sql);
 			
 				$sql = "exec sp_updateSalesTotal " . $this->queryvalue($this->salesid);					
 				$this->db->execute($sql);					
