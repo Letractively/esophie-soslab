@@ -47,7 +47,7 @@ Please wait....<br>
 		<li>Enter Virtual Account</li>
 	</ul>
 </div>
-<? /*<p><a href="http://webdev.sophiemartin.com/sos/mbrpaymentconfirm.php?pageaction=simatm&vanumber=<?=$ctrl->varvalue('virtualaccount')?>">Payment init</a></p> */ ?>
+<p><a href="http://webdev.sophiemartin.com/sos/mbrpaymentconfirm.php?pageaction=simatm&salesid=<?=$ctrl->varvalue('salesid')?>&vanumber=<?=$ctrl->varvalue('virtualaccount')?>">Payment init</a></p>
 <? } ?>
 
 

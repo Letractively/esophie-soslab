@@ -45,8 +45,18 @@
 		?>
 	</div>
 	<br>
-	<button type="button" onclick="setaction('back');" class="back">Kembali</button>
-	<button type="button" onclick="setaction('confirm');" style="width:80px">Validasi</button>
+		
+	<table border="0" width="100%">
+		<tr>
+		<td>
+			<button type="button" class="back" onclick="setaction('back');" class="back">&lt;&lt; Kembali</button>
+		</td>
+		<td align="right">
+			<button type="button" onclick="setaction('confirm');" style="width:80px">Validasi &gt;&gt;</button>
+		</td>
+		</tr>
+	</table>
+
 </center>
 <?include "mbrfooter.php";?>
 

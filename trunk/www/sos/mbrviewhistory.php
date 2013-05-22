@@ -13,7 +13,6 @@
 		</div>
 		<? } ?>
 	</div>
-	<br>
 	<div class="boxcon">
 		<table class="dataview" width="340">
 			<tr>

@@ -22,7 +22,7 @@
 			$this->statuscount['revisi'] 		= 0;
 			$this->statuscount['belumbayar'] 	= 0;
 			$this->statuscount['telahbayar'] 	= 0;
-			$this->statuscount['siap'] 			= 0;
+			$this->statuscount['siap'] 		= 0;
 			$this->statuscount['delivered'] 	= 0;
 			if ($rs->fetch())
 			{
@@ -32,7 +32,7 @@
 				$this->statuscount['revisi'] 		= $rs->value('revisi');
 				$this->statuscount['belumbayar'] 	= $rs->value('belumbayar');
 				$this->statuscount['telahbayar'] 	= $rs->value('telahbayar');
-				$this->statuscount['siap'] 			= $rs->value('siap');
+				$this->statuscount['siap'] 		= $rs->value('siap');
 				$this->statuscount['delivered'] 	= $rs->value('delivered');
 			}
 			$rs->close();
@@ -136,12 +136,9 @@
 					$ret.= "<td align=\"left\">" . $orders['orderdate'] . "</td>";
 					$ret.= "<td align=\"left\">" . $orders['member'] . "</td>";
 					$ret.= "<td align=\"right\">" . $this->valuenumber($orders['totalbayar']) . "</td>";
-					if ( $orders['statuscode'] == 0 )
-						$ret.= "<td align=\"center\" class=\"red\">" . $orders['userstatus'] . "</td>";
-					else if ( $orders['statuscode'] == 6 )
-						$ret.= "<td align=\"center\" class=\"orange\">" . $orders['userstatus'] . "</td>";
-					else
-						$ret.= "<td align=\"center\" class=\"green\">" . $orders['userstatus'] . "</td>";
+					$ret.= "<td align=\"center\"";
+					if ( $orders['statuscode'] == 0 ) $ret.= " class=\"red\"";
+					$ret.= ">" . $orders['userstatus'] . "</td>";
 					$ret.= "</tr>";
 					
 					$i++;
@@ -166,13 +163,7 @@
 					$ret.= "<td align=\"left\">" . $orders['orderdate'] . "</td>";
 					$ret.= "<td align=\"left\">" . $orders['member'] . "</td>";
 					$ret.= "<td align=\"right\">" . $this->valuenumber($orders['totalbayar']) . "</td>";
-					if ( $orders['statuscode'] == 0 )
-						$ret.= "<td align=\"center\" class=\"red\">" . $orders['userstatus'] . "</td>";
-					else if ( $orders['statuscode'] == 6 )
-						$ret.= "<td align=\"center\" class=\"orange\">" . $orders['userstatus'] . "</td>";
-					else
-						$ret.= "<td align=\"center\" class=\"green\">" . $orders['userstatus'] . "</td>";
-						
+					$ret.= "<td align=\"center\">" . $orders['userstatus'] . "</td>";
 					$ret.= "</tr>";
 					$i++;
 				}

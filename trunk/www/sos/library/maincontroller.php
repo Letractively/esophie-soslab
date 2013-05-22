@@ -78,9 +78,9 @@
 			$this->sysparam['payment']['visa']		= "1";
 			
 			//cancel code 
-			$this->sysparam['cancelcode']['technicalerror']	= 0;
+			$this->sysparam['cancelcode']['technicalerror']		= 0;
 			$this->sysparam['cancelcode']['bymember']		= 1;
-			$this->sysparam['cancelcode']['latepayment']	= 2;
+			$this->sysparam['cancelcode']['latepayment']		= 2;
 			$this->sysparam['cancelcode']['emptystock']		= 3;
 			$this->sysparam['cancelcode']['revisi']			= 4;
 			
@@ -88,7 +88,7 @@
 			$this->sysparam['salesstatus']['openorder']		= 1;
 			$this->sysparam['salesstatus']['ordered']		= 2;
 			$this->sysparam['salesstatus']['bypassed']		= 3;
-			$this->sysparam['salesstatus']['inprogress']	= 4;
+			$this->sysparam['salesstatus']['inprogress']		= 4;
 			$this->sysparam['salesstatus']['edited']		= 5; 
 			$this->sysparam['salesstatus']['validated']		= 6; //bc sudah validate / mbr sudah confirm perubahan
 			$this->sysparam['salesstatus']['confirmed']		= 7; //saat member pilih method pembayaran

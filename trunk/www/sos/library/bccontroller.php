@@ -23,7 +23,7 @@
 			{
 				case 'login' 			: header('location:index.php' . ($param != '' ? '?' . $param : '')); break;	
 				case 'onlineorder'		: header('location:bconlineorder.php' . ($param != '' ? '?' . $param : '')); break;	
-				case 'ordertambahan'	: header('location:bcordertambahan.php' . ($param != '' ? '?' . $param : '')); break;	
+				case 'ordertambahan'		: header('location:bcordertambahan.php' . ($param != '' ? '?' . $param : '')); break;	
 				case 'myorder'			: header('location:bcmyorder.php' . ($param != '' ? '?' . $param : '')); break;
 				case 'vieworder'		: header('location:bcvieworder.php' . ($param != '' ? '?' . $param : '')); break;
 				case 'report2'			: header('location:bcreport02.php' . ($param != '' ? '?' . $param : '')); break;
@@ -63,9 +63,10 @@
 					$ret = '02';  break;
 				case $this->sysparam['salesstatus']['edited'] :  
 					$ret = '05';  break;
-				case $this->sysparam['salesstatus']['validated'] : 
-				case $this->sysparam['salesstatus']['confirmed'] : 
+				case $this->sysparam['salesstatus']['validated'] :
 					$ret = '06';  break;
+				case $this->sysparam['salesstatus']['confirmed'] : 
+					$ret = '07';  break;
 				case $this->sysparam['salesstatus']['paid'] : 
 					$ret = '08';  break;
 				case $this->sysparam['salesstatus']['ready'] : 
@@ -83,23 +84,23 @@
 			switch ($status)
 			{
 				case $this->sysparam['salesstatus']['ordered']:
-					$ret = 'Order Baru';
+					$ret = 'New order';
 					break;
 				case $this->sysparam['salesstatus']['cancelled'] : 
 					$ret = 'Cancelled'; break; //'00';
 				case $this->sysparam['salesstatus']['bypassed'] : 
 				case $this->sysparam['salesstatus']['inprogress'] : 
-					$ret =  'Dalam Proses'; break; //'02';
+					$ret = 'In progress'; break; //'02';
 				case $this->sysparam['salesstatus']['edited'] :  
-					$ret =  'Edited'; break; //'05';
+					$ret = 'Edited'; break; //'05';
 				case $this->sysparam['salesstatus']['validated'] : 
 					$ret = 'Waiting payment'; break; //'06';
 				case $this->sysparam['salesstatus']['confirmed'] : 
-					$ret = 'Payment confirmed'; break; //'06';
+					$ret = 'Payment confirmed'; break; //'07';
 				case $this->sysparam['salesstatus']['paid'] : 
-					$ret = 'Paid'; break; //'08'; 
+					$ret = 'Payment accepted'; break; //'08'; 
 				case $this->sysparam['salesstatus']['ready'] : 
-					$ret = 'Ready for Pickup'; break; //'09';
+					$ret = 'Ready for pickup'; break; //'09';
 				case $this->sysparam['salesstatus']['delivered'] : 
 					$ret = 'Delivered'; break; //'10';
 				case $this->sysparam['salesstatus']['clear']:
