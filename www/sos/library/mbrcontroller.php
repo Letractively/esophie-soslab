@@ -89,19 +89,19 @@
 						switch($rs->value('cancelcode'))
 						{
 							case $this->sysparam['cancelcode']['bymember']: 
-								$this->mbrmsg['body'].= 'Anda telah membatalkan pesanan tersebut.';
+								$this->mbrmsg['body'].= 'anda telah membatalkan pesanan tersebut.';
 								break;
 							case $this->sysparam['cancelcode']['latepayment']:
 								$this->mbrmsg['body'].= 'pembayaran anda belum diterima di dalam waktu yang ditentukan';
 								break;
 							case $this->sysparam['cancelcode']['emptystock'] :
-								$this->mbrmsg['body'].= 'Stock Sophie lagi kosong.';
+								$this->mbrmsg['body'].= 'stock Sophie lagi kosong.';
 								break;
 							case $this->sysparam['cancelcode']['revisi']:
-								$this->mbrmsg['body'].= 'Anda tidak setuju dengan revisi dari kami';
+								$this->mbrmsg['body'].= 'anda tidak setuju dengan revisi order dari kami';
 								break;
 							default:
-								$this->mbrmsg['body'].= 'ada masalah teknis. Silahkan hubungi sales Support Sophie';
+								$this->mbrmsg['body'].= 'ada masalah teknis.';
 						}
 						$this->mbrmsg['link1label'] = 'PESAN LAGI';
 						$this->mbrmsg['link1'] = 'mbrpilihitem.php';						
@@ -147,11 +147,18 @@
 						break;
 						
 					case $this->sysparam['salesstatus']['validated'] : 
-					case $this->sysparam['salesstatus']['confirmed'] : 
 						$this->mbrmsg['title'] = 'Order #' . $this->salesid . ' anda telah divalidasi oleh BC!';  
 						$this->mbrmsg['body'] = 'Silahkan lanjut ke pembayaran. Jika pembayaran belum diterima pukul ' . $this->valuedatetime($rs->value('maxpaiddate')) . 'WIB maka order andal otomatis batal.';
 						$this->mbrmsg['link1label'] = 'BAYAR';
 						$this->mbrmsg['link1'] = 'mbrpaymentconfirm.php?salesid=' . $this->salesid;
+						break;
+					
+					case $this->sysparam['salesstatus']['confirmed'] :
+						$this->mbrmsg['title'] = 'Terima kasih atas pembayaran anda!';  
+						$this->mbrmsg['body'] = 'Pembayaran untuk order #' . $this->salesid . ' telah kami terima dan sedang diperiksa oleh team Kasir Sophie Paris.';
+						$this->mbrmsg['body'].= ' Silahkan belanja lagi di Sophie Online Order!';
+						$this->mbrmsg['link1label'] = 'PESAN LAGI';
+						$this->mbrmsg['link1'] = 'mbrpilihitem.php';
 						break;
 						
 					case $this->sysparam['salesstatus']['paid'] : 
@@ -270,8 +277,8 @@
 				case $this->sysparam['salesstatus']['edited'] :  
 					$ret = '05';  break;
 				case $this->sysparam['salesstatus']['validated'] : 
-				case $this->sysparam['salesstatus']['confirmed'] : 
 					$ret = '06';  break;
+				case $this->sysparam['salesstatus']['confirmed'] : 
 				case $this->sysparam['salesstatus']['paid'] : 
 					$ret = '08';  break;
 				case $this->sysparam['salesstatus']['ready'] : 
@@ -299,7 +306,6 @@
 				case $this->sysparam['salesstatus']['validated'] : 
 					$ret = 'Validasi BC'; break; //'06';
 				case $this->sysparam['salesstatus']['confirmed'] : 
-					$ret = 'Sudah bayar'; break; //'06';
 				case $this->sysparam['salesstatus']['paid'] : 
 					$ret = 'Telah Bayar'; break; //'08'; 
 				case $this->sysparam['salesstatus']['ready'] : 

@@ -6,6 +6,21 @@ body {
 	color:#727274;
 }
 
+
+a {
+	color:#d26ca3;
+}
+
+a:visited {
+	color:#d26ca3;
+}
+a:active {
+	color:#d26ca3;
+}
+a:hover{
+	color:#d26ca3;
+}
+
 div {
 	font-family: helvetica, sans-serif, arial;
 	font-size: 10px;
@@ -59,7 +74,7 @@ button {
 
 .boxmain{
 	background-color:#ededed;
-	padding: 10px 5px 10px 5px;
+	padding: 5px;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -139,7 +154,8 @@ button {
 	overflow:auto;
 	background-color:#ffffff;
 	padding: 8px 5px 10px 5px;
-	border: 1px solid black;
+	margin-bottom:10px;
+	border: 1px solid #b9b9b9;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -169,7 +185,7 @@ button {
 	overflow:auto;
 	background-color:#ffffff;
 	padding: 6px 5px 6px 8px;
-	border: 1px solid black;
+	border: 1px solid #b9b9b9;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -181,7 +197,7 @@ button {
 
 .boxcon5{  /* command box*/
 	clear:both;
-	border-bottom:1px solid black;
+	border-bottom:1px solid #b9b9b9;
 	margin-top:10px;
 	margin-bottom:10px;
 	text-align:left;
@@ -199,7 +215,7 @@ button.back {
 	margin-top: 8px;
 	padding-bottom:2px;
 	border:1px solid #a0a0a0;
-	color:#c40079;
+	color:#ffffff;
 	font-weight:bold;
 	background-color: #b2b2b2;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#f1f1f0), to(#b2b2b2));
@@ -259,6 +275,7 @@ table.dataview {
     border-spacing: 0;
 	background-color: #FFFFFF;
     border-radius: 10px;
+    border-color: gray;
 	-moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     box-shadow: 0 0 2px #c8c8c8;         
@@ -273,19 +290,18 @@ table.dataview td, table.dataview th {
 }
 
 table.dataview tr.pinkrow td {
-	background-color:#d26ca3;
-	color:#FFFFFF;
+	background-color:#FBEFEF;
 } 
 
 table.dataview th {
 	color:#FFFFFF;
-    background-color: #b2b2b2;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#b2b2b2), to(#b2b2b2));
-    background-image: -webkit-linear-gradient(top, #b2b2b2, #b2b2b2);
-    background-image:    -moz-linear-gradient(top, #b2b2b2, #b2b2b2);
-    background-image:     -ms-linear-gradient(top, #b2b2b2, #b2b2b2);
-    background-image:      -o-linear-gradient(top, #b2b2b2, #b2b2b2);
-    background-image:         linear-gradient(top, #b2b2b2, #b2b2b2);
+    background-color: #d26ca3;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#d26ca3), to(#d26ca3));
+    background-image: -webkit-linear-gradient(top, #d26ca3, #d26ca3);
+    background-image:    -moz-linear-gradient(top, #d26ca3, #d26ca3);
+    background-image:     -ms-linear-gradient(top, #d26ca3, #d26ca3);
+    background-image:      -o-linear-gradient(top, #d26ca3, #d26ca3);
+    background-image:         linear-gradient(top, #d26ca3, #d26ca3);
 }
 
 table.dataview th:first-child {

@@ -22,7 +22,7 @@
 <input type="hidden" name="backpage" id ="backpage" value="<?=$ctrl->value('backpage')?>">
 <input type="hidden" name="salesid" id ="salesid" value="<?=$ctrl->value('salesid')?>">
 	 
-<div class="boxcon" style="border-bottom:1px solid black">
+<div class="boxcon" style="padding-bottom:5px; border-bottom:1px solid #9b9b9b;">
 	<div class="boxleft" style="width:330px">
 		<a href="bconlineorder.php">Online Orders</a> > Order #<?=$ctrl->value('salesid')?>
 	</div>
@@ -165,7 +165,7 @@
 	</div>
 </div>
 <div style="width:703px;text-align:right">	
-	<button type="button" onclick="setaction('cancel');" style="width:80px" >Kembali</button>
+	<button class="back" type="button" onclick="setaction('cancel');" style="width:80px" >Kembali</button>
 	<?
 		switch ($ctrl->status)
 		{
