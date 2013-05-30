@@ -78,7 +78,7 @@
 		</div>
 	</div>
 	<div style="width:695px;text-align:right">
-		<a href="#" onclick="setaction('cancel');">&lt&lt Kembali&nbsp;&nbsp;</a>
+		<button class="back" type="button" onclick="setaction('cancel');" style="width:80px" >Kembali</button>
 	</div>
 </div>
 <?include "bcfooterright.php";?>

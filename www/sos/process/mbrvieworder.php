@@ -28,6 +28,7 @@
 		var $validatesameday;
 		var $mbrmsg;
 		var $errorbcmsg;
+		var $lastorderstatus;
 		
 		function run() 
 		{	
@@ -182,6 +183,18 @@
 			{
 				$rs->close();
 				$this->gotohomepage();				
+			}
+			$rs->close();
+			
+			
+			$sql = "select top 1 salesid, status from vw_salestable where kodemember = " . $this->queryvalue($this->userid());
+			$sql.= " and status <> " . $this->queryvalue($this->sysparam['salesstatus']['clear']);
+			$sql.= " order by salesid desc";
+			
+			$rs = $this->db->query($sql);			
+			if ($rs->fetch()) 
+			{
+				$this->lastorderstatus = $rs->value('status');
 			}
 			$rs->close();
 		}

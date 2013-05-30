@@ -14,7 +14,7 @@ Silahkan masukkan:<br>
 <? if ($ctrl->varvalue("errmsg") != '') { ?>
 	<div class="errmsg"><?=$ctrl->varvalue("errmsg")?></div>
 <? } ?>
-<br><a href="bcnewpassword.php">Lupa password</a>
+<br><a href="bcnewpassword.php">Lupa password</a> 
 <br><br>&nbsp;
 
 <?include "bcfooter.php";?>
