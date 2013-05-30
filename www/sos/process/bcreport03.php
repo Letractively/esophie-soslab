@@ -73,7 +73,7 @@
 			}
 			$rs->close();
 			
-			$sql = 'select sum(kreditbc) as kreditbc from vw_report03 ';
+			$sql = 'select isnull(sum(kreditbc),0) as kreditbc from vw_report03 ';
 			$sql.= ' where kodebc = ' . $this->queryvalue($this->userid());  
 			$sql.= $this->where;
 			

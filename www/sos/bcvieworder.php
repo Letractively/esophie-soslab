@@ -50,76 +50,107 @@
 	</div>
 </div>
 <div class="boxcon">
-	<div class="boxcon6" style="width:190px; margin-left:325px;float:left;">Stock</div>
-	<div class="boxcon6" style="width:160px; margin-right:10px;float:right;">Total</div>
+	<div class="boxcon6" style="width:115px; margin-left:420px;float:left;">Stock</div>
+	<div class="boxcon6" style="width:140px; margin-right:10px;float:right;">Total</div>
 </div>
-<table class="dataview" >
+<table>
 	<tr>
-		<th width="35" align="right">Kode</th>
-		<th width="400" align="left">Nama Barang</th>
-		<th width="60" align="right">Harga</th>
-		<th width="30" align="right">Jumlah</th>	
-		<th width="30" align="right">Sophie</th>
-		<th width="30" align="right">BC</th>		
-		<th width="30" align="right">Total</th>
-		<th width="10" align="left">&nbsp;</th>
-		<th width="80" align="right">Order MBR</th>
-		<th width="80" align="right">Order BC</th>		
-
-	</tr>
-	<?
-		if (is_array($ctrl->items))
-		{
-			$i=0;
-			foreach ($ctrl->items as $item)
-			{
-				echo $i++%2?"<tr class=\"pinkrow\" >":"<tr>";
-				echo "<td align=\"right\" height='25'>" . $item['itemid'] . "</td>";
-				echo "<td align=\"left\">" . htmlspecialchars($item['itemname']). "</td>";
-				echo "<td align=\"right\">" . $ctrl->valuenumber($item['price']) . "</td>";
-				echo "<td align=\"right\">" . $ctrl->valuenumber($item['salesqty']) . "</td>";		
-				echo "<td align=\"right\"  height='25'>" . $ctrl->valuenumber($item['purchqty']) . "</td>";
-				if ($ctrl->status == $ctrl->sysparam['salesstatus']['ordered']) 
-				{
-					?>
-					<td align="right">
-						<input type="hidden" name="itemid[]" id="itemid[]" value="<?=$item['itemid']?>">
-						<input type="textbox" name="itemqty[]" id="itemqty[]" value="<?=$item['qtybc']?>" maxlength="3" style="width:30px;text-align:right" onkeypress="refresh(event);" onblur="refreshLostFocus();">
-					</td>
-					<?					
-				} else {
-					echo "<td align=\"right\">" . $ctrl->valuenumber($item['qtybc']) . "</td>";
-				}				
-				$color = '';
-				if ($item['shortageqty'] != 0) $color = "color=\"FF0000\"";
-								
-				echo "<td align=\"right\">" . ($ctrl->valuenumber($item['purchqty']) + $ctrl->valuenumber($item['qtybc'])) . "</td>";
-				
-				if($ctrl->status == $ctrl->sysparam['salesstatus']['ordered'] ) { 	
-					if ($item['salesqty'] == $item['purchqty'] + $item['qtybc'])
+		<td>
+			<table class="dataview" >
+				<tr>
+					<th width="35" align="right">Kode</th>
+					<th width="400" align="left">Nama Barang</th>
+					<th width="60" align="right">Harga</th>
+					<th width="30" align="right">Jumlah</th>
+				</tr>
+				<?
+					if (is_array($ctrl->items))
 					{
-						echo '<td><img src="images/ok.gif"/></td>';
+						$i=0;
+						foreach ($ctrl->items as $item)
+						{
+							$item['itemname'] = '1234567890123456789012345678901234567890';
+							echo $i++%2?"<tr class=\"pinkrow\" >":"<tr>";
+							echo "<td align=\"right\" height='25'>" . $item['itemid'] . "</td>";
+							echo "<td align=\"left\" width=\"300\" title=\"".  htmlspecialchars($item['itemname']) ."\">" . (strlen(htmlspecialchars($item['itemname'])) >= 32 ? substr((htmlspecialchars($item['itemname'])),0,29)."..." : htmlspecialchars($item['itemname']))  ."</td>";
+							echo "<td align=\"right\">" . $ctrl->valuenumber($item['price']) . "</td>";
+							echo "<td align=\"right\">" . $ctrl->valuenumber($item['salesqty']) . "</td>";		
+							echo "</tr>";
+						}
 					}
 					else
 					{
-						echo '<td><img src="images/warning.gif"/></td>';
+						echo '<td colspan="4" align="center">no items</td>';
 					}
-				} 
-				else
-				{
-					echo '<td>&nbsp;</td>';
-				}
-				echo '<td align="right"  height="25">' . $ctrl->valuenumber($item['totalordermember']) . '</td>';					
-				echo "<td align=\"right\">" . $ctrl->valuenumber($item['totalorderbc']) . "</td>";
-				echo "</tr>";
-			}
-		}
-		else
-		{
-			echo '<td colspan="10" align="center">no items</td>';
-		}
-	?>
-
+				?>
+			</table>
+		</td>
+		<td>
+			<table class="dataview">
+				<tr>
+					<th width="30" align="right">Sophie</th>
+					<th width="30" align="right">BC</th>		
+					<th width="30" align="right">Total</th>
+				</tr>
+				<?
+					if (is_array($ctrl->items))
+					{
+						$i=0;
+						foreach ($ctrl->items as $item)
+						{
+							echo $i++%2?"<tr class=\"pinkrow\" >":"<tr>";
+							echo "<td align=\"right\"  height='25'>" . $ctrl->valuenumber($item['purchqty']) . "</td>";
+							if ($ctrl->status == $ctrl->sysparam['salesstatus']['ordered']) 
+							{
+								?>
+								<td align="right">
+									<input type="hidden" name="itemid[]" id="itemid[]" value="<?=$item['itemid']?>">
+									<input type="textbox" name="itemqty[]" id="itemqty[]" value="<?=$item['qtybc']?>" maxlength="3" style="width:30px;text-align:right" onkeypress="refresh(event);" onblur="refreshLostFocus();">
+								</td>
+								<?					
+							} else {
+								echo "<td align=\"right\">" . $ctrl->valuenumber($item['qtybc']) . "</td>";
+							}				
+							$color = '';
+							if ($item['shortageqty'] != 0) $color = "color=\"FF0000\"";
+											
+							echo "<td align=\"right\">" . ($ctrl->valuenumber($item['purchqty']) + $ctrl->valuenumber($item['qtybc'])) . "</td>";
+							echo "</tr>";
+						}
+					}
+					else
+					{
+						echo '<td colspan="3" align="center">no items</td>';
+					}
+				?>
+			</table>
+		</td>
+		<td>
+			<table class="dataview">
+				<tr>
+					<th width="120" align="right">Order MBR</th>
+					<th width="120" align="right">Order BC</th>		
+				</tr>
+				<?
+					if (is_array($ctrl->items))
+					{
+						$i=0;
+						foreach ($ctrl->items as $item)
+						{
+							echo $i++%2?"<tr class=\"pinkrow\" >":"<tr>";
+							echo '<td align="right"  height="25">' . $ctrl->valuenumber($item['totalordermember']) . '</td>';					
+							echo "<td align=\"right\">" . $ctrl->valuenumber($item['totalorderbc']) . "</td>";
+							echo "</tr>";
+						}
+					}
+					else
+					{
+						echo '<td colspan="2" align="center">no items</td>';
+					}
+				?>
+			</table>
+		</td>
+	</tr>
 </table>
 <br>
 <div class="boxcon">
@@ -136,26 +167,26 @@
 		</div>
 		<? } ?>
 	</div>
-	<div class="boxright" style="width:350px;padding-right:1px;">
+	<div class="boxright" style="width:350px;padding-right:8px;">
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:200px">Total Order</div>
-			<div class="boxright1" style="margin-left:1px"><?=$ctrl->valuenumber($ctrl->varvalue('totalorderbc'));?></div>
+			<div class="boxright1" style="margin-left:3px"><?=$ctrl->valuenumber($ctrl->varvalue('totalorderbc'));?></div>
 			<div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('totalorder'));?></div>
 		</div>
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:200px">Discount</div>
-			<div class="boxright1" style="margin-left:1px"><?=$ctrl->valuenumber($ctrl->varvalue('discountbc'));?></div>
+			<div class="boxright1" style="margin-left:3px"><?=$ctrl->valuenumber($ctrl->varvalue('discountbc'));?></div>
 			<div class="boxright1" ><?=$ctrl->valuenumber($ctrl->varvalue('discount'));?></div>
 		</div>
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:200px">Total Bayar</div>
-			<div class="boxright1-1" style="margin-left:1px"><?=$ctrl->valuenumber($ctrl->varvalue('totalbayarbc'));?></div>
+			<div class="boxright1-1" style="margin-left:3px"><?=$ctrl->valuenumber($ctrl->varvalue('totalbayarbc'));?></div>
 			<div class="boxright1-1"><?=$ctrl->valuenumber($ctrl->varvalue('totalbayar'));?></div>
 		</div>
 		<? if ($ctrl->status >= $ctrl->sysparam['salesstatus']['edited'] && $ctrl->purchid <> "") { ?>
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:200px">Tambahan Order BC</div>
-			<div class="boxright1" style="width:130px;margin-right:0px"><?='<a href="bcviewmyorder.php?backpage=1&purchid=' . $ctrl->purchid .'">' . $ctrl->purchid . '</a>';?></div>
+			<div class="boxright1" style="width:130px;margin-right:0px"><?='<a href="bcviewmyorder.php?backpage=1&purchid=' . $ctrl->purchid .'">' . ($ctrl->salesidsmi != '' ? $ctrl->salesidsmi : '&nbsp;'). '</a>';?></div>
 		</div>
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:200px">Total Kredit Note BC</div>

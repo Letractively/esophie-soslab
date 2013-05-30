@@ -1,0 +1,169 @@
+div.calendar 
+{
+	background-color: #FFFFFF;
+	border: 1px solid #000000;
+	padding-right : 2px;
+	padding-left : 2px;
+}
+
+table.calendar {
+	background-color: #FFFFFF;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	FONT-SIZE: 10px;
+}
+
+table.calendar td
+{
+	vertical-align:middle;
+}
+
+	
+table.calendar td.NameOfDays
+{
+	border-bottom: 1px solid gray;
+}
+
+table.calendar td.WorkDay
+{
+	cursor:hand;
+}
+
+table.calendar td.WorkDayToday
+{
+	text-decoration: underline;
+	cursor:hand;
+}
+
+table.calendar td.WorkDayHoliday
+{
+	background: #FF8888;
+	cursor:hand;
+}
+
+table.calendar td.WorkDayHolidayToday
+{
+	background: #FF8888;
+	text-decoration: underline;
+	cursor:hand;
+}
+
+table.calendar td.Sunday
+{
+	color: red;
+	cursor:hand;
+}
+
+table.calendar td.SundayToday
+{
+	text-decoration: underline;
+	color: red;
+	cursor:hand;
+}
+
+table.calendar td.SundayHoliday
+{
+	color: red;
+	background: #FF8888;
+	cursor:hand;
+}
+
+table.calendar td.SundayHolidayToday
+{
+	text-decoration: underline;
+	color: red;
+	background: #FF8888;
+	cursor:hand;
+}
+
+table.calendar td.Saturday
+{
+	color: #555555;
+	cursor:hand;
+}
+
+table.calendar td.SaturdayToday
+{
+	text-decoration: underline;
+	color: #555555;
+	cursor:hand;
+}
+
+table.calendar td.SaturdayHoliday
+{
+	color: #555555;
+	background: #FF8888;
+	cursor:hand;
+}
+
+table.calendar td.SaturdayHolidayToday
+{
+	text-decoration: underline;
+	color: #555555;
+	background: #FF8888;
+	cursor:hand;
+}
+
+table.calendar td.OutOfRange
+{
+	color : #CCCCCC;
+	cursor:hand;
+}
+
+table.calendar td.OutOfRangeToday
+{
+	text-decoration: underline;
+	color : #CCCCCC;
+	cursor:hand;
+}
+
+table.calendar td.OutOfRangeHoliday
+{
+	background: #FFDDDD;
+	color : #CCCCCC;
+	cursor:hand;
+}
+
+table.calendar td.OutOfRangeHolidayToday
+{
+	text-decoration: underline;
+	background: #FFDDDD;
+	color : #CCCCCC;
+	cursor:hand;
+}
+
+table.calendar td.Box{
+	border-top: 1px solid #EEEEEE;
+	border-left: 1px solid #EEEEEE;
+	border-right: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+	cursor:hand;
+	height: 45px;
+	width: 52px;
+}
+
+table.calendar td.Box2{
+	border-top: 1px solid #EEEEEE;
+	border-left: 1px solid #EEEEEE;
+	border-right: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+	cursor: hand;
+	color : gray;
+	height: 45px;
+	width: 52px;
+}
+
+A.calendar {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	FONT-SIZE:10px;
+	color: blue;  	
+}
+
+img.calendar 
+{
+	cursor:hand;
+}
+
+img.browsedate {
+	cursor:hand;
+	margin: 0px 0px -4px 0px;
+}

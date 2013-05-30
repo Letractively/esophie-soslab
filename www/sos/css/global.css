@@ -582,4 +582,69 @@ table.dataview tr:last-child td:last-child {
 	border:     1px solid gray
 }
 
+.boxstyled1 {
+	color: #7a7a7a;
+    background-color: #FFFFFF;
+	text-align:left;
+	padding:1px 0px 1px 8px;
+	margin:2px 0px 2px 0px;
+	box-shadow: 1px 2px 3px #c8c8c8;
+	-webkit-box-shadow: 1px 2px 3px #c8c8c8;
+    -moz-box-shadow: 1px 2px 3px #c8c8c8; 
+	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+.boxstyled1 div {	
+	height:18px;
+	padding-top:3px;
+	float:left;
+	text-align:left;
+	width:160px;
+}
+
+.boxstyled1 input {
+	border:0px;
+	height:18px;
+	width:160px;
+	background-color:#ffffff;
+}
+
+.boxstyled1 textarea {
+	border:0px;
+	width:160px;	
+	height:64px;
+	resize: none;
+}
+
+.boxstyled1 select {
+	border:0px solid #FFFFFF;
+	height:18px;
+	width:160px;	
+}
+
+.boxstyled2 {
+	width:150px;
+	color: #7a7a7a;
+    background-color: #FFFFFF;
+	text-align:left;
+	padding-left:8px;
+	padding-top:4px;
+	padding-bottom:4px;
+	margin-bottom:12px;
+	box-shadow: 1px 2px 3px #c8c8c8;
+	-webkit-box-shadow: 1px 2px 3px #c8c8c8;
+    -moz-box-shadow: 1px 2px 3px #c8c8c8; 
+	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+.boxstyled2 select {
+	border:0px solid #FFFFFF;
+	height:18px;
+	width:140px;	
+}
+
 

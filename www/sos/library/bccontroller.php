@@ -23,9 +23,10 @@
 			{
 				case 'login' 			: header('location:index.php' . ($param != '' ? '?' . $param : '')); break;	
 				case 'onlineorder'		: header('location:bconlineorder.php' . ($param != '' ? '?' . $param : '')); break;	
-				case 'ordertambahan'		: header('location:bcordertambahan.php' . ($param != '' ? '?' . $param : '')); break;	
+				case 'ordertambahan'	: header('location:bcordertambahan.php' . ($param != '' ? '?' . $param : '')); break;	
 				case 'myorder'			: header('location:bcmyorder.php' . ($param != '' ? '?' . $param : '')); break;
 				case 'vieworder'		: header('location:bcvieworder.php' . ($param != '' ? '?' . $param : '')); break;
+				case 'report1'			: header('location:bcreport01.php' . ($param != '' ? '?' . $param : '')); break;
 				case 'report2'			: header('location:bcreport02.php' . ($param != '' ? '?' . $param : '')); break;
 				case 'report3'			: header('location:bcreport03.php' . ($param != '' ? '?' . $param : '')); break;
 			}
