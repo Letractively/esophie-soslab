@@ -27,6 +27,7 @@
 		var $isanyitemsold;
 		var $validatesameday;
 		var $mbrmsg;
+		var $errorbcmsg;
 		
 		function run() 
 		{	
@@ -75,6 +76,10 @@
 				case "pembayaran":
 					$this->pembayaran();
 					break;
+				
+				case "orderhistory":
+					$this->gotopage('orderhistory');
+					break;
 					
 				case "none":	
 					$sql = "select status from vw_salestable where salesid = " . $this->queryvalue($this->salesid);
@@ -100,6 +105,7 @@
 				$this->setpageview($rs->value("status"));
 				$this->setmbrmsg();
 				
+				//  All information
 				$this->timeleft 		= $rs->value("timeleft");
 				
 				$this->mbrno 			= $rs->value('kodemember'); 
@@ -139,7 +145,6 @@
 				$this->statuscode 	= $rs->value('status'); 
 				
 				$sql = "select * from vw_salesline where salesid = " . $this->queryvalue($this->salesid);
-				
 				$rs1 = $this->db->query($sql);			
 				$i = 0;
 				while ($rs1->fetch()) 
@@ -161,6 +166,17 @@
 					$i++;
 				}
 				$rs1->close();			
+				
+				// Check BC
+				$sql = "select count(*) as hasbc from mappingtable where kodebc != '' and kodemember = '" . $this->mbrno . "'";
+				$rs2 = $this->db->query($sql);			
+				if ($rs2->fetch()) 
+				{
+					if ( $rs2->value('hasbc') <= 0 )
+						$this->errorbcmsg = "Silahkan hubungi Customer Care di " . $this->sysparam['app']['custservicenumber'] . " untuk pilih BC dahulu.";
+					else 
+						$this->errorbcmsg = "";
+				}
 			}
 			else
 			{
