@@ -9,8 +9,17 @@
 		<table>
 			<tr>
 				<td>Tgl Bayar <small>(dd/mm/yyyy)</small></td>
-				<td><input type="text" id="search_paiddate_from" name="search_paiddate_from" value="<?=$ctrl->value("search_paiddate_from")?>" placeholder="dd/mm/yyyy"> to <input type="text" id="search_paiddate_to" name="search_paiddate_to" value="<?=$ctrl->value("search_paiddate_to")?>" placeholder="dd/mm/yyyy"></td>
-			</tr>
+				<td>
+					<div class="boxstyled1" style="width:100px; float:left;">
+						<input type="text" id="search_paiddate_from" name="search_paiddate_from" value="<?=$ctrl->value("search_paiddate_from")?>" placeholder="dd/mm/yyyy" onblur="CalendarDateLostFocus('search_paiddate_from',null);"  style="width:75px">
+						<img src="images/cal.gif" name="browsedate" id="browsedate" class="browsedate" onclick="CalendarShow('search_paiddate_from',null);">
+					</div>
+					<div style="float:left;padding:5px 5px 0px 5px;">to</div>
+					<div class="boxstyled1" style="width:100px; float:left;">
+						<input type="text" id="search_paiddate_to" name="search_paiddate_to" value="<?=$ctrl->value("search_paiddate_to")?>" placeholder="dd/mm/yyyy" onblur="CalendarDateLostFocus('search_paiddate_to',null);"  style="width:75px">
+						<img src="images/cal.gif" name="browsedate" id="browsedate" class="browsedate" onclick="CalendarShow('search_paiddate_to',null);">
+					</div>
+			</td></tr>
 		</table><br>
 		<button type="button" onclick="if (validsearch()){setaction('search');};" style="width:60px;">Search</button>&nbsp;&nbsp;
 		<button type="button" onclick="setaction('reset');" style="width:60px;">Clear</button>	
@@ -36,7 +45,7 @@
  */ ?>		
 	</div>
 	<div class="boxright">
-		<div class="boxcon5" style="width:280px;margin-right:25px;">
+		<div class="boxcon5" style="width:300px;margin-right:25px;">
 			<table width="100%">
 				<tr>
 					<td width="12px"><div class="color01"></div></td><td width="140"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['ordered'])?></td>

@@ -6,14 +6,38 @@
 <div class="boxcon">
 	<div class="boxleft">
 		<table>
-			<tr><td>Online order #</td><td><input type="text" id="search_salesid" name="search_salesid" value="<?=$ctrl->value("search_salesid")?>"></td></tr>
-			<tr><td>Tanggal <small>(dd/mm/yyyy)</small></td><td><input type="text" id="search_orderdate_from" name="search_orderdate_from" value="<?=$ctrl->value("search_orderdate_from")?>" placeholder="dd/mm/yyyy"> to <input type="text" id="search_orderdate_to" name="search_orderdate_to" value="<?=$ctrl->value("search_orderdate_to")?>" placeholder="dd/mm/yyyy"></td></tr>
-			<tr><td>Member #</td><td><input type="text" id="search_kodemember" name="search_kodemember" value="<?=$ctrl->value("search_kodemember")?>"></td></tr>
+			<tr><td>Online order #</td><td>
+				<div class="boxstyled1" style="width:230px; float:left;">
+					<input type="text" id="search_salesid" name="search_salesid" value="<?=$ctrl->value("search_salesid")?>" style="width:220px">
+				</div>
+			</td></tr>
+			<tr><td>Tanggal <small>(dd/mm/yyyy)</small></td><td>
+				<div class="boxstyled1" style="width:100px; float:left;">
+					<input type="text" id="search_orderdate_from" name="search_orderdate_from" value="<?=$ctrl->value("search_orderdate_from")?>" placeholder="dd/mm/yyyy" onblur="CalendarDateLostFocus('search_orderdate_from',null);" style="width:75px"> 
+					<img src="images/cal.gif" name="browsedate" id="browsedate" class="browsedate" onclick="CalendarShow('search_orderdate_from',null);">
+				</div>
+				<div style="float:left;padding:5px 5px 0px 5px;">to</div>
+				<div class="boxstyled1" style="width:100px; float:left;">
+					<input type="text" id="search_orderdate_to" name="search_orderdate_to" value="<?=$ctrl->value("search_orderdate_to")?>" placeholder="dd/mm/yyyy" onblur="CalendarDateLostFocus('search_orderdate_to',null);" style="width:75px">
+					<img src="images/cal.gif" name="browsedate" id="browsedate" class="browsedate" onclick="CalendarShow('search_orderdate_to',null);">
+				</div>
+				
+			</td></tr>
+			<tr><td>Member #</td><td>
+				<div class="boxstyled1" style="width:230px; float:left;">
+					<input type="text" id="search_kodemember" name="search_kodemember" value="<?=$ctrl->value("search_kodemember")?>" style="width:220px">
+				</div>
+			</td></tr>
 			<!--<tr><td>Member name</td><td><input type="text" id="search_namamember" name="search_namamember" value="<?=$ctrl->value("search_namamember")?>"></td></tr>-->
-			<tr><td>Order BC #</td><td><input type="text" id="search_salesidsmi" name="search_salesidsmi" value="<?=$ctrl->value("search_salesidsmi")?>"></td></tr>
+			<tr><td>Order BC #</td><td>
+				<div class="boxstyled1" style="width:230px; float:left;">
+					<input type="text" id="search_salesidsmi" name="search_salesidsmi" value="<?=$ctrl->value("search_salesidsmi")?>" style="width:220px">
+				</div>
+			</td></tr>
 			<tr><td>Status</td><td>
-				<select id="search_status" name="search_status">
-					<option value="2,3,4,5,6,7,8,9,10,11" <?=($ctrl->value("search_status") == "2,3,4,5,6,7,8,9,10,11" ? "selected" : "")?>>All
+				<div class="boxstyled1" style="width:230px; float:left;">
+				<select id="search_status" name="search_status" style="width:220px">
+					<option value="2,3,4,5,6,7,8,9,10" <?=($ctrl->value("search_status") == "2,3,4,5,6,7,8,9,10" ? "selected" : "")?>>All
 					<option value="2" <?=($ctrl->value("search_status") == "2" ? "selected" : "")?>>On Order
 					<option value="3,4" <?=($ctrl->value("search_status") == "3,4" ? "selected" : "")?>>Dalam Proses
 					<option value="5" <?=($ctrl->value("search_status") == "5" ? "selected" : "")?>>Revisi
@@ -22,11 +46,12 @@
 					<option value="9" <?=($ctrl->value("search_status") == "9" ? "selected" : "")?>>Siap
 					<option value="10" <?=($ctrl->value("search_status") == "10	" ? "selected" : "")?>>Delivered
 				</select>
+				</div>
 			</td></tr>
 		</table>
 	</div>
 	<div class="boxright">
-		<div class="boxcon5" style="width:280px;margin-right:25px;">
+		<div class="boxcon5" style="width:300px;margin-right:25px;">
 			<table width="100%">
 				<tr>
 					<td width="12px"><div class="color01"></div></td><td width="140"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['ordered'])?></td>
@@ -58,10 +83,10 @@
 		<th width="120" align="left"><a href="#" class="colname" onclick="setaction('sortby_salesid');">Order #<?=$ctrl->sortimage('salesid')?></a></th>
 		<th width="110" align="left"><a href="#" class="colname" onclick="setaction('sortby_orderdate');">Tanggal Order<?=$ctrl->sortimage('orderdate')?></a></th>
 		<th width="60" align="left"><a href="#" class="colname" onclick="setaction('sortby_kodemember');">Member<?=$ctrl->sortimage('kodemember')?></a></th>
-		<th width="120" align="left"><a href="#" class="colname" onclick="setaction('sortby_namamember');">Member Name<?=$ctrl->sortimage('namamember')?></a></th>
+		<th width="220" align="left"><a href="#" class="colname" onclick="setaction('sortby_namamember');">Member Name<?=$ctrl->sortimage('namamember')?></a></th>
 		<th width="110" align="right"><a href="#" class="colname" onclick="setaction('sortby_totalbayar');">Total Member<?=$ctrl->sortimage('totalbayar')?></a></th>
 		<th width="100" align="left"><a href="#" class="colname" onclick="setaction('sortby_salesidsmi');">Order BC<?=$ctrl->sortimage('salesidsmi')?></a></th>
-		<th width="100" align="left"><a href="#" class="colname" onclick="setaction('sortby_statusname');">Status<?=$ctrl->sortimage('statusname')?></a></th>
+		<th width="120" align="left"><a href="#" class="colname" onclick="setaction('sortby_statusname');">Status<?=$ctrl->sortimage('statusname')?></a></th>
 	</tr>
 	<?
 	if (is_array($ctrl->items))

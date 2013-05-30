@@ -19,6 +19,7 @@
 				$rs = $this->db->query($sql);
 				if($rs->fetch())
 				{
+					$bcemail = $rs->value('email');
 					if ($rs->value('suspend') == 1)
 					{
 						$this->errmsg = $this->sysparam['appmsg']['bcaccountsuspend'];
@@ -31,11 +32,13 @@
 						$sql.= " where kodebc = " . $this->queryvalue($this->param["userid"]); 
 						$this->db->execute($sql);
 
+						$emailfrom = $this->db->execute('select top 1 emailfrom from sysparamtable with (nolock)');
+						
 						$this->pageindex = 2;
 						$body = $this->sysparam['email']['bcnewpassword']['body'];
 						$body = str_replace("[newpassword]",$newpass,$body);
 						$body = str_replace("[bcurl]",$this->sysparam['app']['bcurl'],$body);	
-						$this->sendemail($this->sysparam['email']['from'],$rs->value('email'),$this->sysparam['email']['bcnewpassword']['subject'],$body);									
+						$this->sendemail($emailfrom,$bcemail,$this->sysparam['email']['bcnewpassword']['subject'],$body);									
 					}
 				}
 				else

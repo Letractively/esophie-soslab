@@ -34,7 +34,8 @@
 				}
 				else if ( isset($ctrl->statuscode) )
 				{
-					if ( $ctrl->statuscode == "1" )
+					if ($ctrl->statuscode == $ctrl->sysparam['salesstatus']['openorder'] || 
+					    $ctrl->statuscode == $ctrl->sysparam['salesstatus']['ordered'])
 					{
 			?>
 				Pesan Online

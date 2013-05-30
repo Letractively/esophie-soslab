@@ -123,8 +123,9 @@
 		
 		function login()
 		{			
-	
-			return isset($_SESSION[$this->sysparam['session']['userid']]) && $_SESSION[$this->sysparam['session']['usertype']] == $this->usertype;
+			return isset($_SESSION[$this->sysparam['session']['userid']]) && 
+				isset($_SESSION[$this->sysparam['session']['usertype']]) &&
+				$_SESSION[$this->sysparam['session']['usertype']] == $this->usertype;
 		}	
 		
 		function gotopage($page,$param = '') { /* inherited */ }	
@@ -151,13 +152,13 @@
 		
 		function sendemail($from, $to, $subject, $body)
 		{
-			$sql = "insert into " . $this->sysparam['table']['email'];
-			$sql.= "([from],[to],subject,body,createdDate) values ";
-			$sql.= "(" . $this->queryvalue($from);
-			$sql.= "," . $this->queryvalue($to);
-			$sql.= "," . $this->queryvalue($subject);
-			$sql.= "," . $this->queryvalue($body);
-			$sql.= ",getdate())";
+			$sql = 'insert into emailtable ';
+			$sql.= '([from],[to],subject,body,createdDate) values ';
+			$sql.= '(' . $this->queryvalue($from);
+			$sql.= ',' . $this->queryvalue($to);
+			$sql.= ',' . $this->queryvalue($subject);
+			$sql.= ',' . $this->queryvalue($body);
+			$sql.= ',getdate())';
 			
 			$this->db->execute($sql);
 		}

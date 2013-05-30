@@ -232,6 +232,11 @@
 		{
 			switch($this->param['backpage'])
 			{
+				case '1' :
+					$searchvalue = $this->param['sc'];
+					$searchvalue = str_replace(";","&",str_replace(":", "=", $searchvalue));
+					$this->gotopage('report1', ($searchvalue == "" ? "" : $searchvalue . "&pageaction=search") );
+					break;
 				case '2' :
 					$searchvalue = $this->param['sc'];
 					$searchvalue = str_replace(";","&",str_replace(":", "=", $searchvalue));
