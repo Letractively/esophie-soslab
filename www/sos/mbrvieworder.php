@@ -21,17 +21,21 @@
 	switch ($ctrl->pageview) 
 	{ 
 		case "orderedit" : ?>
-			<div class="boxcon5">1 - Silahkan pilih BC yang akan proses order Anda</div>
-			<div class="boxcon">
-				<div class="boxleft" style="width:150px">
-					<div class="boxstyled2"><select name="bc" id="bc" onchange="setaction('refreshbc')"><? $ctrl->getbc(); ?></select></div>
-					<input type="checkbox" name="defaultbc" id="defaultbc" value="1" <?if ($ctrl->value('defaultbc') == '1') echo 'checked';?>> set sebagai <font class="pink">default BC</font>.
+			<? if ( $ctrl->errorbcmsg != "" ) { ?>
+			<div class="boxerr1"><?=$ctrl->errorbcmsg?></div>
+			<? } else {?>
+				<div class="boxcon5">1 - Silahkan pilih BC yang akan proses order Anda</div>
+				<div class="boxcon">
+					<div class="boxleft" style="width:150px">
+						<div class="boxstyled2"><select name="bc" id="bc" onchange="setaction('refreshbc')"><? $ctrl->getbc(); ?></select></div>
+						<input type="checkbox" name="defaultbc" id="defaultbc" value="1" <?if ($ctrl->value('defaultbc') == '1') echo 'checked';?>> set sebagai <font class="pink">default BC</font>.
+					</div>
+					<div class="boxright" style="width:150px">
+						<?=$ctrl->varvalue('bcaddress')?>
+						<br><?=$ctrl->varvalue('bcphone')?>
+					</div>
 				</div>
-				<div class="boxright" style="width:150px">
-					<?=$ctrl->varvalue('bcaddress')?>
-					<br><?=$ctrl->varvalue('bcphone')?>
-				</div>
-			</div>
+			<? } ?>
 			<div class="boxcon5">2 - Silahkan cek kembali order Anda</div>			
 <?			break;
 
@@ -189,10 +193,18 @@
 			<table border="0" width="100%">
 			<tr>
 			<td>
-				<button type="button" onclick="setaction('neworder');" class="back" style="width:100px">&lt;&lt; Order Baru</button>
+				<? if ( $ctrl->errorbcmsg != "" ) { ?>
+					<button type="button" onclick="setaction('orderhistory');" class="back">&lt;&lt; Kembali</button>
+				<? } else { ?>
+					<button type="button" onclick="setaction('neworder');" class="back" style="width:100px">&lt;&lt; Order Baru</button>
+				<? } ?>
 			</td>
 			<td align="right">
-				<button type="button" onclick="setaction('confirmorder');" class="buttonbig">Konfirmasi Order &gt;&gt;</button>
+				<? if ( $ctrl->errorbcmsg == "" ) { ?>
+					<button type="button" onclick="setaction('confirmorder');" class="buttonbig">Konfirmasi Order &gt;&gt;</button>
+				<? } else { ?>
+					&nbsp;
+				<? } ?>
 			</td>
 			</tr>
 			</table>
