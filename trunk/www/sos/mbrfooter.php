@@ -8,7 +8,7 @@
 			<?if ($ctrl->filename() == 'mbrcekdata.php' || $ctrl->filename() == 'mbrpilihitem.php' || $ctrl->filename() == 'mbrordercheck.php' || $ctrl->filename() == 'mbrpaymentconfirm.php' ) { ?>
 				Pesan Online 
 			<? } else { 
-				if ($ctrl->filename() == 'mbrviewhistory.php') 
+				if ($ctrl->filename() == 'mbrviewhistory.php' || isset($ctrl->lastorderstatus) ) 
 				{
 					if ( isset($ctrl->lastorderstatus) )
 					{
@@ -35,7 +35,7 @@
 				else if ( isset($ctrl->statuscode) )
 				{
 					if ($ctrl->statuscode == $ctrl->sysparam['salesstatus']['openorder'] || 
-					    $ctrl->statuscode == $ctrl->sysparam['salesstatus']['ordered'])
+					    $ctrl->statuscode == $ctrl->sysparam['salesstatus']['ordered'] )
 					{
 			?>
 				Pesan Online
