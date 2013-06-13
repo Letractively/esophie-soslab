@@ -1,20 +1,39 @@
-<?include "bcheader.php";?>
-<b><br>
-Selamat datang di<br>
-Sophie Online Shopping<br><br>
-</b>
-Silahkan masukkan:<br>
-<table>
-	<tr><td width="110">Kode BC:</td></tr>
-	<tr><td width="110"><input type="text" name="userid" id="userid" value="" size="23"/></td></tr>
-	<tr><td width="110">Password:</td></tr>
-	<tr><td width="110"><input type="password" name="password" id="password" value="" size="23"/></td></tr>
-	<tr><td align="center"><button type="button" onclick="setaction('ok');" style="width:60px;">Login</button></td></tr>
-</table>
-<? if ($ctrl->varvalue("errmsg") != '') { ?>
-	<div class="errmsg"><?=$ctrl->varvalue("errmsg")?></div>
-<? } ?>
-<br><a href="bcnewpassword.php">Lupa password</a>
-<br><br>&nbsp;
-
-<?include "bcfooter.php";?>
+<?
+	class index extends controller
+	{	
+		function run() 
+		{	
+			$this->checklogin = false;
+			parent::run();
+			
+			if ($this->action == "ok")
+			{
+				$sql = "select kodebc, suspend from BCTable ";
+				$sql.= " where kodebc = " . $this->queryvalue($this->param["userid"]);
+				$sql.= " and password = " . $this->queryvalue(md5($this->param["password"]));
+				
+				$rs = $this->db->query($sql);
+				
+				if ($rs->fetch())
+				{	
+					if ($rs->value('suspend') == 1)
+					{
+						$this->errmsg = $this->sysparam['appmsg']['bcaccountsuspend'];
+					}
+					else
+					{
+						$_SESSION[$this->sysparam['session']['userid']] = $this->param["userid"];
+						$_SESSION[$this->sysparam['session']['usertype']] = 2;
+						$rs->close();
+						$this->gotopage('onlineorder');
+					}
+				}
+				else
+				{
+					$this->errmsg = 'Kode BC dan/atau password yang anda masukkan salah';
+				}
+				$rs->close();
+			}
+		}		
+	}
+?>
