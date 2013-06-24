@@ -1,10 +1,13 @@
 <?
-	class index extends controller
+	class bclogin extends controller
 	{	
 		function run() 
 		{	
 			$this->checklogin = false;
+                        
 			parent::run();
+                        
+                        if ($this->login()) $this->gotopage('onlineorder');
 			
 			if ($this->action == "ok")
 			{

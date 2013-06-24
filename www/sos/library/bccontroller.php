@@ -15,15 +15,22 @@
 		{
 			$this->usertype = 2;
 			parent::run();
+                        $this->checkLogin();
+                        
 		}
+                
+                function checkLogin() {                 
+                    if ($this->checklogin && !$this->login())
+                        $this->gotopage('login');
+                }
 		
 		function gotopage($page,$param = '')
 		{
 			switch(strtolower($page))
 			{
-				case 'login' 			: header('location:index.php' . ($param != '' ? '?' . $param : '')); break;	
+				case 'login' 			: header('location:bclogin.php' . ($param != '' ? '?' . $param : '')); break;	
 				case 'onlineorder'		: header('location:bconlineorder.php' . ($param != '' ? '?' . $param : '')); break;	
-				case 'ordertambahan'	: header('location:bcordertambahan.php' . ($param != '' ? '?' . $param : '')); break;	
+				case 'ordertambahan'            : header('location:bcordertambahan.php' . ($param != '' ? '?' . $param : '')); break;	
 				case 'myorder'			: header('location:bcmyorder.php' . ($param != '' ? '?' . $param : '')); break;
 				case 'vieworder'		: header('location:bcvieworder.php' . ($param != '' ? '?' . $param : '')); break;
 				case 'report1'			: header('location:bcreport01.php' . ($param != '' ? '?' . $param : '')); break;

@@ -2,11 +2,11 @@
 	class mbrviewhistory extends controller
 	{	
 		var $orderhistory;
-		var	$lastorderstatus;
+		var $lastorderstatus;
 		
 		function run() 
 		{	
-			parent::run();
+                        parent::run();
 			switch($this->action)
 			{			
 				case "none" :
@@ -20,7 +20,11 @@
 			$sql = "select top 5 * from vw_salestable where kodemember = " . $this->queryvalue($this->userid());
 			$sql.= " and status <> " . $this->queryvalue($this->sysparam['salesstatus']['clear']);
 			$sql.= " and status <> " . $this->queryvalue($this->sysparam['salesstatus']['openorder']);
-			$sql.= " order by salesid desc";
+			$sql.= " order by CASE 
+                                    WHEN status IN (1,2,3,4,5,6,7,8,9) THEN status
+                                    WHEN status IN (0,10) THEN 10
+                                    ELSE 11
+                                END, salesid desc";
 			
 			$rs = $this->db->query($sql);			
 			while ($rs->fetch()) 

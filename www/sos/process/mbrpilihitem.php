@@ -12,7 +12,7 @@
 
 			switch($this->action)
 			{			
-				case "save" :			
+				case "save" :	
 					if ($this->isvaliddata())
 						$this->savedata();
 					break;
@@ -32,22 +32,23 @@
 					}
 					else
 					{
-						$sql = 'select count(*) from salestable ';
-						$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
-						$sql.= ' and status < ' . $this->sysparam['salesstatus']['confirmed'];
-						$sql.= ' and status > 0';
+						$sql1 = 'select count(*) from salestable ';
+						$sql1.= ' where kodemember = ' . $this->queryvalue($this->userid());
+						$sql1.= ' and status < ' . $this->sysparam['salesstatus']['confirmed'];
+						$sql1.= ' and status > 1';
 
-						if($this->db->executeScalar($sql)) $this->gotohomepage();		
+						if($this->db->executeScalar($sql1)) $this->gotohomepage();		
 											
-						$sql = 'select salesid from salestable ';
-						$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
-						$sql.= ' and status = ' . $this->sysparam['salesstatus']['openorder'];
+						$sql2 = 'select salesid from salestable ';
+						$sql2.= ' where kodemember = ' . $this->queryvalue($this->userid());
+						$sql2.= ' and status = ' . $this->sysparam['salesstatus']['openorder'];
 						
-						$rs = $this->db->query($sql);			
+						$rs = $this->db->query($sql2);			
 						if ($rs->fetch()) 
 						{
 							$this->param['salesid'] = $rs->value('salesid');
 							$this->salesid = $rs->value('salesid');
+                                                        $this->gotopage('checkitem',"salesid=" . $this->salesid);
 						}
 						//else $this->gotohomepage();
 					}
@@ -206,7 +207,7 @@
 			}
 			else
 			{ 
-				header('location:mbrordercheck.php?salesid='.$this->salesid);
+                            header('location:mbrordercheck.php?salesid='.$this->salesid);
 			}
 		}
 	}

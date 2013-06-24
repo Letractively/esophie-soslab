@@ -14,14 +14,14 @@
 			<tr><td>Status</td><td>
 				<div class="boxstyled1" style="width:200px; float:left;">
 					<select id="search_status" name="search_status" style="width:190px">
-						<option value="5,6,7,8,9" <?=($ctrl->value("search_status") == "5,6,7,8,9" ? "selected" : "")?>>All
+						<option value="4,5,6,7,8,9,0" <?=($ctrl->value("search_status") == "4,5,6,7,8,9,0" ? "selected" : "")?>>All
 						<!--<option value="2" <?=($ctrl->value("search_status") == "2" ? "selected" : "")?>>On Order-->
 						<!--<option value="3,4" <?=($ctrl->value("search_status") == "3,4" ? "selected" : "")?>>Dalam Proses-->
-						<option value="5" <?=($ctrl->value("search_status") == "5" ? "selected" : "")?>>Revisi
+						<option value="4,5" <?=($ctrl->value("search_status") == "4,5" ? "selected" : "")?>>Belum Konfirmasi
 						<option value="6,7" <?=($ctrl->value("search_status") == "6,7" ? "selected" : "")?>>Belum Bayar
-						<option value="8" <?=($ctrl->value("search_status") == "8" ? "selected" : "")?>>Telah Bayar
-						<option value="9" <?=($ctrl->value("search_status") == "9" ? "selected" : "")?>>Siap
-						<!--<option value="10" <?=($ctrl->value("search_status") == "10	" ? "selected" : "")?>>Delivered-->
+						<option value="8,9" <?=($ctrl->value("search_status") == "8,9" ? "selected" : "")?>>Telah Bayar
+						<option value="0" <?=($ctrl->value("search_status") == "0" ? "selected" : "")?>>Cancelled
+                                                <!--<option value="10" <?=($ctrl->value("search_status") == "10	" ? "selected" : "")?>>Delivered-->
 					</select>
 				</div>
 			</td></tr>

@@ -47,7 +47,7 @@
 		function filename() { return basename($_SERVER["PHP_SELF"]); }
 		function value($var) { return isset($this->param[$var]) ? $this->htmlvalue($this->param[$var]) : ''; }
 		function varvalue($var) { return isset($this->$var) ? $this->htmlvalue($this->$var) : ''; }
-		function valuenumber($value,$decimal=0) {return number_format($value,$decimal,',','.'); }
+		function valuenumber($value,$decimal=0) {return number_format((double)$value,$decimal,',','.'); }
 		function valuedatetime($value) {return date('d M Y H:i',strtotime($value)); }
 		function htmlvalue($value) { return htmlspecialchars($value); }
 		function queryvalue($value) { return "'" . str_replace("'","''",$value) . "'"; }

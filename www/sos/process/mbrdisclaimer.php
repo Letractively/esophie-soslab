@@ -14,16 +14,14 @@
 				case "setuju" :
 					if (isset($this->param["agree"]))
 					{
-						// Create or update the BC mapping for this new member
-						$sql = "exec sp_sos_IMPORTMEMBER " . $this->queryvalue($this->userid());
-						//echo $sql;
-						if ($this->debug()) echo $sql;
-						$this->db->execute($sql);
-						$this->gotopage('inputitem');
+                                            $sql = "UPDATE memberTable SET acceptdate=GETDATE() WHERE kodemember = ". 
+                                                    $this->queryvalue($this->userid());
+                                            $this->db->execute($sql);
+                                            $this->gotopage('inputitem');
 					}
 					else
 					{
-						$this->errmsg = "Silahkan click check box sebagai pernyataan setuju atas persyaratan Sophie Online Shopping.";
+                                            $this->errmsg = "Silahkan click check box sebagai pernyataan setuju atas persyaratan Sophie Online Shopping.";
 					}
 					break;
 				case "lanjut" :

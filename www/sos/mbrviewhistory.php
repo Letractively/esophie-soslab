@@ -5,7 +5,7 @@
 			<div class="color<?=$ctrl->mbrmsg['color']?>"></div>
 			<?}?>
 		</div>
-		<div class="boxright3"><b><?=$ctrl->mbrmsg['title']?></b><br><?=$ctrl->mbrmsg['body']?></div>
+		<div class="boxright3"><p class="msgtitle"><?=$ctrl->mbrmsg['title']?></p><?=$ctrl->mbrmsg['body']?></div>
 		<? if (isset($ctrl->mbrmsg['link1'])) { ?>
 		<div class="boxcon3-1">
 			<?if (isset($ctrl->mbrmsg['link1'])) {?><a href="<?=$ctrl->mbrmsg['link1']?>"><?=$ctrl->mbrmsg['link1label']?></a><?}?>

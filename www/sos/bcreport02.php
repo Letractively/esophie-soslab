@@ -37,15 +37,16 @@
 			<tr><td>Status</td><td>
 				<div class="boxstyled1" style="width:230px; float:left;">
 				<select id="search_status" name="search_status" style="width:220px">
-					<option value="2,3,4,5,6,7,8,9,10" <?=($ctrl->value("search_status") == "2,3,4,5,6,7,8,9,10" ? "selected" : "")?>>All
-					<option value="2" <?=($ctrl->value("search_status") == "2" ? "selected" : "")?>>On Order
-					<option value="3,4" <?=($ctrl->value("search_status") == "3,4" ? "selected" : "")?>>Dalam Proses
-					<option value="5" <?=($ctrl->value("search_status") == "5" ? "selected" : "")?>>Revisi
-					<option value="6,7" <?=($ctrl->value("search_status") == "6,7" ? "selected" : "")?>>Belum Bayar
-					<option value="8" <?=($ctrl->value("search_status") == "8" ? "selected" : "")?>>Telah Bayar
-					<option value="9" <?=($ctrl->value("search_status") == "9" ? "selected" : "")?>>Siap
-					<option value="10" <?=($ctrl->value("search_status") == "10	" ? "selected" : "")?>>Delivered
-				</select>
+					<option value="0,2,3,4,5,6,7,8,9,10" <?=($ctrl->value("search_status") == "0,2,3,4,5,6,7,8,9,10" ? "selected" : "")?>>All
+					<option value="2" <?=($ctrl->value("search_status") == "2" ? "selected" : "")?>>New
+					<option value="3,4" <?=($ctrl->value("search_status") == "3,4" ? "selected" : "")?>>In progress
+					<option value="5" <?=($ctrl->value("search_status") == "5" ? "selected" : "")?>>Edited
+					<option value="6,7" <?=($ctrl->value("search_status") == "6,7" ? "selected" : "")?>>Waiting payment
+					<option value="8" <?=($ctrl->value("search_status") == "8" ? "selected" : "")?>>Payment accepted
+					<option value="9" <?=($ctrl->value("search_status") == "9" ? "selected" : "")?>>Ready to pickup
+					<option value="10" <?=($ctrl->value("search_status") == "10" ? "selected" : "")?>>Delivered
+                                        <option value="0" <?=($ctrl->value("search_status") == "0" ? "selected" : "")?>>Cancelled
+                                </select>
 				</div>
 			</td></tr>
 		</table>

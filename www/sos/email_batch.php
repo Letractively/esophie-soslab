@@ -3,8 +3,7 @@
 	include_once "library/emailsmscontroller.php";
 	include_once "library/class.phpmailer.php";
 	include_once "library/syscontroller.php";
-
-	$sql = ""; 
+ 
 	$sqlUpdate = "";
 	$varBody = "";
 	$varLine = "";
@@ -57,6 +56,7 @@
 				$totalorder = 0;
 				$totaldiscount = 0;
 				$totalbayar = 0;
+                                $varLine = "";
 				$sqlline = "select itemid, itemname, qty, price, totalorder, discount, totalbayar, qtyedited, totalorderedited, discountedited, totalbayaredited from vw_salesline where salesid ='" .  $salesid . "'";
 				$rs3 = $query->db->query($sqlline);
 				while ( $rs3->fetch() )

@@ -83,15 +83,8 @@
 					break;
 					
 				case "none":	
-					$sql = "select status from vw_salestable where salesid = " . $this->queryvalue($this->salesid);
-					$status = $this->db->executescalar($sql);
 					$this->isanyitemsold = $this->checkItemSold();
-					switch($status)
-					{
-						case $this->sysparam['salesstatus']['clear'] : $this->gotohomepage(); break;
-						default :$this->setpageview($status); break;
-					}
-					break;
+                                        break;
 			}
 			$this->loaddata();
 		}		
@@ -103,7 +96,8 @@
 			$rs = $this->db->query($sql);			
 			if ($rs->fetch()) 
 			{					
-				$this->setpageview($rs->value("status"));
+				if ($rs->value("status") == $this->sysparam['salesstatus']['clear']) $this->gotohomepage();
+                                $this->setpageview($rs->value("status"));
 				$this->setmbrmsg();
 				
 				//  All information
@@ -197,6 +191,8 @@
 				$this->lastorderstatus = $rs->value('status');
 			}
 			$rs->close();
+                        
+                        if ($this->debug()) echo "<br/>Payment Mode: " . $this->varvalue('paymentmode');
 		}
 
 		function setpageview($status)
@@ -217,6 +213,7 @@
 				default: $this->pageview = 'view';
 			}
 			
+                        if ($this->debug())  echo "<br/>Pageview: " . $this->pageview;
 		}
 		
 		function checkItemSold()
@@ -281,6 +278,7 @@
 			$sql = " exec sp_SalesConfirmQtyChange " . $this->queryvalue($this->salesid);			
 			$this->db->execute($sql);			
 			$this->updatesalesstatus($this->salesid,$this->sysparam['salesstatus']['validated']);
+                        $this->initfaspay($this->salesid);
 		
 			$this->gotopage('paymentconfirm','salesid='.urlencode($this->salesid));
 		}

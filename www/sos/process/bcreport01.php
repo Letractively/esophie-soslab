@@ -32,19 +32,14 @@
 			{
 				$sql.= " and status in (" . $this->param["search_status"] . ")";
 				$this->searchcriteria .= ($this->searchcriteria != "" ? ";" : "") . "search_status:". $this->param["search_status"];
-			}
-			if ( $this->action == "none" )
-			{
-				$sql.= " and status in (6,7,8)";
-				$this->searchcriteria .= ($this->searchcriteria != "" ? ";" : "") . "search_status:6,7,8";
-			}			
+			}		
 			if ( $this->sortby == "" )	
 				$this->sortby = "itemid";
 			if ( $this->sortorder == "" )	
 				$this->sortorder = "asc";
 				
 			$sql.= " order by " . $this->sortby . " " .$this->sortorder ;
-			
+			if ($this->debug()) echo $sql;
 			$rs = $this->db->query($sql);
 			$count = 0;
 			
