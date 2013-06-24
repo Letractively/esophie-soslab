@@ -20,8 +20,8 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 #
 # m h  dom mon dow   command
-* * * * *               root /var/www/.staging/sos/dev/util/sh/SOS_SMS.sh >> /var/log/apache2/SOS_batch.log
-* * * * *               root /var/www/.staging/sos/dev/util/sh/SOS_Email.sh >> /var/log/apache2/SOS_batch.log
-0-59/2 7-20 * * *       root /var/www/.staging/sos/dev/util/sh/SOS_CheckSync.sh >> /var/log/apache2/SOS_batch.log
-2-59/3 * * * *          root /var/www/.staging/sos/dev/util/sh/SOS_CheckPayment.sh >> /var/log/apache2/SOS_batch.log
-1-59/3 8-19 * * *       root /var/www/.staging/sos/dev/util/sh/SOS_AutoByPass.sh >> /var/log/apache2/SOS_batch.log
+* * * * *               root /var/www/admin/sos/sh/SOS_SMS.sh >> /var/log/apache2/SOS_batch.log
+* * * * *               root /var/www/admin/sos/sh/SOS_Email.sh >> /var/log/apache2/SOS_batch.log
+0-59/2 7-20 * * *       root /var/www/admin/sos/sh/SOS_CheckSync.sh >> /var/log/apache2/SOS_batch.log
+2-59/3 * * * *          root /var/www/admin/sos/sh/SOS_CheckPayment.sh >> /var/log/apache2/SOS_batch.log
+1-59/3 8-19 * * *       root /var/www/admin/sos/sh/SOS_AutoByPass.sh >> /var/log/apache2/SOS_batch.log
