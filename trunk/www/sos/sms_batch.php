@@ -3,10 +3,7 @@
 	include_once "library/emailsmscontroller.php";
 	include_once "library/class.phpmailer.php";
 
-	$sql = "";
 	$sqlUpdate = "";
-	$varBody = "";
-	$smsurl = "";
 	$status = -1;
 	$msgid = "";
 	$phonenumber = "";

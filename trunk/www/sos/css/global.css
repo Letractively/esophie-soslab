@@ -380,6 +380,14 @@ img.logo {
 }
 
 
+div.tabletitle {
+     padding-bottom: 3px;
+     border-bottom: 2px solid #9b9b9b;
+     text-align: center;
+     margin-bottom: 10px;
+     margin-left: 10px;
+     margin-right: 10px;
+}
 
 table.dataview {
 	*border-collapse: collapse; /* IE7 and lower */
@@ -477,15 +485,29 @@ table.dataview tr:last-child td:last-child {
 }
 
 .errormessage {
-	BORDER-BOTTOM: 1px solid #903; 
-	BORDER-TOP: 1px solid #903; 
-	PADDING: 2px 0px 2px 0px; 
-	MARGIN: 2px 0px 2px 0px; 
-	BACKGROUND: #fcc; 
-	COLOR: #903;
+	border-bottom: 1px solid #903; 
+	border-top: 1px solid #903; 
+	padding: 2px 0px 2px 0px; 
+	margin: 2px 0px 2px 0px; 
+	background: #fcc; 
+	color: #903;
 }
-.errormessage  ul{PADDING: 0px 0px 0px 15px; margin: 0px 0px 0px 0px;}
-.errormessage  ul li{PADDING: 2px 0px 2px 10px;}
+.errormessage  ul{padding: 0px 0px 0px 15px; margin: 0px 0px 0px 0px;}
+.errormessage  ul li{padding: 2px 0px 2px 10px;}
+
+.errorbox {
+    float:left;
+    text-align:left;
+    width:290px;
+    background: #fcc; 
+    color: #903;
+    border: 1px solid #903;
+    margin-left: 30px;
+    padding:6px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
 
 .color00{ /* blank */
 	width:8px;

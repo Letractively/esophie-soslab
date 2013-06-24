@@ -1,3 +1,3 @@
 #!/bin/sh
-cd /var/www/sos
-/usr/bin/php5 email_batch.php
+cd /var/www/sos/library
+/usr/bin/php5 batch_sendemail.php

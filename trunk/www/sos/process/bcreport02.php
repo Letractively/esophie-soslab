@@ -45,8 +45,8 @@
 			}
 			if ( $this->action == "none" )
 			{
-				$sql.= " and status in (2,3,4,5,6,7,8,9,10)";
-				$this->searchcriteria .= ($this->searchcriteria != "" ? ";" : "") . "search_status:2,3,4,5,6,7,8,9,10";
+				$sql.= " and status in (0,2,3,4,5,6,7,8,9,10)";
+				$this->searchcriteria .= ($this->searchcriteria != "" ? ";" : "") . "search_status:0,2,3,4,5,6,7,8,9,10";
 			}
 			if ( isset($this->param["search_salesidsmi"]) && trim($this->param["search_salesidsmi"]) != "" )
 			{

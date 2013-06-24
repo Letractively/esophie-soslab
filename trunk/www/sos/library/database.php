@@ -102,6 +102,13 @@
 			}
 			return $this->record;
 		}
+                
+                function fetchAll()
+                {
+                    $this->rId->execute();
+                    return $this->rId->fetchAll();
+                }
+                
 		function record() {
 			return $this->record;
 		}

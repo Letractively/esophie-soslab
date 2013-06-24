@@ -1,9 +1,5 @@
 <?include "bcheader.php";?>
-<b><br>
-Selamat datang di<br>
-Sophie Online Shopping<br><br>
-</b>
-Silahkan masukkan:<br>
+<br/><b><p>Online Orders - Backoffice BC</p></b>
 <table>
 	<tr><td width="110">Kode BC:</td></tr>
 	<tr><td width="110"><input type="text" name="userid" id="userid" value="" size="23"/></td></tr>

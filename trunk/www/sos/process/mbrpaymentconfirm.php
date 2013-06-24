@@ -40,12 +40,10 @@
 					if ($status != $this->sysparam['salesstatus']['validated'])
 						$this->gotohomepage();
 					break;
-				case "simatm":
-					$vanumber = $this->param["vanumber"];
-					echo $this->SimulateATMPayment($vanumber);
-					break;
 			}
 			$this->load();
+                        
+                        if ($this->action == "simulate") $this->SimulatePayment();
 		}		
 		
 		function load()
@@ -100,6 +98,43 @@
 			$rs->close();
 		}
 		
+                function SimulatePayment ()
+		{
+                    $userid = "bot31025";
+                    $password = "p@ssw0rd";
+                    $signature = sha1(md5($userid . $password .  $this->salesid));
+                    
+                    $sql = "select trxref from paymenttable with (NOLOCK) where salesid = " . $this->queryvalue($this->salesid);
+                    $rs = $this->db->query($sql);			
+                    if ($rs->fetch()) 
+                    {
+                        $xml = "<faspay>";
+                        $xml.= "<request>Payment Notification</request>";
+                        $xml.= "<trx_id>" . $rs->value("trxref") . "</trx_id>";
+                        $xml.= "<merchant_id>" . $this->merchantid . "</merchant_id>";
+                        $xml.= "<merchant>SOPHIE PARIS</merchant>";
+                        $xml.= "<bill_no>" . $this->salesid . "</bill_no>";
+                        $xml.= "<payment_reff>dummyref123</payment_reff>";
+                        $xml.= "<payment_date>" . date("Y-m-d H:i:s") . "</payment_date>";
+                        $xml.= "<payment_status_code>2</payment_status_code>";
+                        $xml.= "<payment_status_desc>Dummy success notification</payment_status_desc>";
+                        $xml.= "<signature>" . $signature . "</signature>";
+                        $xml.= "</faspay>";
+                        
+                        $url = 'http://webdev.sophiemartin.com/paygate/faspay/PaymentNotification';
+                        $ch = curl_init($url);
+
+                        curl_setopt($ch, CURLOPT_POST, 1);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                        $response = curl_exec($ch);
+                        curl_close($ch);
+                    }
+                    
+                    return $response;
+                }
+                
 		function SimulateATMPayment ($vanumber)
 		{
 			$bOk = false;

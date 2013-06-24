@@ -18,4 +18,4 @@
 		<input type="hidden" id="pageaction" name="pageaction">		
 		<div name="MyCalendar" id="MyCalendar"></div>	
 		<?include_once "bcmenu.php";?>
-		<div class="boxmain" <? if ($ctrl->filename() == 'index.php') { echo 'style="width:325px;padding-right:0px;"'; } else { echo 'style="width:1000px;padding-right:0px;"';} ?> >
+		<div class="boxmain" <? if ($ctrl->filename() == 'bclogin.php') { echo 'style="width:325px;padding-right:0px;"'; } else { echo 'style="width:1000px;padding-right:0px;"';} ?> >

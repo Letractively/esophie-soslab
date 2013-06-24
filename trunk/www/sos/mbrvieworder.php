@@ -7,13 +7,7 @@
 			<div class="color<?=$ctrl->mbrmsg['color']?>"></div>
 			<?}?>
 		</div>
-		<div class="boxright3"><b><?=$ctrl->mbrmsg['title']?></b><br><?=$ctrl->mbrmsg['body']?></div>
-		<? if (isset($ctrl->mbrmsg['link1']) && $ctrl->pageview != 'pembayaran') { ?>
-		<div class="boxcon3-1">
-			<?if (isset($ctrl->mbrmsg['link1'])) {?><a href="<?=$ctrl->mbrmsg['link1']?>"><?=$ctrl->mbrmsg['link1label']?></a><?}?>
-			<?if (isset($ctrl->mbrmsg['link2'])) {?>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?=$ctrl->mbrmsg['link2']?>"><?=$ctrl->mbrmsg['link2label']?></a><?}?>
-		</div>
-		<? } ?>
+		<div class="boxright3"><p class="msgtitle"><?=$ctrl->mbrmsg['title']?></p><?=$ctrl->mbrmsg['body']?></div>
 	</div>
 	<? } ?>
 
@@ -168,19 +162,19 @@
 	<div class="boxcon1">
 		<div class="boxleft1">Total Setelah Diskon</div><div class="boxright1-1"><?=$ctrl->valuenumber($ctrl->varvalue('totalorder')+$ctrl->varvalue('discount'));?></div>
 	</div>
-	<? if ($ctrl->statuscode == 1) { ?>
-	<div class="boxcon1">
-		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i></div>
-	</div>
-	<? } ?>	
-	<?if ($ctrl->varvalue('paymentmode') != '' && $ctrl->statuscode > 1) { ?>
+
+	<?if ($ctrl->varvalue('paymentmode') != '' && ($ctrl->statuscode > 1 || $ctrl->pageview == 'orderconfirm')) { ?>
 	<div class="boxcon1">
 		<div class="boxleft1">Payment Charge (<?=$ctrl->varvalue('paymentname')?>)</div><div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('paymentcharge'));?></div>
 	</div>
 	<div class="boxcon1">
 		<div class="boxleft1">Total Pembayaran</div><div class="boxright1-1"><?=$ctrl->valuenumber($ctrl->varvalue('totalbayar'));?></div>
 	</div>
-	<? } ?>
+	<? } else { ?>
+        <div class="boxcon1">
+		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i></div>
+	</div>
+	<? } ?>	
 <?
 	switch ($ctrl->pageview) 
 	{ 

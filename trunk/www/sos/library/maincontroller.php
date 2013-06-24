@@ -14,9 +14,7 @@
 		
 		function run() 
 		{ 
-			parent::run();		
-			if ($this->checklogin && !$this->login()) $this->gotopage('login');
-		
+			parent::run();	
 		}
 		
 		function __destruct()
@@ -33,7 +31,7 @@
 			parent::setsysparam();
 			
 			//db setting
-			$this->sysparam['db']['server'] 		= 'NSUDBS';
+			$this->sysparam['db']['server'] 		= '10.0.0.102';
 			$this->sysparam['db']['name'] 			= 'webdev';
 			$this->sysparam['db']['user'] 			= 'sos';
 			$this->sysparam['db']['password'] 		= 'S0s#0k';	
@@ -42,18 +40,27 @@
 			$this->sysparam['dbsms']['server'] 		= '192.168.10.201';
 			$this->sysparam['dbsms']['name'] 		= 'SOS2';
 			$this->sysparam['dbsms']['user'] 		= 'sa';
-			$this->sysparam['dbsms']['password'] 	= 'sa123';	
+			$this->sysparam['dbsms']['password'] 	= 'sa123';
+                        $this->sysparam['dbsms']['url']                 = 'http://broadcast.jatismobile.com/smspush/send.aspx?userid=smartin&password=smartin123';
+
+                        //payment gateway settings
+                        $this->sysparam['paygate']['urlinit'] 		= "http://webdev.sophiemartin.com/paygate/faspay/PostDataTrx?salesid=";
 			
 			//application parameter			
-			$this->sysparam['app']['bcurl']				= "http://webdev.sophiemartin.com/sos/index.php";
-			$this->sysparam['app']['mbrurl']			= "http://www.sophiemobile.com";
+			$this->sysparam['app']['bcurl']				= "http://webdev.sophiemartin.com/sos/bclogin.php";
+			$this->sysparam['app']['mbrurl']			= "http://webdev.sophiemartin.com/sos/mbrlogin.php";
 			$this->sysparam['app']['mbrdisclaimer'] 	= "Persyaratannya sebagai berikut bla...bla...bla..."; 
 			$this->sysparam['app']['custservicenumber']	= "+6221 5781345"; 
 			
 			$this->sysparam['appmsg']['bcaccountsuspend']	= "account member anda ditangguhkan, silahkan hubungi admin Sophie Online Shopping";
 			
 			//email parameter
-			$this->sysparam['email']['bcneworder']['subject'] 		= "New Order from [mbrname]";
+                        $this->sysparam['email']['host']                 = "10.0.0.17"; 
+                        $this->sysparam['email']['port']                 = 25; 
+                        $this->sysparam['email']['fromemail']            = "onlineorders@sophieparis.com"; 
+                        $this->sysparam['email']['fromname']             = "Sophie Online Orders (NO REPLY)"; 
+                  
+                        $this->sysparam['email']['bcneworder']['subject'] 		= "New Order from [mbrname]";
 			$this->sysparam['email']['bcneworder']['body']			= 
 				"Member #[mbrno] ([mbrname]) baru pesan online lewat BC anda. " . 
 
@@ -142,6 +149,8 @@
 				case $this->sysparam['salesstatus']['clear']:
 				case $this->sysparam['salesstatus']['inprogress']:	
 				case $this->sysparam['salesstatus']['cancelled']:
+                                case $this->sysparam['salesstatus']['confirmed']:
+                                case $this->sysparam['salesstatus']['paid']:
 				case $this->sysparam['salesstatus']['edited']:
 				case $this->sysparam['salesstatus']['validated']:
 					$sql = 'exec sp_updateSalesStatus ' . $this->queryvalue($salesid) . ',' . $status . ',' . $cancelcode;
@@ -173,5 +182,31 @@
 			
 			$this->db->execute($sql);
 		}
+                
+                function initfaspay($salesid)
+                {
+
+                    // Send HTTP request to paygate to initialize the payment
+                    $urlpaygate = $this->sysparam['paygate']['urlinit'] . urlencode($salesid); 
+                    $result = file_get_contents($urlpaygate);
+
+                    // Send HTTP request to paygate to initialize the payment
+                    if (strcasecmp("OK",$result)==0)
+                    {
+                        // Templates for validated orders
+                        $emailTemplate = 'VLDORD2MBR';
+                        $SMSTemplate = 'VLDORD2MBR';
+
+                        // Send email and SMS
+                        $sql = "exec sp_sendEmailAndSMS ";
+                        $sql.= $this->queryvalue($salesid);
+                        $sql.= ", 1, " . $this->queryvalue($emailTemplate); 
+                        $sql.= ", '', " . $this->queryvalue($SMSTemplate);
+                        $this->db->execute($sql);
+                        
+                         return true;
+                    }
+                    else return false;
+                }
 	}
 ?>

@@ -29,7 +29,10 @@
 		function run()
 		{
 			$this->usertype = 1;
-			parent::run();	
+
+			parent::run();
+                        
+                        $this->checkLogin();
 
 			if ($this->disclaimercheck)
 			{
@@ -38,16 +41,126 @@
 					case 'disclaimer': $this->gotopage('disclaimer'); break;
 					case 'suspend' : $this->gotopage('suspend');break;
 					case 'continue' : break; 
-					default: $this->gotopage('login');
+					default: break;
 				}
 			}
-			
+       
 		}
+                
+                function checkLogin() {
+                    if ($this->checklogin && !$this->login())
+                    {
+                        $this->singlesignonsophiemobile ();
+                    }
+                    
+                    if ($this->checklogin && !$this->login())
+                    {
+                        $this->gotopage('login');
+                    }
+                }
+                
+                function singlesignonsophiemobile()
+		{
+                    try
+                    {
+			if (isset($this->param['sssm']))
+                        {
+                            $sssm = base64_decode($this->param['sssm']);
+                            if (strlen($sssm) > 0)
+                            {
+                                $sssm_array = explode(":", $sssm);
+                                if (sizeof($sssm_array) == 2 && strlen($sssm_array[0]) > 0)
+                                {
+                                    $kdmember = $sssm_array[0];
+                                    
+                                    $sql1 = "SELECT count(*) FROM memberTable";
+                                    $sql1.= " WHERE kodemember = ". $this->queryvalue($kdmember);
+                                    if ($this->db->executeScalar($sql1) == 0)
+                                    {
+                                        // Update/import member data and mapping
+                                        $this->importmember($kdmember);
+                                    }
+                            
+                                    $sql2 = "SELECT norekening FROM memberTable";
+                                    $sql2.= " WHERE kodemember = ". $this->queryvalue($kdmember);
+                                    $rs = $this->db->query($sql2);
+                                    if ($rs->fetch())
+                                    {
+                                        $nbrekening = $rs->value("norekening");
+                                    }
+                                    $rs->close();
+                                      
+                                    if (strlen($nbrekening) > 4)
+                                    {
+                                        // sssm = md5([memberid]:[pwd(5)][pwd(2)][pwd(3)])
+                                        $salt = substr($nbrekening,4,1) . substr($nbrekening,1,1) . substr($nbrekening,2,1);
+                                        $mysssm = md5($kdmember.":".$salt);
+
+                                        if (strcmp($sssm,$mysssm) == 0)
+                                        {
+                                            $_SESSION[$this->sysparam['session']['userid']] = $kdmember;
+                                            $_SESSION[$this->sysparam['session']['usertype']] = $this->usertype;
+                                            
+                                            // Check available mapping
+                                            $this->checkmembermapping();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception $e)
+                    {
+                        // If single sign/on failed => silent fail (redirect to login)
+                        if ($this->debug()) echo $e; 
+                    }
+		}
+                
+                function importmember($kdmember)
+                {
+                    try
+                    {
+                        // Create or update the BC mapping for this new member
+                        $sql = "exec sp_sos_IMPORTMEMBER " . $this->queryvalue($kdmember);
+                        //$sql = "INSERT INTO memberTable SELECT ". $this->queryvalue($kdmember) .
+                        //        ", NULL, 0, 'MBR BLABLA', 'Jalan Bla Bla Jakarta', '082122821440', 'victor@sophieparis.com', '123456789'" .
+                        //        " WHERE NOT EXISTS (SELECT 'x' FROM memberTable WHERE kodemember = ". $this->queryvalue($kdmember) .")";
+                        if ($this->debug()) echo $sql;
+                        $this->db->execute($sql);
+                    }
+                    catch (Exception $e)
+                    {
+                        // If no update/import fail silently
+                        if ($this->debug()) echo $e; 
+                    }
+                }
+                
+                function checkmembermapping()
+                {
+                    try
+                    {
+                        $sql = "SELECT count(bc.kodebc) FROM BCTable bc";
+                        $sql.= " INNER JOIN mappingTable mt ON bc.kodebc = mt.kodebc";
+                        $sql.= " WHERE mt.kodemember = ". $this->queryvalue($this->userid());
+                        
+                        $nb = $this->db->executeScalar($sql);
+                        if ($nb == 0)
+                        {
+                            $this->gotopage('notavailable');
+                        }
+                    }
+                    catch (Exception $e)
+                    {
+                        // If no error, fail silently
+                        if ($this->debug()) echo $e; 
+                    }
+                }
 		
 		function disclaimerchecking()
 		{
 			$ret = '';
-			$sql = "select * from memberTable where kodemember = " . $this->queryvalue($this->userid());				
+			$sql = "select suspend,acceptdate from memberTable";
+                        $sql.= " where kodemember = " . $this->queryvalue($this->userid());				
 			$rs = $this->db->query($sql);
 			if ($rs->fetch())
 			{	
@@ -58,8 +171,6 @@
 				}
 				else $ret = 'suspend';
 			}
-			else
-			$ret = 'disclaimer';
 				
 			$rs->close();
 			return $ret;
@@ -203,7 +314,6 @@
 			$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
 			$sql.= ' and status = ' . $this->queryvalue($this->sysparam['salesstatus']['openorder']);
 			$sql.= ' and salesid = ' . $this->queryvalue($this->salesid);
-			
 			if(!$this->db->executeScalar($sql)) $this->gotohomepage();
 		}
 		
@@ -218,17 +328,18 @@
 		{
 			switch(strtolower($page))
 			{
-				case 'login' 			: header("location:" . $this->sysparam['app']['mbrurl']); break;
+				case 'login' 			: header("location:mbrlogin.php". ($param != '' ? '?' . $param : '')); break;
 				case 'disclaimer' 		: header("location:mbrdisclaimer.php" . ($param != '' ? '?' . $param : ''));  break;
 				case 'suspend' 			: header("location:mbrsuspend.php" . ($param != '' ? '?' . $param : ''));  break;
-				case 'orderhistory' 	: header("location:mbrviewhistory.php" . ($param != '' ? '?' . $param : ''));  break;
+                                case 'notavailable' 		: header("location:mbrnoaccess.php?action=nomapping" . ($param != '' ? '&' . $param : ''));  break;
+				case 'orderhistory'             : header("location:mbrviewhistory.php" . ($param != '' ? '?' . $param : ''));  break;
 				case 'memberinfo' 		: header("location:mbrcekdata.php" . ($param != '' ? '?' . $param : ''));  break;
 				case 'inputitem' 		: header("location:mbrpilihitem.php" . ($param != '' ? '?' . $param : ''));  break;				
 				case 'checkitem' 		: header("location:mbrvieworder.php?edit=1" . ($param != '' ? '&' . $param : ''));  break;
 				case 'confirm' 			: header("location:mbrvieworder.php" . ($param != '' ? '?' . $param : ''));  break;
-				case 'paymentmethod'	: header("location:mbrpaymentmethod.php" . ($param != '' ? '?' . $param : ''));  break;
-				case 'paymentconfirm' 	: header("location:mbrpaymentconfirm.php" . ($param != '' ? '?' . $param : ''));  break;
-				case 'paymentreceived' 	: header("location:mbrpaymentreceived.php" . ($param != '' ? '?' . $param : ''));  break;
+				case 'paymentmethod'            : header("location:mbrpaymentmethod.php" . ($param != '' ? '?' . $param : ''));  break;
+				case 'paymentconfirm'           : header("location:mbrpaymentconfirm.php" . ($param != '' ? '?' . $param : ''));  break;
+				case 'paymentreceived'          : header("location:mbrpaymentreceived.php" . ($param != '' ? '?' . $param : ''));  break;
 				case 'neworder'	 		: header("location:mbrneworder.php" . ($param != '' ? '?' . $param : ''));  break;
 			}
 			exit;
@@ -236,7 +347,7 @@
 	
 		function printerrors()
 		{
-			$ret = '';
+                        $ret = '';
 			if (is_array($this->errmsg))
 			{
 				$ret = '<div class="errormessage" style="text-align:left">';
@@ -254,7 +365,7 @@
 			}
 			else
 			{
-				if ( $this->errmsg != '' )
+                                if ( $this->errmsg != '' )
 				{
 					$ret = '<div class="errormessage">' . ucfirst($this->errmsg) . '</div>';
 				}

@@ -34,6 +34,7 @@
 		var $cancelcode;
 		var $sc;
 		var $insufficientitems;
+                var $iscleared;
 		
 		function run() 
 		{
@@ -107,6 +108,8 @@
 				$this->canceldate			= (is_null($rs->value('canceldate')) ? null : $this->valuedatetime($rs->value('canceldate'))); 
 				$this->deliverdate			= (is_null($rs->value('deliverdate')) ? null : $this->valuedatetime($rs->value('deliverdate'))); 	
 				
+                                $this->iscleared                        = (is_null($rs->value('cleardate')) ? false : true); 
+                                
 				$this->cancelcode			= $rs->value('cancelcode');
 				$this->userstatus			= $rs->value('userstatus');
 				$this->userstatusinfo		= $rs->value('statusinfo'); 

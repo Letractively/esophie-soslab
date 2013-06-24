@@ -18,6 +18,6 @@
 	Password baru sudah dikirimkan ke email anda.<br>
 	silahkan cek email anda beberapa menit kedepan.<br>
 <? } ?>
-<br><a href="index.php">kembali ke layar login</a>
+<br><a href="bclogin.php">kembali ke layar login</a>
 <br><br>&nbsp;
 <?include "bcfooter.php";?>
