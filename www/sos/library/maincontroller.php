@@ -189,9 +189,10 @@
                     // Send HTTP request to paygate to initialize the payment
                     $urlpaygate = $this->sysparam['paygate']['urlinit'] . urlencode($salesid); 
                     $result = file_get_contents($urlpaygate);
-
-                    // Send HTTP request to paygate to initialize the payment
-                    if (strcasecmp("OK",$result)==0)
+                    
+                    $data = json_decode($result);
+                    // If response = OK
+                    if (is_array($data) && isset($data['response']) && strcasecmp("OK",$data['response']) == 0)
                     {
                         // Templates for validated orders
                         $emailTemplate = 'VLDORD2MBR';
