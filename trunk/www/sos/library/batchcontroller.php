@@ -119,9 +119,9 @@
                             {
                                 // Send HTTP request to paygate to initialize the payment
                                 if ($this->initfaspay($row['salesid']))
-                                    echo "[BATCH][".date("Y-m-d H:i:s")."][syncchecking][".$row['salesid']."] Payment initialized\n";
+                                    echo "[BATCH][". date("Y-m-d H:i:s") ."][syncchecking][". $row['salesid'] ."] Payment initialized\n";
                                 else
-                                    echo "[BATCH][".date("Y-m-d H:i:s")."][syncchecking][".$row['salesid']."] Not initialized\n";
+                                    echo "[BATCH][". date("Y-m-d H:i:s") ."][syncchecking][". $row['salesid'] ."] Not initialized\n";
                             }
                         }
                     } 			
