@@ -66,7 +66,7 @@
 				case "delivered":	
 					// $this->delivered();
 					// SMI want if delivered the data order will disapprear from BC page 
-					$this->clearorder();
+					$this->delivered();
 					break;
 				case "clear":	
 					$this->clearorder();
@@ -273,7 +273,8 @@
 		function delivered()
 		{
 			$this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['delivered']);
-		}
+                        $this->gotopage('onlineorder');
+                }
 		
 		function setasready()
 		{
