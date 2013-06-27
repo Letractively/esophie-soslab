@@ -38,7 +38,7 @@
 			$this->salesid = $this->param['salesid'];
 			if ($this->salesid == '') $this->gotohomepage();
                         
-                        $this->urlforward = $this->sysparam['paygate']['urlforward'] . "?" . urlencode($this->salesid);
+                        $this->urlforward = $this->sysparam['paygate']['urlforward'] . urlencode($this->salesid);
 
 			switch($this->action)
 			{
