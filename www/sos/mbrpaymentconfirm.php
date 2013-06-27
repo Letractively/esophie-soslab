@@ -42,7 +42,7 @@ BAYAR <?=$ctrl->merchantid?> <?=$ctrl->salesid?> <?=$ctrl->totalbayar?> [PIN]
 <? } ?>
 
 <button type="button" onclick="setaction('simulate');" class="buttonbig" >Simulate</button>
-<button type="button" onclick="seturl('http://webdev.sophiemartin.com/paygate/sophie/forwardredirect?salesid=<?=$ctrl->varvalue('salesid')?>');" class="buttonbig" >Lanjut >></button>
+<button type="button" onclick="seturl('<?=$ctrl->varvalue('urlforward')?>');" class="buttonbig" >Lanjut >></button>
 
 
 <?include "mbrfooter.php";?>
