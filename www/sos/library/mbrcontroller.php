@@ -280,12 +280,18 @@
 						$this->mbrmsg['link1label'] = 'PESAN LAGI';
 						$this->mbrmsg['link1'] = 'mbrpilihitem.php';
 						break;
-						
+                                        
+                                        case $this->sysparam['salesstatus']['ready'] :
+                                                $this->mbrmsg['title'] = 'Order #' . $this->salesid . ' sudah siap diambil di BC!';  
+						$this->mbrmsg['body'] = 'Anda bisa menghubungi BC anda untuk menerima order Anda. Silhakan belanja lagi di Sophie Online Order!';
+						$this->mbrmsg['link1label'] = 'PESAN ONLINE';
+						$this->mbrmsg['link1'] = 'mbrpilihitem.php';
+						break;
+                                            
 					case $this->sysparam['salesstatus']['delivered'] : 
-					case $this->sysparam['salesstatus']['ready'] : 
 					default:
 						$this->mbrmsg['title'] = 'Selamat datang kembali ' . $mbrname . '!';  
-						$this->mbrmsg['body'] = 'Silahkan klik link dibawah ini untuk belanja lagi di Sophie Online Order!';
+						$this->mbrmsg['body'] = 'Terima kasih atas kepercayaan Anda. Silahkan klik link dibawah ini untuk belanja lagi di Sophie Online Order!';
 						$this->mbrmsg['link1label'] = 'PESAN ONLINE';
 						$this->mbrmsg['link1'] = 'mbrpilihitem.php';
 						break;
