@@ -36,41 +36,27 @@
 			$this->sysparam['db']['user'] 			= 'sos';
 			$this->sysparam['db']['password'] 		= 'S0s#0k';	
 			
-			//database to send short message service
-			$this->sysparam['dbsms']['server'] 		= '192.168.10.201';
-			$this->sysparam['dbsms']['name'] 		= 'SOS2';
-			$this->sysparam['dbsms']['user'] 		= 'sa';
-			$this->sysparam['dbsms']['password'] 	= 'sa123';
+			//short message service
                         $this->sysparam['dbsms']['url']                 = 'http://broadcast.jatismobile.com/smspush/send.aspx?userid=smartin&password=smartin123';
 
                         //payment gateway settings
-                        $this->sysparam['paygate']['urlinit'] 		= "http://webdev.sophiemartin.com/paygate/faspay/PostDataTrx?salesid=";
+                        $this->sysparam['paygate']['urlinit'] 		= "http://paygate.sophieparis.com/faspay/PostDataTrx?salesid=";
 			
 			//application parameter			
-			$this->sysparam['app']['bcurl']				= "http://webdev.sophiemartin.com/sos/bclogin.php";
-			$this->sysparam['app']['mbrurl']			= "http://webdev.sophiemartin.com/sos/mbrlogin.php";
-			$this->sysparam['app']['mbrdisclaimer'] 	= "Persyaratannya sebagai berikut bla...bla...bla..."; 
-			$this->sysparam['app']['custservicenumber']	= "+6221 5781345"; 
+			$this->sysparam['app']['bcurl']                 = "http://order.sophiemobile.com/bclogin.php";
+			$this->sysparam['app']['mbrurl']		= "http://order.sophiemobile.com";
 			
-			$this->sysparam['appmsg']['bcaccountsuspend']	= "account member anda ditangguhkan, silahkan hubungi admin Sophie Online Shopping";
+			$this->sysparam['appmsg']['bcaccountsuspend']	= "Account member anda ditangguhkan, silahkan hubungi Sophie Care.";
 			
 			//email parameter
                         $this->sysparam['email']['host']                 = "10.0.0.17"; 
                         $this->sysparam['email']['port']                 = 25; 
                         $this->sysparam['email']['fromemail']            = "onlineorders@sophieparis.com"; 
-                        $this->sysparam['email']['fromname']             = "Sophie Online Orders (NO REPLY)"; 
-                  
-                        $this->sysparam['email']['bcneworder']['subject'] 		= "New Order from [mbrname]";
-			$this->sysparam['email']['bcneworder']['body']			= 
-				"Member #[mbrno] ([mbrname]) baru pesan online lewat BC anda. " . 
-
-			    "Silahkan ke backoffice anda supaya pesanannya bisa divalidasikan:\n\n" .
-				"[bcurl]";
+                        $this->sysparam['email']['fromname']             = "Sophie Online Orders (NO REPLY)";             
 				
 			$this->sysparam['email']['bcnewpassword']['subject'] 	= "Password baru Sophie Online Shopping";
-			$this->sysparam['email']['bcnewpassword']['body']		= 
-				"Password baru anda adalah: [newpassword]\n" . 
-			    "Silahkan untuk mencoba login [bcurl]";
+			$this->sysparam['email']['bcnewpassword']['body']	= "Password baru anda adalah: [newpassword]\n" . 
+                                                                                  "Silahkan untuk mencoba login [bcurl]";
 																				
 			$this->sysparam['session']['userid'] 	= 'userid';
 			$this->sysparam['session']['usertype'] 	= 'usertype';
@@ -185,15 +171,21 @@
                 
                 function initfaspay($salesid)
                 {
-
                     // Send HTTP request to paygate to initialize the payment
                     $urlpaygate = $this->sysparam['paygate']['urlinit'] . urlencode($salesid); 
                     $result = file_get_contents($urlpaygate);
                     
                     $data = json_decode($result);
                     // If response = OK
-                    if (is_array($data) && isset($data['response']) && strcasecmp("OK",$data['response']) == 0)
+                    if (isset($data->response) && strcasecmp("OK",$data->response) == 0)
                     {
+                        if (isset($data->trxref) && strlen($data->trxref) > 0)
+                        {
+                            $sql0 = "update salestable set virtualaccount = " . $this->queryvalue($data->trxref);
+                            $sql0.= "where paymentmode = 'ATM' and salesid = " . $this->queryvalue($salesid);
+                            $this->db->execute($sql);
+                        }
+                        
                         // Templates for validated orders
                         $emailTemplate = 'VLDORD2MBR';
                         $SMSTemplate = 'VLDORD2MBR';

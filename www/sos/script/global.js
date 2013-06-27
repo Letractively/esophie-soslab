@@ -3,6 +3,12 @@ function setaction(value) {
 	frmmain.submit();
 }
 
+function seturl(value) {
+	frmmain.action = value;
+        frmmain.method = 'get';
+	frmmain.submit();
+}
+
 function checkfailed(msg)
 {
 	alert(msg);

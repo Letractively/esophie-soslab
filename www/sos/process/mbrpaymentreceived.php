@@ -2,13 +2,47 @@
 	class mbrpaymentreceived extends controller
 	{
 		var $salesid;
+                var $success;
+                var $orderdate;
+                var $totalbayar;
+                var $status;
+                var $paymdate;
+                var $paymref;
 	
 		function run()
 		{
 			parent::run ();
-			$this->salesid = $this->salesid();
-			$this->load();
+                        
+                        $this->checksalesid();
+			$this->salesid = $this->param['salesid'];
+                        
+                        switch($this->action)
+			{	
+				case "success":
+					$this->callback_success();
+                                        $this->load();
+					break;
+				case "failure":
+					$this->callback_failure();
+                                        $this->load();
+					break;
+				case "none":
+					$this->load();
+					break;
+			}
 		}
+                
+                function callback_success()
+                {
+                    $this->updatesalesstatus($this->salesid, $this->sysparam['salesstatus']['confirmed']);
+                    $this->paymdate = $this->param['paymdate'];
+                    $this->paymref = $this->param['paymref'];
+                }
+                
+                function callback_failure()
+                {
+                    // do nothing
+                }
 		
 		function load()
 		{
@@ -19,11 +53,15 @@
 				$this->totalbayar 		= $rs->value('totalbayar'); 
 				$this->orderdate 		= $this->valuedatetime($rs->value('orderdate')); 
 				$this->status 			= $rs->value('userstatus'); 
+                                
+                                if ($rs->value('status') == $this->sysparam['salesstatus']['confirmed'])
+                                    $this->success = true;
+                                else $this->success = false;
 			}
 			else
 			{
 				$rs->close();
-				$this->gotopage('memberinfo');
+				$this->gotohomepage();
 			}
 			$rs->close();
 		}
