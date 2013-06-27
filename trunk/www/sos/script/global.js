@@ -4,9 +4,9 @@ function setaction(value) {
 }
 
 function seturl(value) {
-	frmexec.action = value;
-        frmexec.method = 'get';
-	frmexec.submit();
+	frmmain.action = value;
+        frmmain.method = 'get';
+	frmmain.submit();
 }
 
 function checkfailed(msg)
