@@ -25,13 +25,21 @@
 		var $orderdate;
 		var $timeleft;
 		var $virtualaccount;
+                
+                var $urlforward;
+                var $urlsimulate;
 		
 		function run() 
 		{
 			parent::run();	
+                        
+                        $this->urlsimulate = $this->sysparam['paygate']['urlsimulate'];
+                        
 			$this->salesid = $this->param['salesid'];
 			if ($this->salesid == '') $this->gotohomepage();
-			
+                        
+                        $this->urlforward = $this->sysparam['paygate']['urlforward'] . "?" . urlencode($this->salesid);
+
 			switch($this->action)
 			{
 				case "none":					
@@ -121,7 +129,7 @@
                         $xml.= "<signature>" . $signature . "</signature>";
                         $xml.= "</faspay>";
                         
-                        $url = 'http://webdev.sophiemartin.com/paygate/faspay/PaymentNotification';
+                        $url = $this->urlsimulate;
                         $ch = curl_init($url);
 
                         curl_setopt($ch, CURLOPT_POST, 1);
@@ -144,7 +152,7 @@
 			$salt = $this->JatisSaltIt($vanumber);
 			
 			$hashinit = $this->JatisHashItVAInquiry($vanumber, $stan, $trxdate, $salt);
-			$urlinit = "http://webdev.sophiemartin.com/paygate/jatis/vainquiry?hash=".$hashinit."&vanumber=".$vanumber."&stan=".$stan."&trxdate=".$trxdate;
+			$urlinit = "http://paygate.sophieparis.com/jatis/vainquiry?hash=".$hashinit."&vanumber=".$vanumber."&stan=".$stan."&trxdate=".$trxdate;
 			$result = file_get_contents($urlinit);
 			if (strlen($result) > 0)
 			{
@@ -160,7 +168,7 @@
 			if (!$bOk) return "Init failed! ".$result;
 
 			$hashpay = $this->JatisHashItVAPayment($vanumber, $stan, $amount, $trxdate, $trxref, $salt);
-			$urlpayment = "http://webdev.sophiemartin.com/paygate/jatis/vapayment?hash=".$hashpay."&vanumber=".$vanumber."&stan=".$stan."&trxdate=".$trxdate."&trxref=".$trxref."&amount=".$amount;
+			$urlpayment = "http://paygate.sophieparis.com/jatis/vapayment?hash=".$hashpay."&vanumber=".$vanumber."&stan=".$stan."&trxdate=".$trxdate."&trxref=".$trxref."&amount=".$amount;
 			$result = file_get_contents($urlpayment);
 			if (strlen($result) > 0)
 			{

@@ -40,7 +40,9 @@
                         $this->sysparam['dbsms']['url']                 = 'http://broadcast.jatismobile.com/smspush/send.aspx?userid=smartin&password=smartin123';
 
                         //payment gateway settings
-                        $this->sysparam['paygate']['urlinit'] 		= "http://paygate.sophieparis.com/faspay/PostDataTrx?salesid=";
+                        $this->sysparam['paygate']['urlinit'] 		= "http://paygate.sophieparis.com/faspay/postdatatrx?salesid=";
+                        $this->sysparam['paygate']['urlforward']        = "http://paygate.sophieparis.com/sophie/forwardredirect?salesid=";
+                        $this->sysparam['paygate']['urlsimulate']       = "http://paygate.sophieparis.com/faspay/paymentnotification";
 			
 			//application parameter			
 			$this->sysparam['app']['bcurl']                 = "http://order.sophiemobile.com/bclogin.php";
