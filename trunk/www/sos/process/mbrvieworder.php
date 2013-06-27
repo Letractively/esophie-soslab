@@ -101,7 +101,10 @@
 				$this->setmbrmsg();
 				
 				//  All information
-				$this->timeleft 		= $rs->value("timeleft");
+                                if ($rs->value("status") < $this->sysparam['salesstatus']['validated']) 
+                                    $this->timeleft 		= $rs->value("timeleft");
+                                else 
+                                    $this->timeleft 		= $rs->value("timeleftpaid");
 				
 				$this->mbrno 			= $rs->value('kodemember'); 
 				$this->mbrname 			= $rs->value('namamember'); 

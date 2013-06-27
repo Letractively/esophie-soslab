@@ -127,7 +127,7 @@
 		*/
 		function close() {
 			//return mssql_free_result($this->rId);			
-			$this->rId->closeCursor();
+			if (isset($this->rId)) $this->rId->closeCursor();
 			$this->rId = null;
 		}
 	}

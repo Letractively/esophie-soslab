@@ -53,8 +53,8 @@
 			if ($rs->fetch()) 
 			{					
 				
-				$this->timeleft 		= $rs->value("timeleft");
-				$this->virtualaccount 	= $rs->value("virtualaccount");
+				$this->timeleft 		= $rs->value("timeleftpaid");
+				$this->virtualaccount           = $rs->value("virtualaccount");
 				
 				$this->mbrno 			= $rs->value('kodemember'); 
 				$this->mbrname 			= $rs->value('namamember'); 

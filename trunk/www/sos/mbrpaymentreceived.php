@@ -16,7 +16,9 @@
 	</tr>
 </table>
 <br>
-	
+<? if ($ctrl->varvalue('success'))  { ?>	
 <div class="boxfont2">Terima kasih atas pembayaran anda, transaksi ini sedang divalidasi oleh Sophie Paris Indonsia. Setelah validasi maka anda akan menerima email dari Sophie Paris Indonesia. Order anda siap diambil di BC pilih dalam 2-3 hari kerja.</div>
-
+<? } else { ?>	
+<div class="boxfont2">Mohon maaf, pembayaran anda telah ditolak...</div>
+<? } ?>
 <?include "mbrfooter.php";?>
