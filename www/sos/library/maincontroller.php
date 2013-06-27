@@ -41,7 +41,7 @@
 
                         //payment gateway settings
                         $this->sysparam['paygate']['urlinit'] 		= "http://paygate.sophieparis.com/faspay/postdatatrx?salesid=";
-                        $this->sysparam['paygate']['urlforward']        = "http://paygate.sophieparis.com/sophie/forwardredirect?salesid=";
+                        $this->sysparam['paygate']['urlforward']        = "http://paygate.sophieparis.com/sophie/forwardredirect";
                         $this->sysparam['paygate']['urlsimulate']       = "http://paygate.sophieparis.com/faspay/paymentnotification";
 			
 			//application parameter			

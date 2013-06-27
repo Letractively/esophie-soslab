@@ -1,12 +1,6 @@
             <div class="footer">
                 <?if (!isset($footer_params) || $footer_params == 'nofooter') { ?>
                 <div> 
-                    <?if ($ctrl->filename() == 'mbrviewhistory.php') { ?>
-                            Online Orders 
-                    <? } else { ?>
-                            <a href="mbrviewhistory.php">Online Orders</a>
-                    <? } ?>
-                    &nbsp;&nbsp;|&nbsp;&nbsp; 
                     <?if ($ctrl->filename() == 'mbrcekdata.php' || $ctrl->filename() == 'mbrpilihitem.php' || $ctrl->filename() == 'mbrordercheck.php' || $ctrl->filename() == 'mbrpaymentconfirm.php' ) { ?>
                             Pesan Online 
                     <? } else { 
@@ -62,7 +56,9 @@
                             Terms and Conditions 
                     <? } else { ?>
                             <a href="mbrdisclaimer.php">Terms and Conditions</a>
-                    <? } ?>			
+                    <? } ?>
+                    &nbsp;&nbsp;|&nbsp;&nbsp; 
+                    <a href="mbrlogout.php">Log Out</a>
                 </div>
                 <br/>
                 <? } ?>

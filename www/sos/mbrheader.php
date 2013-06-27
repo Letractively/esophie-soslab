@@ -13,7 +13,7 @@
 	<form id="frmexec" name="frmexec" method="post"></form>
 	<form id="frmmain" name="frmmain" action="<?=$ctrl->filename()?>" method="post">
 		<center>
-		<img src="images/logo.png" class="logo" alt="Sophie Online Shopping"/>
+                <a href="mbrviewhistory.php"><img src="images/logo.png" class="logo" alt="Sophie Online Shopping"/></a>
 		<div class="boxmain" style="width:340px;">
 		<input type="hidden" id="pageaction" name="pageaction">
 		<input type="hidden" id="salesid" name="salesid" value="<?=$ctrl->value("salesid")?>">
