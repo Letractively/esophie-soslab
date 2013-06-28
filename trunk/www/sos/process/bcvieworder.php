@@ -300,5 +300,6 @@
 			$this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['clear']);
 			$this->gotopage('onlineorder');
 		}
+
 	}
 ?>

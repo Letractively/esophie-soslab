@@ -11,5 +11,5 @@
 <br/><?= $ctrl->printerrors(); ?>
 
 <input type="hidden" name="redirect" value="login" />
-<button type="button" onclick="setaction('save');" style="width:60px;">OK</button>
+<button type="submit" onclick="setaction('save');" style="width:60px;">OK</button>
 <?include "mbrfooter.php";?>

@@ -30,6 +30,8 @@
 		var $errorbcmsg;
 		var $lastorderstatus;
                 var $defaultbckode;
+                var $paymdate;
+                var $paymref;
 		
 		function run() 
 		{	
@@ -82,7 +84,16 @@
 				case "orderhistory":
 					$this->gotopage('orderhistory');
 					break;
-					
+                                
+                                case "success":
+					$this->callback_success();
+					break;
+                                    
+				case "failure":
+					$this->callback_failure();
+					break;
+                                    
+				// default view	
 				case "none":	
 					$this->isanyitemsold = $this->checkItemSold();
                                         //$this->checksalesopenorder();
@@ -234,13 +245,14 @@
 			if (trim($this->param['handphone']) != '')
 			{
 				$number = array("0","1","2","3","4","5","6","7","8","9");
-				$mobile = trim($this->param['handphone']);
-				$result = str_replace( $number, "", $mobile );
-				if ( strlen($result) > 0 )
+				$result = str_replace( $number, "", $this->param['handphone'] );
+				if ( strlen(trim($result)) > 0 )
 				{
 					$this->errmsg = "Nomor handphone harus diisi dengan angka saja";
 					return;
-				}
+				} else {
+                                    $mobile = trim($this->param['handphone']);   
+                                }
 			}
 			else
 			{
@@ -249,14 +261,14 @@
 			}
 			
 			$sql = 'update salestable set ';
-			$sql.= 'telp = ' . $this->queryvalue($this->param['handphone']);
-			$sql.= ',email = ' . $this->queryvalue($this->param['email']);
+			$sql.= 'telp = ' . $this->queryvalue($mobile);
+			$sql.= ',email = ' . $this->queryvalue(trim($this->param['email']));
 			$sql.= 'from salestable where salesid=' . $this->queryvalue($this->salesid);			
 			$this->db->execute($sql);
 
 			$sql = 'update membertable set ';
-			$sql.= 'phone = ' . $this->queryvalue($this->param['handphone']);
-			$sql.= ',email = ' . $this->queryvalue($this->param['email']);
+			$sql.= 'phone = ' . $this->queryvalue($mobile);
+			$sql.= ',email = ' . $this->queryvalue(trim($this->param['email']));
 			$sql.= 'where kodemember=(select top 1 kodemember from salesTable where salesid=' . $this->queryvalue($this->salesid). ')';
 			$this->db->execute($sql);
 
@@ -489,8 +501,17 @@
 			}
 			
 		}
-		
-		
+                
+                                
+                function callback_success()
+                {
+                    // do nothing 
+                }
+                
+                function callback_failure()
+                {
+                    $this->pageview = 'paymfailure';
+                }
 
 	}
 ?>

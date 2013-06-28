@@ -1,6 +1,6 @@
 <?include "mbrheader.php";?>
 <input type="hidden" id="edit" name="edit" value="<?=$ctrl->value("edit")?>">
-	<?if ($ctrl->pageview != 'orderedit' && $ctrl->pageview != 'orderconfirm') { ?>
+	<?if ($ctrl->pageview != 'orderedit' && $ctrl->pageview != 'orderconfirm' && $ctrl->pageview != 'paymfailure') { ?>
 	<div class="boxcon3">
 		<div class="boxleft3">
 			<?if ($ctrl->mbrmsg['color'] != '') {?>
@@ -53,6 +53,12 @@
 				<div class="boxfont2"style="color:#ff0000">Maaf, order anda tidak dapat dipenuhi</div>
 <?			} 
 			break;
+                
+                case 'paymfailure': ?>
+                        <div class="boxcon4" style="text-align:left">
+                                Mohon maaf, pembayaran anda telah gagal! Silahkan coba lagi.
+                        </div>
+<?                      break;
 	}
 	?>	
 	
