@@ -31,8 +31,6 @@
 					$this->firstlogin = ($this->disclaimerchecking() == 'disclaimer');
 					break;
 			}
-
-			$this->disclaimer = $this->sysparam['app']['mbrdisclaimer'];
 			
 		}
 		
