@@ -142,7 +142,7 @@
                         $sql = "SELECT count(bc.kodebc) FROM BCTable bc";
                         $sql.= " INNER JOIN mappingTable mt ON bc.kodebc = mt.kodebc";
                         $sql.= " WHERE mt.kodemember = ". $this->queryvalue($this->userid());
-                        
+                        //echo $sql; exit;
                         $nb = $this->db->executeScalar($sql);
                         if ($nb == 0)
                         {

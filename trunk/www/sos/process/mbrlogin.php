@@ -17,7 +17,7 @@
                         }
                         else
                         {
-                            $kdmember = str_pad($_POST['username'], 10, " ", STR_PAD_LEFT); //warning: the member id is filled with blank spaces at the begining if shorter than 10 digits
+                            $kdmember = str_pad($userid, 10, ' ', STR_PAD_LEFT); //warning: the member id is filled with blank spaces at the begining if shorter than 10 digits
                             // Import/update member
                             $this->importmember($kdmember);
 
@@ -27,7 +27,7 @@
 
                             if ($this->db->executescalar($sql) > 0)
                             {
-                                $_SESSION[$this->sysparam['session']['userid']] = $userid;
+                                $_SESSION[$this->sysparam['session']['userid']] = $kdmember;
                                 $_SESSION[$this->sysparam['session']['usertype']] = $this->usertype;
                                 $this->checkmembermapping();
                                 $this->gotohomepage(); 
