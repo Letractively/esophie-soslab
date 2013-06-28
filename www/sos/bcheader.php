@@ -8,8 +8,8 @@
 	<link rel="icon" type="image/ico" href="images/favicon.ico"/>
 	<link type="text/css" rel="stylesheet" href="css/global.css"/>
 	<link type="text/css" rel="stylesheet" href="css/calendar.css"/>
-	<script language="Javascript" type="text/javascript" src="script/global.js"/>
-	<script language="Javascript" type="text/javascript" src="script/calendar.js"/>
+	<script type="text/javascript" src="script/global.js"></script>
+	<script type="text/javascript" src="script/calendar.js"></script>
         <script type="text/javascript">
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
