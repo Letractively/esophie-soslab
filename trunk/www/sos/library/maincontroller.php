@@ -185,7 +185,7 @@
                         {
                             $sql0 = "update salestable set virtualaccount = " . $this->queryvalue($data->trxref);
                             $sql0.= "where paymentmode = 'ATM' and salesid = " . $this->queryvalue($salesid);
-                            $this->db->execute($sql);
+                            $this->db->execute($sql0);
                         }
                         
                         // Templates for validated orders
