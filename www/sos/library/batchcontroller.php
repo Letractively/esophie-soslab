@@ -160,9 +160,9 @@
                                     $mail->IsSMTP();                    // telling the class to use SMTP
 
                                     // mail property
-                                    $mail->Host       = $this->sysparam['email']['host']; 			// SMTP server
-                                    //$mail->SMTPAuth   = true;                 	// enable SMTP authentication
-                                    $mail->Port       = $this->sysparam['email']['port'];                    		// set the SMTP port for the GMAIL server
+                                    $mail->Host       = $this->sysparam['email']['host']; 	// SMTP server
+                                    //$mail->SMTPAuth   = true;                                 // enable SMTP authentication
+                                    $mail->Port       = $this->sysparam['email']['port'];       // set the SMTP port 
                                     $mail->Username   = $this->sysparam['email']['fromemail']; 	// SMTP account username
 
                                     // Mail Address
@@ -198,8 +198,8 @@
 
                                                     if ( $row['salesstatus'] == '5' ) // edited / revisi
                                                     {
-                                                            $varLine .= "<td>".$this->valuenumber(trim($rs3->value('qtyedited')))."</td>
-                                                                                    <td style='text-align:right'>".$this->valuenumber($rs3->value('totalorderedited'))."</td>";
+                                                            $varLine .= "<td color='red'>".$this->valuenumber(trim($rs3->value('qtyedited')))."</td>
+                                                                         <td style='text-align:right'>".$this->valuenumber($rs3->value('totalorderedited'))."</td>";
                                                             $totalorder += $rs3->value('totalorderedited');
                                                             $totaldiscount += $rs3->value('discountedited');
                                                             $totalbayar += $rs3->value('totalbayaredited');
@@ -220,6 +220,7 @@
 
                                     $varBody = '<span id="wrapper" style="font-family: helvetica, sans-serif, arial; font-size: 12px; color:#727274;">'
                                             . $row['body'] . '</span>';
+                                    
                                     if ( $salesid !=  "" )
                                     {
                                             $varBody .= "<br><br><table cellspacing='1' cellpadding='1' style='width:100%;'>
@@ -325,10 +326,11 @@
                     $sqlUpdate = "";
                     $status = -1;
                     $msgid = "";
+                    $salesid = "";
                     $phonenumber = "";
                     $smsurl = $this->sysparam['dbsms']['url'];
 
-                    $sql = "select [noseq], isnull(phone,'') as phone, Replace(message,' ','%20') as message";
+                    $sql = "select [noseq], isnull(phone,'') as phone, Replace(message,' ','%20') as message,isnull(salesid,'') as salesid";
                     $sql.= " from smsTable with (NOLOCK) where sendDate is null and isnull(retrynumber,0) < 3";
                     $rs	= $this->db->query($sql);
                     
@@ -342,6 +344,7 @@
                             try 
                             {
                                     $phonenumber = $row['phone'];
+                                    $salesid = $row['salesid'];
                                     if ( $phonenumber != '' )
                                     {
                                             if ( substr($phonenumber,0,1) == '0' )
@@ -376,20 +379,20 @@
                                             {
                                                     $sqlUpdate = "update smsTable set sendDate=getdate(), messageid='" . $msgid . "' where noseq =" . $row['noseq'];
                                                     $this->db->execute($sqlUpdate);
-                                                    echo "[BATCH][".date("Y-m-d H:i:s")."][sendsms][".$phonenumber. "] SMS sent\n";
+                                                    echo "[BATCH][".date("Y-m-d H:i:s")."][sendsms][salesid:".$salesid."][".$phonenumber. "] SMS sent\n";
                                             }
                                             else
                                             {
                                                     $sqlUpdate = "update smsTable set retrynumber = isnull(retrynumber,0) + 1 where noseq =" . $row['noseq'];
                                                     $this->db->execute($sqlUpdate);
-                                                    echo "[BATCH][".date("Y-m-d H:i:s")."][sendsms][".$phonenumber. "] SMS not sent! Jatis returned status $status\n";
+                                                    echo "[BATCH][".date("Y-m-d H:i:s")."][sendsms][salesid:".$salesid."][".$phonenumber. "] SMS not sent! Jatis returned status $status\n";
                                             }
                                             
                                     }                                  
                             } 
                             catch (Exception $e) 
                             {
-                                    echo "[BATCH][".date("Y-m-d H:i:s")."][sendsms][".$phonenumber."] SMS not sent! Exception ". $e->getMessage() ."\n";
+                                    echo "[BATCH][".date("Y-m-d H:i:s")."][sendsms][salesid:".$salesid."][".$phonenumber."] SMS not sent! Exception ". $e->getMessage() ."\n";
                             }
                         }
                     }

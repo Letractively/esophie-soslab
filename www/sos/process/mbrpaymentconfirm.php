@@ -34,11 +34,10 @@
 			parent::run();	
                         
                         $this->urlsimulate = $this->sysparam['paygate']['urlsimulate'];
+                        $this->urlforward = $this->sysparam['paygate']['urlforward'];
                         
 			$this->salesid = $this->param['salesid'];
 			if ($this->salesid == '') $this->gotohomepage();
-                        
-                        $this->urlforward = $this->sysparam['paygate']['urlforward'] . urlencode($this->salesid);
 
 			switch($this->action)
 			{

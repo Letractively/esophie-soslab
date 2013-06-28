@@ -11,7 +11,10 @@
 	
 		function run()
 		{
-			parent::run ();
+			// no login required for callback
+                        $this->checklogin = false;
+                    
+                        parent::run ();
                         
                         $this->checksalesid();
 			$this->salesid = $this->param['salesid'];
@@ -20,11 +23,9 @@
 			{	
 				case "success":
 					$this->callback_success();
-                                        $this->load();
 					break;
 				case "failure":
 					$this->callback_failure();
-                                        $this->load();
 					break;
 				case "none":
 					$this->load();
@@ -35,13 +36,12 @@
                 function callback_success()
                 {
                     $this->updatesalesstatus($this->salesid, $this->sysparam['salesstatus']['confirmed']);
-                    $this->paymdate = $this->param['paymdate'];
-                    $this->paymref = $this->param['paymref'];
+                    $this->gotopage('confirm', 'action=success');
                 }
                 
                 function callback_failure()
                 {
-                    // do nothing
+                    $this->gotopage('confirm', 'action=failure');
                 }
 		
 		function load()
