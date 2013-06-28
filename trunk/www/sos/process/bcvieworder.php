@@ -265,8 +265,22 @@
 			}
 			else
 			{
-				$this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['validated']);
-				$this->gotopage('onlineorder');
+                                $sql = "select sum(shortageqty) as shortqty, sum(qtyedited) as totalqty from vw_salesline where salesid = " . $this->queryvalue($this->param['salesid']);
+                                $rs = $this->db->query($sql);
+                                
+                                if ($rs->fetch())
+                                {
+                                    if ($rs->value('shortqty') > 0) 
+                                    {                                
+                                        if ($rs->value('qtyedited') == 0) 
+                                            $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['cancelled']);
+                                        else $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['edited']);
+                                    }
+                                    else $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['validated']);
+                                }
+                                $rs->close();
+                                
+                                $this->gotopage('onlineorder');
 			}
 		}
 		
