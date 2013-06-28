@@ -9,7 +9,17 @@
 	<link type="text/css" rel="stylesheet" href="css/globalmobile.css"/>
 	<script language="Javascript" type="text/javascript" src="script/global.js"/>
 	</head>
-	<body class="mobile">
+	<body class="mobile">  
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-42095429-1', 'sophiemobile.com');
+          ga('send', 'pageview');
+
+        </script>          
 	<form id="frmexec" method="post"></form>
 	<form id="frmmain" action="<?=$ctrl->filename()?>" method="post">
 		<center>
