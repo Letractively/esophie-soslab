@@ -207,7 +207,7 @@
 			}
 			else
 			{ 
-                            header('location:mbrordercheck.php?salesid='.$this->salesid);
+                            $this->gotopage('checkitem', "salesid=".urlencode($this->salesid));
 			}
 		}
 	}

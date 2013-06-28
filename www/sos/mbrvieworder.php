@@ -93,7 +93,6 @@
 	</div>		
 	<? } ?>
 	
-	<?if ($ctrl->pageview == 'orderedit') echo $ctrl->printerrors();?>
 	<div class="boxcon">
 		<table class="dataview" width="340">
 			<tr>
@@ -175,6 +174,8 @@
 		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i></div>
 	</div>
 	<? } ?>	
+                                
+        <?if ($ctrl->pageview == 'orderedit') echo "<br/>" . $ctrl->printerrors();?>
 <?
 	switch ($ctrl->pageview) 
 	{ 

@@ -29,6 +29,7 @@
 		var $mbrmsg;
 		var $errorbcmsg;
 		var $lastorderstatus;
+                var $defaultbckode;
 		
 		function run() 
 		{	
@@ -51,7 +52,7 @@
 					$this->gotopage('inputitem','salesid='.urlencode($this->salesid));
 					break;
 				case "neworder":
-					$this->gotopage('neworder');
+					$this->orderbaru();
 					break;
 				
 				//orderconfirm
@@ -84,6 +85,7 @@
 					
 				case "none":	
 					$this->isanyitemsold = $this->checkItemSold();
+                                        //$this->checksalesopenorder();
                                         break;
 			}
 			$this->loaddata();
@@ -171,7 +173,7 @@
 				if ($rs2->fetch()) 
 				{
 					if ( $rs2->value('hasbc') <= 0 )
-						$this->errorbcmsg = "Silahkan hubungi Customer Care di " . $this->sysparam['app']['custservicenumber'] . " untuk pilih BC dahulu.";
+						$this->errorbcmsg = "Silahkan hubungi Customer Care untuk daftar ke salah satu BC dahulu.";
 					else 
 						$this->errorbcmsg = "";
 				}
@@ -296,7 +298,7 @@
 		//orderedit ----------------------------------------------------------------------------
 		function refresh()
 		{
-			if (!$this->isvaliddata() ) return;
+			//if (!$this->isvaliddata() ) return;
 			$this->savebc();
 			if (!isset($this->param['itemid'])) return;
 			for($i=0;$i<count($this->param['itemid']);$i++)
@@ -317,6 +319,17 @@
 			$this->refresh();
 			if ( $this->isvaliddata() ) 
 				$this->gotopage('paymentmethod','salesid='.urlencode($this->salesid));
+		}
+                
+                function orderbaru ()
+		{
+			$sql = "delete from salesline where salesid=".$this->queryvalue($this->salesid);
+			$this->db->query($sql);
+
+			$sql = "delete from salesTable where salesid=".$this->queryvalue($this->salesid);
+			$this->db->query($sql);
+			
+			$this->gotopage("inputitem");
 		}
 		
 		function savebc() 
@@ -339,8 +352,8 @@
 
 			$this->db->execute($sql);	
 		}
-		
-		function isvaliddata()
+                
+                function isvaliddata()
 		{
 			$ret = true;
 			if ( isset($this->param['itemid']) == false )
@@ -349,42 +362,97 @@
 				return false;
 			}
 			
-			$this->errmsg = '';
 			for ($i=0;$i<count($this->param['itemid']);$i++)
 			{
-				$itemid = $this->param['itemid'][$i];
-				
-				if ($itemid != '') 
+				$errname = "item".$i."err";
+				$this->param[$errname] = '';
+
+				if ($this->param['itemid'][$i] != '') 
 				{					
 					if ($this->param['itemqty'][$i] == '')		
 					{
-						$this->errmsg[$itemid] = 'Item ' . $itemid . ' quantity harus diisi';
+						if ($this->param[$errname] == '')
+							$this->param[$errname] = "quantity harus di isi";										
 					}
 					else														
 						if (!is_numeric($this->param['itemqty'][$i]))
 						{
-							$this->errmsg[$itemid] = 'Item ' . $itemid . ' quantity harus numeric';						
+							$this->param[$errname] .= ($this->param[$errname] ? " dan " : "");
+							$this->param[$errname] .= "quantity harus numeric";										
 						}
 						else
 						{
 							if (floatval($this->param['itemqty'][$i]) <= 0)
 							{
-								$this->errmsg[$itemid] = 'Item ' . $itemid . ' quantity harus lebih besar dari 0';									
+								$this->param[$errname] .= ($this->param[$errname] ? " dan " : "");
+								$this->param[$errname] .= "quantity harus lebih besar dari 0";										
 							}
 							/*
 							else
 							{
-								$sql = "exec sp_checkQuantity" . $this->queryvalue($itemid);
+								$sql = "exec sp_checkQuantity" . $this->queryvalue($this->param['itemid'][$i]);
 								$qtyStock = $this->db->executeScalar($sql);
 								$qtyOrder = $this->param['itemqty'][$i];
 								if ($qtyStock - $qtyOrder < 0 )
 								{
-									$this->errmsg[$itemid] = 'Item ' . $itemid . ' stock item tidak mencukupi';
+									$this->param[$errname] = 'stock item tidak mencukupi';
 								}						
 							}
 							*/
 						}
 				}
+				else
+				{			
+					if (!$this->param['itemqty'][$i] == '')	
+					{
+						$this->param[$errname] = "kode item tidak boleh kosong";
+						
+						if (!is_numeric($this->param['itemqty'][$i]))
+						{
+							$this->param[$errname] .= ($this->param[$errname] ? " dan " : "");
+							$this->param[$errname] .= "quantity harus numeric";
+						}
+						else
+						{
+							if (floatval($this->param['itemqty'][$i]) <= 0)
+							{
+								$this->param[$errname] .= ($this->param[$errname] ? " dan " : "");
+								$this->param[$errname] .= "quantity harus lebih besar dari 0";										
+							}
+						}
+					}
+				}
+				
+				if ($this->param[$errname] != '' )
+				{
+					$this->param[$errname] = ucfirst($this->param[$errname]) . ".";
+					$ret = false;
+				}
+			}
+			
+			// Checking min order and max order
+			$sql = "select top 1 isnull(totalorder,0) as totalorder from vw_salestable where salesid = " . $this->queryvalue($this->salesid);
+			$rs = $this->db->query($sql);			
+			if ($rs->fetch()) 
+			{
+			    $this->totalorder = $rs->value('totalorder'); 
+			}
+			$rs->close ();
+			
+			$sql = "select top 1 mintotalsales, maxtotalsales from sysparamTable";
+			$rs = $this->db->query($sql);			
+			if ($rs->fetch()) 
+			{
+			    $mintotalsales = $rs->value('mintotalsales'); 
+			    $maxtotalsales = $rs->value('maxtotalsales'); 
+			}
+			$rs->close ();
+			
+			//echo $this->totalorder . '-' .$maxtotalsales . '-' . $mintotalsales;
+			if ( $this->totalorder > $maxtotalsales || $this->totalorder < $mintotalsales )
+			{
+			    $this->errmsg = 'Minimum order harus diatas IDR ' . $this->valuenumber($mintotalsales) . ' dan maximum order IDR ' . $this->valuenumber($maxtotalsales);
+                            $ret = false;    
 			}
 			
 			return $ret;			
@@ -397,6 +465,7 @@
 				$sql = "select kodebc from vw_BCMapping where KodeMember = " . $this->queryvalue($this->userid());
 				$sql.= " and defaultbc = 1";
 				$this->param["bc"] = $this->db->executeScalar($sql);
+                                $this->defaultbckode = $this->param["bc"];
 			}
 			
 			$sql = "select* from vw_BCMapping ";
