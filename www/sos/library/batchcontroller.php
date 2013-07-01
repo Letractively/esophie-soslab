@@ -103,10 +103,10 @@
                     
                     // Execute payment initialization for faspay
                     // Loop through all salestable with status validated (6) 
-                    // and paymenttable.paymstatus = none (0) and payment still possible
+                    // and paymenttable.paymstatus = none / failed (0/3) and payment still possible
                     $sql = "select t1.salesid from salestable t1 with (nolock)";
                     $sql.= " inner join paymenttable t2 with (nolock) on t1.salesid = t2.salesid";
-                    $sql.= " where t1.status = 6 and t1.maxpaiddate > GETDATE() and t2.paymstatus = 0";
+                    $sql.= " where t1.status = 6 and t1.maxpaymdate > GETDATE() and t2.paymstatus in (0,3)";
                     $rs	= $this->db->query($sql);
                     if ($rs)
                     {
@@ -345,12 +345,31 @@
                             {
                                     $phonenumber = $row['phone'];
                                     $salesid = $row['salesid'];
+                                    $message = $row['message'];
                                     if ( $phonenumber != '' )
                                     {
                                             if ( substr($phonenumber,0,1) == '0' )
                                                     $phonenumber = '62' . substr($phonenumber,1,strlen($phonenumber)-1);
                                             if ( substr($phonenumber,0,2) != '62' )
                                                     $phonenumber = '62' . $phonenumber;
+                                            
+                                            if (strpos('[payminstruksi]', $message))
+                                            {
+                                                $sql0 = "select paymentmode, paymentname, totalbayar, virtualaccount";
+                                                $sql0.= " from vw_paymtable where salesid = " . $this->queryvalue($salesid);
+                                                $rs0  = $this->db->query($sql0);
+                                                
+                                                $payminstruksi = "";
+                                                if ($rs0->fetch())
+                                                {
+                                                    $payminstruksi.= "Rp".$this->valuenumber($rs0->value('totalbayar'));
+                                                    if (strcasecmp($rs0->value('paymentmode'), 'ATM') && strlen($rs0->value('virtualaccount')) >0 )
+                                                        $payminstruksi .= " ke rek " . $rs0->value('virtualaccount');
+                                                    else
+                                                        $payminstruksi .= " di " . $rs0->value('paymentname');
+                                                }
+                                                $message = str_replace('[payminstruksi]', $payminstruksi, $message);
+                                            }
 
                                             $smsurlsent = $smsurl . '&message=' . $row['message'] . '&msisdn=' . $phonenumber;
                                             //echo $smsurlsent.'<br>';

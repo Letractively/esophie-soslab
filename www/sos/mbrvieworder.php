@@ -177,7 +177,7 @@
 	</div>
 	<? } else { ?>
         <div class="boxcon1">
-		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i></div>
+		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i><br>Special offer: <i>Kalau anda berbelanja untuk lebih dari Rp500.000, ongkos pembayaran gratis untuk order ini!</i></div>
 	</div>
 	<? } ?>	
                                 
