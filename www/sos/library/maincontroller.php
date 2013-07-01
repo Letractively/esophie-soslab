@@ -30,24 +30,49 @@
 		{ 
 			parent::setsysparam();
 			
-			//db setting
-			$this->sysparam['db']['server'] 		= '10.0.0.102';
-			$this->sysparam['db']['name'] 			= 'webdev';
-			$this->sysparam['db']['user'] 			= 'sos';
-			$this->sysparam['db']['password'] 		= 'S0s#0k';	
-			
-			//short message service
-                        $this->sysparam['dbsms']['url']                 = 'http://broadcast.jatismobile.com/smspush/send.aspx?userid=smartin&password=smartin123';
+                        if ($this->dev) //DEVELOPMENT
+                        {
+                            //db setting
+                            $this->sysparam['db']['server'] 		= 'nsudbs';
+                            $this->sysparam['db']['name'] 		= 'webdev';
+                            $this->sysparam['db']['user'] 		= 'sos';
+                            $this->sysparam['db']['password'] 		= 'S0s#0k';	
 
-                        //payment gateway settings
-                        $this->sysparam['paygate']['urlinit'] 		= "http://paygate.sophieparis.com/faspay/postdatatrx?salesid=";
-                        $this->sysparam['paygate']['urlforward']        = "http://paygate.sophieparis.com/sophie/forwardredirect";
-                        $this->sysparam['paygate']['urlsimulate']       = "http://paygate.sophieparis.com/faspay/paymentnotification";
-			
-			//application parameter			
-			$this->sysparam['app']['bcurl']                 = "http://order.sophiemobile.com/bclogin.php";
-			$this->sysparam['app']['mbrurl']		= "http://order.sophiemobile.com";
-			
+                            //short message service
+                            $this->sysparam['dbsms']['url']             = 'http://broadcast.jatismobile.com/smspush/send.aspx?userid=smartin&password=smartin123';
+
+                            //payment gateway settings
+                            $this->sysparam['paygate']['urlinit']       = "http://webdev.sophiemartin.com/paygate/faspay/postdatatrx?salesid=";
+                            $this->sysparam['paygate']['urlforward']    = "http://webdev.sophiemartin.com/paygate/sophie/forwardredirect?salesid=";
+                            $this->sysparam['paygate']['urlsimulate']   = "http://webdev.sophiemartin.com/paygate/faspay/paymentnotification";
+
+                            //application parameter			
+                            $this->sysparam['app']['bcurl']             = "http://webdev.sophiemartin.com/sos/bclogin.php";
+                            $this->sysparam['app']['mbrurl']		= "http://webdev.sophiemartin.com/sos";
+                        }
+                        else //PRODUCTION
+                        {
+                            //db setting
+                            $this->sysparam['db']['server'] 		= 'nsudbs';
+                            $this->sysparam['db']['name']               = 'web';
+                            $this->sysparam['db']['user'] 		= 'sos';
+                            $this->sysparam['db']['password'] 		= 'S0s#0k';	
+
+                            //short message service
+                            $this->sysparam['dbsms']['url']             = 'http://broadcast.jatismobile.com/smspush/send.aspx?userid=smartin&password=smartin123';
+
+                            //payment gateway settings
+                            $this->sysparam['paygate']['urlinit']       = "http://paygate.sophieparis.com/faspay/postdatatrx?salesid=";
+                            $this->sysparam['paygate']['urlforward']    = "http://paygate.sophieparis.com/sophie/forwardredirect?salesid=";
+                            $this->sysparam['paygate']['urlsimulate']   = "http://paygate.sophieparis.com/faspay/paymentnotification";
+
+                            //application parameter			
+                            $this->sysparam['app']['bcurl']             = "http://order.sophiemobile.com/bclogin.php";
+                            $this->sysparam['app']['mbrurl']		= "http://order.sophiemobile.com";
+
+                        }
+                        
+                        
 			$this->sysparam['appmsg']['bcaccountsuspend']	= "Account member anda ditangguhkan, silahkan hubungi Sophie Care.";
 			
 			//email parameter

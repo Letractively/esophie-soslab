@@ -28,19 +28,52 @@
                 var $paymstatus;
                 var $trxref;
                 var $timeleftinit;
-                
-                var $urlforward;
-                var $urlsimulate;
 		
 		function run() 
 		{
 			parent::run();	
                         
-                        $this->urlsimulate = $this->sysparam['paygate']['urlsimulate'];
-                        $this->urlforward = $this->sysparam['paygate']['urlforward'];
                         
 			$this->salesid = $this->param['salesid'];
 			if ($this->salesid == '') $this->gotohomepage();
+                        
+                        if ($this->action == 'forward')
+                        {
+                            $urlpaygate = $this->sysparam['paygate']['urlforward'] . urlencode($this->salesid);
+                            
+                            // Send HTTP request to paygate to initialize the payment
+                            $result = file_get_contents($urlpaygate);
+                            $data = json_decode($result);
+                            
+                            echo $urlpaygate;
+                            echo var_dump($data);
+                            // If response = OK
+                            if (isset($data->response) && strcasecmp("OK",$data->response) == 0)
+                            {
+                                if (isset($data->url) && strlen($data->url) > 0)
+                                {
+                                    header("location:" . $data->url);
+                                    exit;
+                                }
+                            }
+                        }
+                        
+                        $sql = "select status, paymstatus, timeleftinit, trxref from vw_paymtable where salesid = " . $this->queryvalue($this->salesid);
+			$rs = $this->db->query($sql);			
+			if ($rs->fetch()) 
+			{					
+				$this->status			= $rs->value('status'); 
+                                $this->timeleftinit 		= $rs->value("timeleftinit");
+                                $this->paymstatus               = $rs->value('paymstatus');
+                                $this->trxref                   = $rs->value('trxref');
+                            
+                                if ($this->status != $this->sysparam['salesstatus']['validated'])
+                                    $this->gotohomepage();
+                                
+                                // init payment first if not yet initialized
+                                if (($this->paymstatus == 0 || $this->paymstatus == 3) && $this->timeleftinit > 0)
+                                    $this->initfaspay ($this->salesid);
+                        }
                         
 			$this->load();
                         
@@ -57,18 +90,11 @@
 				$this->userstatus		= $rs->value('userstatus'); 
 				$this->status			= $rs->value('status'); 
                             
-                                if ($this->status != $this->sysparam['salesstatus']['validated'])
-                                    $this->gotohomepage();
-                                
 				$this->timeleft 		= $rs->value("timeleftpaid");
                                 $this->timeleftinit 		= $rs->value("timeleftinit");
 				$this->virtualaccount           = $rs->value("virtualaccount");
                                 $this->paymstatus               = $rs->value('paymstatus');
                                 $this->trxref                   = $rs->value('trxref');
-                                
-                                // init payment first if not yet initialized
-                                if (($this->paymstatus == 0 || $this->paymstatus == 3) && $this->timeleftinit > 0)
-                                    $this->initfaspay ($this->salesid);
                                
 				$this->mbrno 			= $rs->value('kodemember'); 
 				$this->mbrname 			= $rs->value('namamember'); 
