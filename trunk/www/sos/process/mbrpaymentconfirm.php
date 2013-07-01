@@ -25,6 +25,9 @@
 		var $orderdate;
 		var $timeleft;
 		var $virtualaccount;
+                var $paymstatus;
+                var $trxref;
+                var $timeleftinit;
                 
                 var $urlforward;
                 var $urlsimulate;
@@ -38,51 +41,49 @@
                         
 			$this->salesid = $this->param['salesid'];
 			if ($this->salesid == '') $this->gotohomepage();
-
-			switch($this->action)
-			{
-				case "none":					
-					$sql = "select status from vw_salestable where salesid = " . $this->queryvalue($this->salesid);
-					$status = $this->db->executescalar($sql);
-					if ($status != $this->sysparam['salesstatus']['validated'])
-						$this->gotohomepage();
-					break;
-			}
+                        
 			$this->load();
                         
-                        if ($this->action == "simulate") $this->SimulatePayment();
+                        //if ($this->action == "simulate") $this->SimulatePayment();
 		}		
 		
 		function load()
 		{
-			$sql = "select * from vw_salestable where salesid = " . $this->queryvalue($this->salesid);
+			$sql = "select * from vw_paymtable where salesid = " . $this->queryvalue($this->salesid);
 			$rs = $this->db->query($sql);			
 			if ($rs->fetch()) 
 			{					
-				
+				$this->orderdate 		= $this->valuedatetime($rs->value('orderdate')); 
+				$this->userstatus		= $rs->value('userstatus'); 
+				$this->status			= $rs->value('status'); 
+                            
+                                if ($this->status != $this->sysparam['salesstatus']['validated'])
+                                    $this->gotohomepage();
+                                
 				$this->timeleft 		= $rs->value("timeleftpaid");
+                                $this->timeleftinit 		= $rs->value("timeleftinit");
 				$this->virtualaccount           = $rs->value("virtualaccount");
-				
+                                $this->paymstatus               = $rs->value('paymstatus');
+                                $this->trxref                   = $rs->value('trxref');
+                                
+                                // init payment first if not yet initialized
+                                if (($this->paymstatus == 0 || $this->paymstatus == 3) && $this->timeleftinit > 0)
+                                    $this->initfaspay ($this->salesid);
+                               
 				$this->mbrno 			= $rs->value('kodemember'); 
 				$this->mbrname 			= $rs->value('namamember'); 
 				$this->mbraddress 		= $rs->value('alamat'); 
 				
-				$this->paymentcharge 	= $rs->value('paymentcharge'); 
+				$this->paymentcharge            = $rs->value('paymentcharge'); 
 				$this->paymentname 		= $rs->value('paymentname'); 
 				$this->paymentmode 		= $rs->value('paymentmode'); 
 
-				$sql = "Select * from paymentmode with (NOLOCK)  where paymentmode = " . $this->queryvalue($this->paymentmode);
-				$rs1 = $this->db->query($sql);			
-				if ($rs1->fetch()) 
-				{
-					$this->merchantid 	= $rs1->value('merchantid'); 
-					$this->currencycode = $rs1->value('currencycode'); 					
-					$this->returnurl 	= $rs1->value('returnurl'); 
-					$this->password 	= $rs1->value('password'); 
-					$this->paymentto 	= $rs1->value('paymentto'); 
-					$this->paymentdesc 	= $rs1->value('description');
-				}
-				$rs1->close();
+                                $this->merchantid               = $rs->value('merchantid'); 
+                                $this->currencycode             = $rs->value('currencycode'); 					
+                                $this->returnurl                = $rs->value('returnurl'); 
+                                $this->password                 = $rs->value('password'); 
+                                $this->paymentto                = $rs->value('paymentto'); 
+                                $this->paymentdesc              = $rs->value('description');
 				
 				$this->totalorder 		= $rs->value('totalorder'); 
 				$this->discount 		= $rs->value('discount'); 
@@ -91,16 +92,12 @@
 				$this->bcno 			= $rs->value('kodebc'); 
 				$this->bcname 			= $rs->value('namabc'); 
 				$this->bcaddress 		= $rs->value('alamatbc'); 
-				
-				$this->orderdate 		= $this->valuedatetime($rs->value('orderdate')); 
-				$this->userstatus		= $rs->value('userstatus'); 
-				$this->status			= $rs->value('status'); 
 						
 			}
 			else
 			{
 				$rs->close();
-				$this->gotopage('memberinfo');
+				$this->gotohomepage();
 			}
 			$rs->close();
 		}
@@ -141,74 +138,6 @@
                     
                     return $response;
                 }
-                
-		function SimulateATMPayment ($vanumber)
-		{
-			$bOk = false;
-			$stan = '1234567';
-			$trxdate = '20130125';
-			$trxref = $vanumber;
-			$salt = $this->JatisSaltIt($vanumber);
-			
-			$hashinit = $this->JatisHashItVAInquiry($vanumber, $stan, $trxdate, $salt);
-			$urlinit = "http://paygate.sophieparis.com/jatis/vainquiry?hash=".$hashinit."&vanumber=".$vanumber."&stan=".$stan."&trxdate=".$trxdate;
-			$result = file_get_contents($urlinit);
-			if (strlen($result) > 0)
-			{
-				$bits = explode("|", $result, 6);
-				if (sizeof($bits) > 5 && $bits[1] == "00")
-				{
-					$amount = $bits[4];
-					$trxref = $bits[5];
-					$bOk = true;
-				}
-			}
-			
-			if (!$bOk) return "Init failed! ".$result;
-
-			$hashpay = $this->JatisHashItVAPayment($vanumber, $stan, $amount, $trxdate, $trxref, $salt);
-			$urlpayment = "http://paygate.sophieparis.com/jatis/vapayment?hash=".$hashpay."&vanumber=".$vanumber."&stan=".$stan."&trxdate=".$trxdate."&trxref=".$trxref."&amount=".$amount;
-			$result = file_get_contents($urlpayment);
-			if (strlen($result) > 0)
-			{
-				$bits = explode("|", $result, 4);
-				if (sizeof($bits) > 3 && $bits[1] == "00")
-				{
-					$bOk = true;
-				}
-			}
-			
-			if (!$bOk) return "Payment failed! ".$result;
-			
-			return "Payment OK : amount=" . $amount . " - " . $result; 
-		}
-		
-						
-		function JatisSaltIt($vanumber)
-		{
-		    // Membuat salt dari digit 5,6,15,16 dari va number
-		    // Contoh : salt = 0124
-		    $salt = substr($vanumber, 4,1).substr($vanumber, 5,1).substr($vanumber, 14,1).substr($vanumber, 15,1);
-		    
-		    // Salt di mod 7, sisipkan ke digit akhir salt
-		    // Contoh : salt = 01245
-		    $salt = $salt . ($salt % 7);
-		    
-		    return $salt;
-		}
-		
-		function JatisHashItVAInquiry($vanumber, $stan, $trxdate, $salt)
-		{
-		    // parameter berikut di encrypt menggunakan md5 untuk inquiry
-		    $inqHash = md5(strtoupper("vanumber=$vanumber&stan=$stan&trxdate=$trxdate&$salt"));
-		    return $inqHash;
-		}
-		
-		function JatisHashItVAPayment($vanumber, $stan, $amount, $trxdate, $trxref, $salt)
-		{
-		    // parameter berikut di encrypt menggunakan md5 untuk inquiry
-		    $inqHash = md5(strtoupper("vanumber=$vanumber&stan=$stan&amount=$amount&trxdate=$trxdate&trxref=$trxref&$salt"));
-		    return $inqHash;
-		}
+ 
 	}
 ?>

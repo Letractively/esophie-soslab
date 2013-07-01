@@ -35,9 +35,11 @@
 <? if ($ctrl->paymentmode == "ATM" || $ctrl->paymentmode == "SMSBRI") { ?>
 <div class="boxfont2">Untuk informasi pembayaran yang lebih lengkap, silahkan clik di button <em>Lanjut >></em> bahwa ini.</div>
 <? } else { ?>
-<div class="boxfont2">Setelah clik button <em>Lanjut >></em>, Anda akan diredireksi ke checkout untuk melakukan online payment...</div>
-<? } ?>
-<br><button type="button" onclick="setaction('simulate');" class="buttonbig" >Simulate</button>
+<div class="boxfont2">Setelah clik button <em>Lanjut >></em>, Anda akan diredireksi ke checkout Faspay untuk melakukan online payment...</div>
+<? }
+//<button type="button" onclick="setaction('simulate');" class="buttonbig" >Simulate</button>
+?>
+<br>
 <button type="button" onclick="seturl('<?=$ctrl->varvalue('urlforward')?>');" class="buttonbig" >Lanjut >></button>
 
 
