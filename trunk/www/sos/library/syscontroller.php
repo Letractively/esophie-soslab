@@ -5,10 +5,14 @@
 		var $sysparam;
 		var $action;
 		var $checklogin;
+                var $dev;
 		
 		function __construct() 
 		{	
-			session_start();
+			// IF false => PRODUCTION, true => DEVELOPMENT
+                        $this->dev = false;
+                        
+                        session_start();
 			switch ($_SERVER['REQUEST_METHOD']) {
 				case "GET" :
 					$this->param = $_GET;					

@@ -24,7 +24,7 @@
 						<div id="description" name="description" class="boxcon2">
 						<?=$item['fee']?>
 						<?=($item['mobilenumber'] != '0' ? '<br> Mobile number : <input type="text" id="mobilenumber" name="mobilenumber"></input> ex: 08111234567' : '')?>
-						<br><br>Instruksi pembayaran: <?= $item['description'] ?></a>
+						<br><br><? include 'include/paymode_' . strtolower($item['paymentmode']) . '.php'; ?></a>
 						</div>
 					<?
 					$i++;

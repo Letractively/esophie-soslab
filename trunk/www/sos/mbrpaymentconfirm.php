@@ -34,18 +34,21 @@
 
 <br><div class="boxcon3" style="text-align:left;padding: 10px 10px 10px 10px;">
     <img style="float:right;" src="images/logo-payment-<?= strtolower($ctrl->paymentmode)?>.png"/>
-    Instruksi pembayaran <?=$ctrl->paymentname?>:<br><br><?=$ctrl->paymentdesc?>
+    Instruksi pembayaran <?=$ctrl->paymentname?>:<br><br><? include 'include/paymode_' . strtolower($ctrl->paymentmode) . '.php'; ?>
 </div>
 
-<? if ($ctrl->paymentmode == "ATM" || $ctrl->paymentmode == "SMSBRI") { ?>
-<div class="boxfont2">Untuk informasi pembayaran yang lebih lengkap, silahkan clik di button <em>Lanjut >></em> bahwa ini.</div>
-<? } else { ?>
-<div class="boxfont2">Setelah clik button <em>Lanjut >></em>, Anda akan diredireksi ke checkout Faspay untuk melakukan online payment...</div>
-<? }
-//<button type="button" onclick="setaction('simulate');" class="buttonbig" >Simulate</button>
-?>
+<? 
+if (strlen($ctrl->trxref)>0)
+{
+    if ($ctrl->paymentmode == "ATM" || $ctrl->paymentmode == "SMSBRI") { ?>
+    <div class="boxfont2">Untuk informasi pembayaran yang lebih lengkap, silahkan clik di button <em>Lanjut >></em> bahwa ini.</div>
+    <? } else { ?>
+    <div class="boxfont2">Setelah clik button <em>Lanjut >></em>, Anda akan diredireksi ke checkout Faspay untuk melakukan online payment...</div>
+    <? } //<button type="button" onclick="setaction('simulate');" class="buttonbig" >Simulate</button> ?>
 <br>
-<button type="button" onclick="seturl('<?=$ctrl->varvalue('urlforward')?>');" class="buttonbig" >Lanjut >></button>
-
+<button type="button" onclick="setaction('forward')" class="buttonbig" >Lanjut >></button>
+<? } else { ?>
+    <div class="boxfont2">Silahkan tunggu 2-3 menit untuk initialisasi pembayaran...</div>
+<? } ?>
 
 <?include "mbrfooter.php";?>
