@@ -78,16 +78,16 @@
 <button type="button" onclick="if (validsearch()){setaction('search');};" style="width:60px;">Search</button>&nbsp;&nbsp;
 <button type="button" onclick="setaction('reset');" style="width:60px;">Clear</button>	
 <br><br>
-<table class="dataview">
+<table class="dataview" width ="955">
 	<tr>
 		<th>&nbsp;</th>
-		<th width="120" align="left"><a href="#" class="colname" onclick="setaction('sortby_salesid');">Order #<?=$ctrl->sortimage('salesid')?></a></th>
-		<th width="110" align="left"><a href="#" class="colname" onclick="setaction('sortby_orderdate');">Tanggal Order<?=$ctrl->sortimage('orderdate')?></a></th>
-		<th width="60" align="left"><a href="#" class="colname" onclick="setaction('sortby_kodemember');">Member<?=$ctrl->sortimage('kodemember')?></a></th>
-		<th width="220" align="left"><a href="#" class="colname" onclick="setaction('sortby_namamember');">Member Name<?=$ctrl->sortimage('namamember')?></a></th>
-		<th width="110" align="right"><a href="#" class="colname" onclick="setaction('sortby_totalbayar');">Total Member<?=$ctrl->sortimage('totalbayar')?></a></th>
-		<th width="100" align="left"><a href="#" class="colname" onclick="setaction('sortby_salesidsmi');">Order BC<?=$ctrl->sortimage('salesidsmi')?></a></th>
-		<th width="120" align="left"><a href="#" class="colname" onclick="setaction('sortby_statusname');">Status<?=$ctrl->sortimage('statusname')?></a></th>
+		<th align="left"><a href="#" class="colname" onclick="setaction('sortby_salesid');">Order #<?=$ctrl->sortimage('salesid')?></a></th>
+		<th align="left"><a href="#" class="colname" onclick="setaction('sortby_orderdate');">Tanggal Order<?=$ctrl->sortimage('orderdate')?></a></th>
+		<th align="left"><a href="#" class="colname" onclick="setaction('sortby_kodemember');">Member<?=$ctrl->sortimage('kodemember')?></a></th>
+		<th align="left"><a href="#" class="colname" onclick="setaction('sortby_namamember');">Member Name<?=$ctrl->sortimage('namamember')?></a></th>
+		<th align="right"><a href="#" class="colname" onclick="setaction('sortby_totalbayar');">Total Member<?=$ctrl->sortimage('totalbayar')?></a></th>
+		<th align="left"><a href="#" class="colname" onclick="setaction('sortby_salesidsmi');">Order BC<?=$ctrl->sortimage('salesidsmi')?></a></th>
+		<th align="left"><a href="#" class="colname" onclick="setaction('sortby_statusname');">Status<?=$ctrl->sortimage('statusname')?></a></th>
 	</tr>
 	<?
 	if (is_array($ctrl->items))
@@ -96,18 +96,18 @@
 		foreach ($ctrl->items as $item)
 		{
 			echo $i%2?'<tr class="pinkrow">':'<tr>';
-			echo '<td><div class="color' . $ctrl->colorstatus($item['status']) . '"></div></td>';			
-			echo '<td align="left"><a ' . ($i%2?'class="grid"':'') . ' href="bcvieworder.php?backpage=2&salesid=' . $item['salesid'] . '&sc=' . $ctrl->searchcriteria .'">' . $item['salesid'] . '</a></td>';
-			echo '<td align="left">' . $item['orderdate']. '</td>';
-			echo '<td align="left">' . htmlspecialchars($item['kodemember']). '</td>';
-			echo '<td align="left">' . htmlspecialchars($item['namamember']). '</td>';
-			echo '<td align="right">' . $ctrl->valuenumber($item['totalbayar']) . '</td>';
+			echo '<td width="20"><div class="color' . $ctrl->colorstatus($item['status']) . '"></div></td>';			
+			echo '<td width="120" align="left"><a ' . ($i%2?'class="grid"':'') . ' href="bcvieworder.php?backpage=2&salesid=' . $item['salesid'] . '&sc=' . $ctrl->searchcriteria .'">' . $item['salesid'] . '</a></td>';
+			echo '<td width="110" align="left">' . $item['orderdate']. '</td>';
+			echo '<td width="60" align="left">' . htmlspecialchars($item['kodemember']). '</td>';
+			echo '<td width="*" align="left">' . htmlspecialchars($item['namamember']). '</td>';
+			echo '<td width="110" align="right">' . $ctrl->valuenumber($item['totalbayar']) . '</td>';
 			if ( strtolower($item['salesidsmi']) != "no order" )
-				echo '<td align="left"><a href="bcviewmyorder.php?backpage=2&purchid=' . $item['salesid'] .'">' . $item['salesidsmi'] . '</a></td>';
+				echo '<td width="100" align="left"><a href="bcviewmyorder.php?backpage=2&purchid=' . $item['salesid'] .'">' . $item['salesidsmi'] . '</a></td>';
 			else
-				echo '<td align="left">No Order</td>';
+				echo '<td width="100" align="left">No Order</td>';
 			//echo '<td align="left">' . htmlspecialchars($item['salesidsmi']). '</td>';
-			echo '<td align="left">' . htmlspecialchars($item['statusname']). '</td>';
+			echo '<td width="120" align="left">' . htmlspecialchars($item['statusname']). '</td>';
 			echo '</tr>';
 			$i++;
 		}

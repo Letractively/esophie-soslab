@@ -11,17 +11,20 @@
 				{
 					?>
 						<div class="boxcon">
-							<div class="boxleft" style="width:200px">
+							<div class="boxleft" style="width:150px">
 								<input type="radio" id="mop" name="mop" value="<?=$item['paymentmode']?>" onclick="opendescription(<?=$i?>)" <?=($ctrl->selectedpaymentmode == $item['paymentmode']?'checked':'')?>><?=$item['name']?><br>
 							</div>
-							<div class="boxright" style="width:90px;text-align:right;margin-right:10px;">
-								+<?=$ctrl->valuenumber($item['totalfee'])?>
+							<div class="boxright" style="width:140px;text-align:right;margin-right:10px;">
+                                                            <img style="float:right;margin-left:15px;" src="images/logo-payment-<?= strtolower($item['paymentmode'])?>.png"/>
+                                                            <?  if ($item['totalfee'] == 0) echo 'gratis';
+                                                                else echo '+' . $ctrl->valuenumber($item['totalfee']);
+                                                            ?>
 							</div>
 						</div>							
 						<div id="description" name="description" class="boxcon2">
 						<?=$item['fee']?>
 						<?=($item['mobilenumber'] != '0' ? '<br> Mobile number : <input type="text" id="mobilenumber" name="mobilenumber"></input> ex: 08111234567' : '')?>
-						<br><a href="#<?=$item['paymentmode']?>">Payment instructions...</a>
+						<br><br>Instruksi pembayaran: <?= $item['description'] ?></a>
 						</div>
 					<?
 					$i++;
@@ -29,22 +32,6 @@
 			}
 		?>
 	</div>
-	<div class="boxcon3" style="text-align:left;padding: 10px 10px 10px 10px;">
-		<?
-			if (is_array($ctrl->items))
-			{
-				$i = 0;
-				foreach ($ctrl->items as $item)
-				{
-					echo $i ? '<br><br>' : '';
-					echo '<a href="'. $item['paymentmode'] . '"></a>';
-					echo $item['name'] . ': ' . $item['description'];
-					$i++;
-				}
-			}
-		?>
-	</div>
-	<br>
 		
 	<table border="0" width="100%">
 		<tr>

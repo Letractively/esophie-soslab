@@ -48,7 +48,7 @@
 				$this->items[$i]["name"] = $rs->value('name');
                                 if ($rs->value('chargethreshold') >= 0 && $rs->value('chargethreshold') <= $totalbayar)
                                 {
-                                        $this->items[$i]["fee"] = 'No payment fee if total pembayaran above Rp' .$this->valuenumber($rs->value('chargethreshold'));
+                                        $this->items[$i]["fee"] = 'Biaya administrasi gratis jika total pembarayan > Rp ' .$this->valuenumber($rs->value('chargethreshold'));
                                         $this->items[$i]["totalfee"] = 0;
                                 }
 				else if ($rs->value('chargeratio') > 0 && $rs->value('chargefee') > 0)
