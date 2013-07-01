@@ -5,13 +5,12 @@
 		var $sysparam;
 		var $action;
 		var $checklogin;
-                var $dev;
+                
+                // Environment PROD/DEV
+                const _ENV_ = 'PROD';
 		
 		function __construct() 
 		{	
-			// IF false => PRODUCTION, true => DEVELOPMENT
-                        $this->dev = false;
-                        
                         session_start();
 			switch ($_SERVER['REQUEST_METHOD']) {
 				case "GET" :
