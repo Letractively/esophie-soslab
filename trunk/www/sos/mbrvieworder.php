@@ -170,14 +170,15 @@
 
 	<?if ($ctrl->varvalue('paymentmode') != '' && ($ctrl->statuscode > 1 || $ctrl->pageview == 'orderconfirm')) { ?>
 	<div class="boxcon1">
-		<div class="boxleft1">Payment Charge (<?=$ctrl->varvalue('paymentname')?>)</div><div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('paymentcharge'));?></div>
+		<div class="boxleft1">Biaya admin (<?=$ctrl->varvalue('paymentname')?>)</div><div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('paymentcharge'));?></div>
 	</div>
 	<div class="boxcon1">
 		<div class="boxleft1">Total Pembayaran</div><div class="boxright1-1"><?=$ctrl->valuenumber($ctrl->varvalue('totalbayar'));?></div>
 	</div>
 	<? } else { ?>
         <div class="boxcon1">
-		<div class="boxright"><i>Total order belum termasuk ongkos pembayaran online</i><br>Special offer: <i>Kalau anda berbelanja untuk lebih dari Rp500.000, ongkos pembayaran gratis untuk order ini!</i></div>
+		<div class="boxright" style="text-align:right;"><i>Total order belum termasuk biaya administrasi online</i>
+                <br><i>Jika berbelanja lebih dari Rp 500.000, gratis biaya administrasi!</i></div>
 	</div>
 	<? } ?>	
                                 

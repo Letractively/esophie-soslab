@@ -284,11 +284,11 @@
                                                             </tr>
                                                             <tr>
                                                                     <td style='text-align:right' colspan='".($colspan-1)."' rowspan='1'>Discount member</td>
-                                                                    <td style='text-align:right'>".$this->valuenumber($totaldiscount*-1)."</td>
+                                                                    <td style='text-align:right'>".$this->valuenumber($totaldiscount)."</td>
                                                             </tr>
                                                             <tr>
                                                                     <td style='text-align:right' colspan='".($colspan-1)."' rowspan='1'>Total setelah discount</td>
-                                                                    <td style='text-align:right'>".$this->valuenumber($totalorder-$totaldiscount)."</td>
+                                                                    <td style='text-align:right'>".$this->valuenumber($totalorder+$totaldiscount)."</td>
                                                             </tr>
                                                             <tr>
                                                                     <td style='text-align:right' colspan='".($colspan-1)."' rowspan='1'>Ongkos pembayaran</td>
