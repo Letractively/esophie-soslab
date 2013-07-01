@@ -30,7 +30,7 @@
 		{ 
 			parent::setsysparam();
 			
-                        if ($this->dev) //DEVELOPMENT
+                        if (self::_ENV_ == 'PROD') //DEVELOPMENT
                         {
                             //db setting
                             $this->sysparam['db']['server'] 		= 'nsudbs';

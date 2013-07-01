@@ -144,7 +144,7 @@
                     $sql = "select top 30 [noseq],[from],[to],isnull([cc],'') as cc,isnull([bcc],'') as bcc,[subject],[body],t1.[createdDate],[sendDate],isnull([toname],[to]) as toname, t1.[salesid] as salesid, t2.status as [salesstatus] ";
                     $sql.= " ,t2.orderdate, t2.kodemember, t2.namamember, t2.telp, isnull(t2.alamat,'') as alamat, t2.kodebc, t2.namabc, t2.alamatbc, t2.telpbc, t2.userstatus, t2.bcsalesorderstatus, t2.totalorder, t2.discount, t2.totalbayar, isnull(t2.paymentcharge,0) as paymentcharge ";
                     $sql.= " from emailTable as t1 with (NOLOCK) left join vw_salestable as t2 with (NOLOCK) on t1.salesid=t2.salesid";
-                    $sql.= " where T1.sendDate is null";
+                    $sql.= " where T1.sendDate is null";   
 
                     $rs	= $this->db->query($sql);
                     if ($rs)
@@ -177,7 +177,7 @@
                                     // Mail Message
                                     // List item
 
-                                    $salesid = trim($row['salesid']);
+                                    $salesid = trim($row['salesid']);  
                                     if ( $salesid !=  "" )
                                     {
                                             $idx = 0;
@@ -190,6 +190,7 @@
                                             while ( $rs3->fetch() )
                                             {
                                                     $idx ++;
+                                                   
                                                     $varLine .= "<tr ". ($idx % 2 == 0 ? "style='background-color:#fbefef'" : "") .">
                                                             <td>".trim($rs3->value('itemid'))."</td>
                                                             <td>".trim($rs3->value('itemname'))."</td>
