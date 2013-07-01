@@ -353,25 +353,25 @@
                                             if ( substr($phonenumber,0,2) != '62' )
                                                     $phonenumber = '62' . $phonenumber;
                                             
-                                            if (strpos('[payminstruksi]', $message))
+                                            if (strpos($message, '[payminstruksi]'))
                                             {
-                                                $sql0 = "select paymentmode, paymentname, totalbayar, virtualaccount";
+                                                $sql0 = "select paymentmode, paymentname, totalbayar, virtualaccount,trxref";
                                                 $sql0.= " from vw_paymtable where salesid = " . $this->queryvalue($salesid);
                                                 $rs0  = $this->db->query($sql0);
-                                                
                                                 $payminstruksi = "";
                                                 if ($rs0->fetch())
                                                 {
                                                     $payminstruksi.= "Rp".$this->valuenumber($rs0->value('totalbayar'));
-                                                    if (strcasecmp($rs0->value('paymentmode'), 'ATM') && strlen($rs0->value('virtualaccount')) >0 )
-                                                        $payminstruksi .= " ke rek " . $rs0->value('virtualaccount');
+                                                    if (strcasecmp($rs0->value('paymentmode'), 'ATM') && strlen($rs0->value('trxref')) >0 )
+                                                        $payminstruksi .= " ke rek " . $rs0->value('trxref');
                                                     else
                                                         $payminstruksi .= " di " . $rs0->value('paymentname');
                                                 }
-                                                $message = str_replace('[payminstruksi]', $payminstruksi, $message);
+                                                $message = str_replace('[payminstruksi]', urlencode($payminstruksi), $message);
+                                                //echo $message;
                                             }
 
-                                            $smsurlsent = $smsurl . '&message=' . $row['message'] . '&msisdn=' . $phonenumber;
+                                            $smsurlsent = $smsurl . '&message=' . $message . '&msisdn=' . $phonenumber;
                                             //echo $smsurlsent.'<br>';
 
                                             $result = file_get_contents($smsurlsent);
