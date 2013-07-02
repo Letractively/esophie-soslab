@@ -292,7 +292,7 @@
                                                                     <td style='text-align:right'>".$this->valuenumber($totalorder+$totaldiscount)."</td>
                                                             </tr>
                                                             <tr>
-                                                                    <td style='text-align:right' colspan='".($colspan-1)."' rowspan='1'>Ongkos pembayaran</td>
+                                                                    <td style='text-align:right' colspan='".($colspan-1)."' rowspan='1'>Biaya admin</td>
                                                                     <td style='text-align:right'>".$this->valuenumber($row['paymentcharge'])."</td>
                                                             </tr>
                                                             <tr>
@@ -362,8 +362,8 @@
                                                 $payminstruksi = "";
                                                 if ($rs0->fetch())
                                                 {
-                                                    $payminstruksi.= "Rp".$this->valuenumber($rs0->value('totalbayar'));
-                                                    if (strcasecmp($rs0->value('paymentmode'), 'ATM') && strlen($rs0->value('trxref')) >0 )
+                                                    $payminstruksi.= "Rp ".$this->valuenumber($rs0->value('totalbayar'));
+                                                    if (strcasecmp($rs0->value('paymentmode'), 'ATM') == 0 && strlen($rs0->value('trxref')) > 0 )
                                                         $payminstruksi .= " ke rek " . $rs0->value('trxref');
                                                     else
                                                         $payminstruksi .= " di " . $rs0->value('paymentname');

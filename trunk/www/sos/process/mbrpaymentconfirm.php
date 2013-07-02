@@ -45,8 +45,6 @@
                             $result = file_get_contents($urlpaygate);
                             $data = json_decode($result);
                             
-                            echo $urlpaygate;
-                            echo var_dump($data);
                             // If response = OK
                             if (isset($data->response) && strcasecmp("OK",$data->response) == 0)
                             {

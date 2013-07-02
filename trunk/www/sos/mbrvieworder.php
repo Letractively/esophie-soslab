@@ -170,7 +170,7 @@
 
 	<?if ($ctrl->varvalue('paymentmode') != '' && ($ctrl->statuscode > 1 || $ctrl->pageview == 'orderconfirm')) { ?>
 	<div class="boxcon1">
-		<div class="boxleft1">Biaya admin (<?=$ctrl->varvalue('paymentname')?>)</div><div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('paymentcharge'));?></div>
+		<div class="boxleft1">Biaya administrasi</div><div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('paymentcharge'));?></div>
 	</div>
 	<div class="boxcon1">
 		<div class="boxleft1">Total Pembayaran</div><div class="boxright1-1"><?=$ctrl->valuenumber($ctrl->varvalue('totalbayar'));?></div>

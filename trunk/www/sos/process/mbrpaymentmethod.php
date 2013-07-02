@@ -87,7 +87,8 @@
 		{	
 			if (isset($this->param["mop"]))
 			{				
-				$sql = " exec sp_updatePaymentMode " . $this->queryvalue($this->salesid) . "," . $this->queryvalue($this->param["mop"]) . "," . $this->queryvalue($this->param["mobilenumber"]);
+				$mobnumber = isset($this->param["mobilenumber"]) ? trim($this->param["mobilenumber"]) : '';
+                                $sql = " exec sp_updatePaymentMode " . $this->queryvalue($this->salesid) . "," . $this->queryvalue($this->param["mop"]) . "," . $this->queryvalue($mobnumber);
 				$this->db->execute($sql);	
 				header('location:mbrvieworder.php?salesid=' . $this->salesid);
 			}
