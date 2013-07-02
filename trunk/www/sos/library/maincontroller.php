@@ -70,6 +70,7 @@
                             //application parameter			
                             $this->sysparam['app']['bcurl']             = "http://webdev.sophiemartin.com/sos/bclogin.php";
                             $this->sysparam['app']['mbrurl']		= "http://webdev.sophiemartin.com/sos";
+                        }
                         
 			$this->sysparam['appmsg']['bcaccountsuspend']	= "Account member anda ditangguhkan, silahkan hubungi Sophie Care.";
 			
