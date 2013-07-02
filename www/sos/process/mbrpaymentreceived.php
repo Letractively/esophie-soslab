@@ -36,12 +36,12 @@
                 function callback_success()
                 {
                     $this->updatesalesstatus($this->salesid, $this->sysparam['salesstatus']['confirmed']);
-                    $this->gotopage('confirm', 'action=success&salesid=' . urlencode($this->salesid));
+                    $this->gotopage('confirm', 'pageaction=success&salesid=' . urlencode($this->salesid));
                 }
                 
                 function callback_failure()
                 {
-                    $this->gotopage('confirm', 'action=failure&salesid=' . urlencode($this->salesid));
+                    $this->gotopage('confirm', 'pageaction=failure&salesid=' . urlencode($this->salesid));
                 }
 		
 		function load()
