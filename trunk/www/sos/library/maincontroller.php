@@ -33,7 +33,7 @@
                         if (self::_ENV_ == 'PROD') //PRODUCTION
                         {
                             //db setting
-                            $this->sysparam['db']['server'] 		= 'nsudbs';
+                            $this->sysparam['db']['server'] 		= '10.0.0.102';
                             $this->sysparam['db']['name']               = 'web';
                             $this->sysparam['db']['user'] 		= 'sos';
                             $this->sysparam['db']['password'] 		= 'S0s#0k';	
@@ -54,7 +54,7 @@
                         else //DEVELOPMENT
                         {
                             //db setting
-                            $this->sysparam['db']['server'] 		= 'nsudbs';
+                            $this->sysparam['db']['server'] 		= '10.0.0.102';
                             $this->sysparam['db']['name'] 		= 'webdev';
                             $this->sysparam['db']['user'] 		= 'sos';
                             $this->sysparam['db']['password'] 		= 'S0s#0k';	
@@ -75,7 +75,7 @@
 			$this->sysparam['appmsg']['bcaccountsuspend']	= "Account member anda ditangguhkan, silahkan hubungi Sophie Care.";
 			
 			//email parameter
-                        $this->sysparam['email']['host']                 = "10.0.0.17"; 
+                        $this->sysparam['email']['host']                 = "10.0.0.243"; 
                         $this->sysparam['email']['port']                 = 25; 
                         $this->sysparam['email']['fromemail']            = "onlineorders@sophieparis.com"; 
                         $this->sysparam['email']['fromname']             = "Sophie Online Orders (NO REPLY)";             
