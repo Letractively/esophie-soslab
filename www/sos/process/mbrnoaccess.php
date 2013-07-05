@@ -2,8 +2,8 @@
 	class mbrnoaccess extends controller
 	{	
 		function run() 
-		{							
-			parent::run();
+		{		
+			//parent::run();
 		}		
 	}
 ?>

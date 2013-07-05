@@ -40,11 +40,11 @@
 			</div>
 			<div class="boxcon5">Silahkan update data pribadi Anda</div>
 			<div style="text-align:left;">
-				Konfirmasi order yang sudah di validasi oleh BC atau pembayaran yang sudah diterima akan dikirimkan melalui SMS dan email.
+				Konfirmasi order yang sudah di validasi oleh BC atau pembayaran yang sudah diterima akan dikirimkan melalui SMS dan email. Silahkan merubah numer HP atau email address kalau perlu.
 			</div>
 			<?=$ctrl->printerrors();?>
-			<div class="boxstyled1"><div>Handphone (ex: 081234567890)</div><input type="textbox" name="handphone" id="handphone" maxlength="50" placeholder="Handphone Number" value="<?=$ctrl->mbrphone?>"></div>
-			<div class="boxstyled1"><div>Email (optional)</div><input type="textbox" name="email" id="email" maxlength="80" placeholder="Email Address" value="<?=$ctrl->mbremail?>"></div>	
+			<div class="boxstyled1" onclick="document.getElementById('handphone').focus(); return false;"><div>Handphone (ex: 081234567890)</div><input type="textbox" name="handphone" id="handphone" maxlength="50" placeholder="Handphone Number" value="<?=$ctrl->mbrphone?>"></div>
+			<div class="boxstyled1" onclick="document.getElementById('email').focus(); return false;"><div>Email (optional)</div><input type="textbox" name="email" id="email" maxlength="80" placeholder="Email Address" value="<?=$ctrl->mbremail?>"></div>	
 <?			break;
 
 		case "confirmqtychange" : 

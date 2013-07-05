@@ -279,7 +279,7 @@
 		
 		function batalorder()
 		{
-			$this->updatesalesstatus($this->salesid, 0, $this->sysparam['cancelcode']['bymember']); // cancelled
+			$this->updatesalesstatus($this->salesid, $this->sysparam['salesstatus']['cancelled'], $this->sysparam['cancelcode']['bymember']); // cancelled
 			$this->gotohomepage();
 		}
 		

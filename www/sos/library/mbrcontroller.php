@@ -57,6 +57,11 @@
                     {
                         $this->gotopage('login');
                     }
+                    
+                    if ($this->checklogin)
+                    {
+                        $this->checkmembermapping();
+                    }
                 }
                 
                 function singlesignonsophiemobile()
@@ -100,9 +105,6 @@
                                         {
                                             $_SESSION[$this->sysparam['session']['userid']] = $kdmember;
                                             $_SESSION[$this->sysparam['session']['usertype']] = $this->usertype;
-                                            
-                                            // Check available mapping
-                                            $this->checkmembermapping();
                                         }
                                     }
                                 }
