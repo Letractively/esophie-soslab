@@ -6,6 +6,8 @@
 	<title>Sophie Mobile - Online Orders</title>
 	<meta name="viewport" content="width=360;"/> 
 	<link rel="icon" type="image/ico" href="images/favicon.ico"/>
+        <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png" />
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
 	<link type="text/css" rel="stylesheet" href="css/globalmobile.css"/>
 	<script type="text/javascript" src="script/global.js"></script>
         <script type="text/javascript">

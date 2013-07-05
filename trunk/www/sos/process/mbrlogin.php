@@ -29,7 +29,6 @@
                             {
                                 $_SESSION[$this->sysparam['session']['userid']] = $kdmember;
                                 $_SESSION[$this->sysparam['session']['usertype']] = $this->usertype;
-                                $this->checkmembermapping();
                                 $this->gotohomepage(); 
                             }
                             else

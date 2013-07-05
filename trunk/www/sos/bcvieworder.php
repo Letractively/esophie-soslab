@@ -7,8 +7,7 @@
 	<div style="padding:10px 5px 15px 5px;">
 		Total Stock pada product <?=$ctrl->varvalue('productrevisi')?> tidak mencukupi
 		<br><br>
-		Bila anda klik SETUJU, jumlah order member secara otomatis akan disesuaikan supaya stock produk mencukupi.
-		Total order member akan berubah dari IDR <?=$ctrl->valuenumber($ctrl->varvalue('totalorder'));?> ke IDR <?=$ctrl->valuenumber($ctrl->varvalue('totalorderedited'));?>.
+		Bila anda klik SETUJU, order member secara otomatis akan disesuaikan supaya stock produk mencukupi.
     </div>
 	<div>
 		<div class="boxleft">Anda ingin melanjutkan ?</div>
@@ -18,7 +17,7 @@
 		</div>
 	</div>
 </div>
-<input type="hidden" name="sc" id ="backpage" value="<?=$ctrl->value('sc')?>">
+<input type="hidden" name="sc" id ="sc" value="<?=$ctrl->value('sc')?>">
 <input type="hidden" name="backpage" id ="backpage" value="<?=$ctrl->value('backpage')?>">
 <input type="hidden" name="salesid" id ="salesid" value="<?=$ctrl->value('salesid')?>">
 	 
@@ -158,22 +157,30 @@
 		Order ini telah ditolak karena <?=$ctrl->cancelreason($ctrl->cancelcode)?>
         </div>
 	<? } ?>
-	<? if($ctrl->status == $ctrl->sysparam['salesstatus']['ordered'] && $ctrl->varvalue('insufficientitems')) {?>
-	<div class="errorbox" style="width:330px;">
-                <div class="boxleft" style="width:20px;"><img src="images/warning.gif"></div>
-		<div class="boxleft" style="color:red;width:280px;margin-top:3px">Total stock product <?=$ctrl->varvalue('insufficientitems')?> tidak cukup.</div>
-		<div class="boxleft" style="width:320px;margin-top:10px">
-		Kalau lanjut, jumlah order member secara otomatis akan disesuakan supaya stock produk mencukupi. 
-		<br>Setelah validasi, membernya akan diminta untuk konfirm order kembali sebelum pembayaran.
-                </div>
+	<? if($ctrl->status == $ctrl->sysparam['salesstatus']['ordered']) { ?>
+        <div class="errorbox" style="width:330px;"> <?
+            if ($ctrl->varvalue('insufficientitems')) 
+            { ?>
+            <div class="boxleft" style="width:20px;"><img src="images/warning.gif"></div>
+            <div class="boxleft" style="color:red;width:280px;margin-top:3px;margin-bottom:5px;">Total stock product <?=$ctrl->varvalue('insufficientitems')?> tidak cukup.</div>
+            <div class="boxleft" style="width:320px;margin-bottom:5px;">
+            Kalau lanjut, jumlah order member secara otomatis akan disesuakan supaya stock produk mencukupi. 
+            <br>Setelah validasi, membernya akan diminta untuk konfirm order kembali sebelum pembayaran.
+            </div>
+        <?  } 
+            if (!$ctrl->isvalidhours) 
+            { ?>
+            <div class="boxleft" style="width:20px;"><img src="images/warning.gif"></div>
+            <div class="boxleft" style="color:red;width:280px;margin-top:3px;margin-bottom:5px;"><?=$ctrl->errmsg;?></div>
+	<?  } ?>
         </div>
-	<? } ?>
+        <? } ?>
 	
 	<div class="boxright" style="width:300px;padding-right:4px;">
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:145px">Total Order</div>
 			<div class="boxright1" style="margin-left:5px"><?=$ctrl->valuenumber($ctrl->varvalue('totalorderbc'));?></div>
-			<div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('totalorder'));?></div>
+			<div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('totalorderedited'));?></div>
 		</div>
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:145px">Discount</div>
@@ -211,8 +218,9 @@
                                 <button type="button" onclick="setaction('clear');" style="width:80px;">Hapus</button> <?
                                 }
 				break;
-			case $ctrl->sysparam['salesstatus']['ordered']: ?>
-				<button type="button" onclick="<?if($ctrl->varvalue('productrevisi') == ''){?>setaction('validasi');<?} else {?>showPopUp('dialog');<?}?>" style="width:80px;">Validasi</button> <?
+			case $ctrl->sysparam['salesstatus']['ordered']: 
+                                if ($ctrl->isvalidhours) { ?>
+                                <button type="button" onclick="<?if($ctrl->varvalue('productrevisi') == ''){?>setaction('validasi');<?} else {?>showPopUp('dialog');<?}?>" style="width:80px;">Validasi</button> <? }
 				break;
 			case $ctrl->sysparam['salesstatus']['ready']: ?>
 				<button type="button" onclick="setaction('delivered');" style="width:80px;">Delivered</button> <?

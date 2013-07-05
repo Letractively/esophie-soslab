@@ -35,6 +35,7 @@
 		var $sc;
 		var $insufficientitems;
                 var $iscleared;
+                var $isvalidhours;
 		
 		function run() 
 		{
@@ -75,15 +76,50 @@
 					$this->setasready();
 					break;
 				case "none" :	
-					$sql = "select status from salestable with (nolock) where salesid = " . $this->queryvalue($this->param['salesid']);					
-					if ($this->db->executescalar($sql) == $this->sysparam['salesstatus']['ordered'])
-					{
-						$this->createPurchTable();
-					}	
+					$sql = "select st.status from salestable st with (nolock)";
+					$sql.= " where st.salesid = ". $this->queryvalue($this->param['salesid']);
+                                        $rs = $this->db->query($sql);
+                                        if ($rs->fetch())
+                                        {
+                                            if ($rs->value('status') == $this->sysparam['salesstatus']['ordered'])
+                                            {
+                                                    $this->createPurchTable();
+                                                    $this->checkValidHours();
+                                            }
+                                        }
+                                        else $this->gotohomepage ();
+                                        if ($rs) $rs->close();
+                                        	
 					break;
 			}
 			$this->loaddata();
-		}		
+		}
+                
+                function checkValidHours()
+                {
+                    $return = false;
+                    $this->isvalidhours = false;
+                    
+                    $sql = "select sp.bcstartwork, sp.bcendwork from sysparamtable sp with (nolock)";
+                    $rs = $this->db->query($sql);
+                    if ($rs && $rs->fetch())
+                    {
+                        $minutesnow = round(( time() - strtotime("today") ) / 60, 2);
+                        $datestart = date ("H:i", strtotime('+'  .$rs->value('bcstartwork') . ' minutes', strtotime("today")));
+                        $dateend = date ("H:i", strtotime('+'  .$rs->value('bcendwork') . ' minutes', strtotime("today")));
+                        if ($minutesnow >= $rs->value('bcstartwork') && $minutesnow <= $rs->value('bcendwork')) 
+                        {
+                            $return = true;
+                            $this->isvalidhours = true;
+                        }
+                    }
+                    $rs->close();
+                    
+                    if (!$this->isvalidhours)
+                        $this->errmsg .= "Validasi BC hanya dibuka di antara jam " . $datestart . " dan jam " . $dateend . ".<br>";
+
+                    return $return;
+                }
 		
 		function loaddata() 
 		{
@@ -229,6 +265,7 @@
 				}
 			}
 			$this->updatePurchLine();
+                        $this->checkValidHours();
 		}
 		
 		function cancel()
@@ -257,7 +294,9 @@
 		
 		function nextpage()
 		{
-			$sql = "select count(*) as total from PurchLine where purchid = " . $this->queryvalue($this->param['salesid']);
+			if (!$this->isvalidhours) return;
+                    
+                        $sql = "select count(*) as total from PurchLine where purchid = " . $this->queryvalue($this->param['salesid']);
 			$sql.= " and qty > 0";
 			if ($this->db->executescalar($sql))
 			{
@@ -273,7 +312,7 @@
                                     if ($rs->value('shortqty') > 0) 
                                     {                                
                                         if ($rs->value('qtyedited') == 0) 
-                                            $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['cancelled']);
+                                            $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['cancelled'], $this->sysparam['cancelcode']['emptystock']);
                                         else $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['edited']);
                                     }
                                     else $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['validated']);

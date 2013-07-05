@@ -6,6 +6,8 @@
 	<title>Sophie Online Orders - Backoffice BC</title>
 	<meta name="viewport" content="width=360;"/> 
 	<link rel="icon" type="image/ico" href="images/favicon.ico"/>
+        <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png" />
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
 	<link type="text/css" rel="stylesheet" href="css/global.css"/>
 	<link type="text/css" rel="stylesheet" href="css/calendar.css"/>
 	<script type="text/javascript" src="script/global.js"></script>
