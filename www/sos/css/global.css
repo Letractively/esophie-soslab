@@ -270,11 +270,7 @@ a.menuselect:visited{
 	clear:both;
 	margin-bottom:5px;
 	overflow:auto;	
-	text-align:left;
-	background-image:url('../images/rightpic.jpg');
-	background-repeat: no-repeat;	
-	background-position-x: 100%;
-	background-position-y: 100%;
+	text-align:left;	
 	border-radius: 0px 10px 10px 0px;
 	-moz-border-radius: 0px 10px 10px 0px;
     -webkit-border-radius: 0px 10px 10px 0px;	
@@ -293,7 +289,11 @@ a.menuselect:visited{
 	text-align:left;
 	width:210px;
 	height:480px;
-	/*background-color:red;*/
+	background-color:red;
+	background-image:url('../images/rightpic.jpg');
+	background-repeat: no-repeat;	
+	background-position-x: 100%;
+	background-position-y: 100%;
 }
 
 .boxcon3{

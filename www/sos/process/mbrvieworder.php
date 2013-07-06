@@ -29,9 +29,11 @@
 		var $mbrmsg;
 		var $errorbcmsg;
 		var $lastorderstatus;
-                var $defaultbckode;
-                var $paymdate;
-                var $paymref;
+		var $defaultbckode;
+		var $paymdate;
+		var $paymref;
+		var $defaultbc;
+		var $choosebc;
 		
 		function run() 
 		{	
@@ -39,6 +41,9 @@
 			
 			$this->salesid = $this->param['salesid'];
 			if ($this->salesid == '') $this->gotohomepage();
+			
+			if ( isset($this->param['bc']) )
+				$this->choosebc = $this->param['bc'];
 			
 			switch($this->action)
 			{	
@@ -92,7 +97,7 @@
 				case "failure":
 					$this->callback_failure();
 					break;
-                                    
+
 				// default view	
 				case "none":	
 					$this->isanyitemsold = $this->checkItemSold();
@@ -100,6 +105,9 @@
                                         break;
 			}
 			$this->loaddata();
+
+			if ( $this->action == "refreshbc" )
+				$this->refreshbc();
 		}		
 		
 		function loaddata() 
@@ -114,10 +122,10 @@
 				$this->setmbrmsg();
 				
 				//  All information
-                                if ($rs->value("status") < $this->sysparam['salesstatus']['validated']) 
-                                    $this->timeleft 		= $rs->value("timeleft");
-                                else 
-                                    $this->timeleft 		= $rs->value("timeleftpaid");
+				if ($rs->value("status") < $this->sysparam['salesstatus']['validated']) 
+					$this->timeleft 		= $rs->value("timeleft");
+				else 
+					$this->timeleft 		= $rs->value("timeleftpaid");
 				
 				$this->mbrno 			= $rs->value('kodemember'); 
 				$this->mbrname 			= $rs->value('namamember'); 
@@ -365,7 +373,7 @@
 			$this->db->execute($sql);	
 		}
                 
-                function isvaliddata()
+		function isvaliddata()
 		{
 			$ret = true;
 			if ( isset($this->param['itemid']) == false )
@@ -477,12 +485,13 @@
 				$sql = "select kodebc from vw_BCMapping where KodeMember = " . $this->queryvalue($this->userid());
 				$sql.= " and defaultbc = 1";
 				$this->param["bc"] = $this->db->executeScalar($sql);
-                                $this->defaultbckode = $this->param["bc"];
+                $this->defaultbckode = $this->param["bc"];
 			}
 			
 			$sql = "select* from vw_BCMapping ";
 			$sql.= "where KodeMember = " . $this->queryvalue($this->userid());
-			$this->setselectoption('bc', $sql, 'kodebc', 'label', $this->param["bc"]);
+			
+			$this->setselectoption('bc', $sql, 'kodebc', 'label', $this->choosebc);
 		}
 		
 		function setselectedoption($name,$rs) 
@@ -503,15 +512,29 @@
 		}
                 
                                 
-                function callback_success()
-                {
-                    // do nothing 
-                }
-                
-                function callback_failure()
-                {
-                    $this->pageview = 'paymfailure';
-                }
-
+		function callback_success()
+		{
+			// do nothing 
+		}
+		
+		function callback_failure()
+		{
+			$this->pageview = 'paymfailure';
+		}
+	
+		function refreshbc ( ) 
+		{
+			if ( isset($this->choosebc) )
+			{
+				$sql = "select isnull(defaultbc,0) as defaultbc from mappingTable where kodebc ='".$this->choosebc."' and kodemember = '".$this->mbrno."'";
+				if ( $this->db->executeScalar($sql) )
+					$this->defaultbc = '1';
+				else
+					$this->defaultbc = '0';
+				
+				
+			}
+		}
+		
 	}
 ?>
