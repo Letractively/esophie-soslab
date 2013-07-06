@@ -1,4 +1,5 @@
 <?include "mbrheader.php";?>
+
 <input type="hidden" id="edit" name="edit" value="<?=$ctrl->value("edit")?>">
 	<?if ($ctrl->pageview != 'orderedit' && $ctrl->pageview != 'orderconfirm' && $ctrl->pageview != 'paymfailure') { ?>
 	<div class="boxcon3">
@@ -22,7 +23,7 @@
 				<div class="boxcon">
 					<div class="boxleft" style="width:150px">
 						<div class="boxstyled2"><select name="bc" id="bc" onchange="setaction('refreshbc')"><? $ctrl->getbc(); ?></select></div>
-						<input type="checkbox" name="defaultbc" id="defaultbc" value="1" <?if ($ctrl->value('defaultbc') == '1') echo 'checked';?>> set sebagai <font class="pink">default BC</font>.
+						<input type="checkbox" name="defaultbc" id="defaultbc" value="1" <?if ($ctrl->defaultbc == '1') echo 'checked';?>> set sebagai <font class="pink">default BC</font>.
 					</div>
 					<div class="boxright" style="width:150px">
 						<?=$ctrl->varvalue('bcaddress')?>
