@@ -4,7 +4,7 @@
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 	<title>Sophie Online Orders - Backoffice BC</title>
-	<meta name="viewport" content="width=360;"/> 
+	<meta name="viewport" content="width=360"/> 
 	<link rel="icon" type="image/ico" href="images/favicon.ico"/>
         <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png" />
         <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />

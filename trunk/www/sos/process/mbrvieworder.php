@@ -54,6 +54,9 @@
 				case "refresh":
 					$this->refresh();
 					break;
+                                case "refreshbc":
+					$this->refreshbc();
+					break;
 				case "tambah":
 					$this->savebc();
 					$this->gotopage('inputitem','salesid='.urlencode($this->salesid));
@@ -105,9 +108,6 @@
                                         break;
 			}
 			$this->loaddata();
-
-			if ( $this->action == "refreshbc" )
-				$this->refreshbc();
 		}		
 		
 		function loaddata() 

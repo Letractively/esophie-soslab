@@ -21,6 +21,7 @@
 			$this->statuscount['dalamproses'] 	= 0;
 			$this->statuscount['revisi'] 		= 0;
 			$this->statuscount['belumbayar'] 	= 0;
+                        $this->statuscount['confirmed'] 	= 0;
 			$this->statuscount['telahbayar'] 	= 0;
 			$this->statuscount['siap'] 		= 0;
 			$this->statuscount['delivered'] 	= 0;
@@ -31,6 +32,7 @@
 				$this->statuscount['dalamproses'] 	= $rs->value('dalamproses');
 				$this->statuscount['revisi'] 		= $rs->value('revisi');
 				$this->statuscount['belumbayar'] 	= $rs->value('belumbayar');
+                                $this->statuscount['confirmed'] 	= $rs->value('confirmed');
 				$this->statuscount['telahbayar'] 	= $rs->value('telahbayar');
 				$this->statuscount['siap'] 		= $rs->value('siap');
 				$this->statuscount['delivered'] 	= $rs->value('delivered');

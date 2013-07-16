@@ -1,22 +1,43 @@
 <?include "bcheaderright.php";?>
 <div id="cover"></div>
 <div id="dialog" class="boxcon5" style="width:400px;padding-bottom:10px">
-    <div class="boxcon6">
-		Edit mode - Revisi order member ?
-	</div>
-	<div style="padding:10px 5px 15px 5px;">
-		Total Stock pada product <?=$ctrl->varvalue('productrevisi')?> tidak mencukupi
-		<br><br>
-		Bila anda klik SETUJU, order member secara otomatis akan disesuaikan supaya stock produk mencukupi.
+    <? 
+    $popupaction = '';
+    if($ctrl->status == $ctrl->sysparam['salesstatus']['ordered']) { 
+        $popupaction = 'validasi'; ?>
+    <div class="boxcon6">Revisi order member ?</div>
+    <div style="padding:10px 5px 15px 5px;">
+            Total stock pada product <?=$ctrl->varvalue('productrevisi')?> tidak mencukupi!<br><br>
+            Bila anda klik LANJUT, order member secara otomatis akan disesuaikan supaya stock produk mencukupi.
     </div>
-	<div>
-		<div class="boxleft">Anda ingin melanjutkan ?</div>
-		<div class="boxright" style="padding-right:5px">
-			<button type="button" onclick="closePopUp('dialog');" style="width:80px;">Kembali</button>
-			<button type="button" onclick="setaction('validasi');" style="width:80px;">Setuju</button>
-		</div>
-	</div>
+    <? } else if($ctrl->status == $ctrl->sysparam['salesstatus']['cancelled']) { 
+        $popupaction = 'clear'; ?>
+    <div class="boxcon6">Clear cancel order ?</div>
+    <div style="padding:10px 5px 15px 5px;">
+            Order ini telah dibatalkan. Silahkan release stock BC anda sebelum klik LANJUT.
+    </div>
+    <? } else if($ctrl->status == $ctrl->sysparam['salesstatus']['paid']) { 
+        $popupaction = 'ready'; ?>
+    <div class="boxcon6">Ready to pickup?</div>
+    <div style="padding:10px 5px 15px 5px;">
+            Bila anda klik LANJUT, member secara otomatis akan menerima email dan SMS untuk dikasih tahu order sudah siap diambil di BC.
+    </div>
+    <? } else if($ctrl->status == $ctrl->sysparam['salesstatus']['ready']) {
+        $popupaction = 'delivered';?>
+    <div class="boxcon6">Order delivered?</div>
+    <div style="padding:10px 5px 15px 5px;">
+            Jangan lupa melakukan invoicing kepada member dan reporting F1 sebelum klik LANJUT.
+    </div>
+    <? } ?>
+    <div>
+            <div class="boxleft">Anda ingin melanjutkan ?</div>
+            <div class="boxright" style="padding-right:5px">
+                    <button type="button" onclick="closePopUp('dialog');" style="width:80px;">Kembali</button>
+                    <button type="button" onclick="setaction('<?= $popupaction ?>');" style="width:80px;">Lanjut</button>
+            </div>
+    </div>
 </div>
+
 <input type="hidden" name="sc" id ="sc" value="<?=$ctrl->value('sc')?>">
 <input type="hidden" name="backpage" id ="backpage" value="<?=$ctrl->value('backpage')?>">
 <input type="hidden" name="salesid" id ="salesid" value="<?=$ctrl->value('salesid')?>">
@@ -157,7 +178,8 @@
 		Order ini telah ditolak karena <?=$ctrl->cancelreason($ctrl->cancelcode)?>
         </div>
 	<? } ?>
-	<? if($ctrl->status == $ctrl->sysparam['salesstatus']['ordered']) { ?>
+	<? if($ctrl->status == $ctrl->sysparam['salesstatus']['ordered']  &&
+                ($ctrl->varvalue('insufficientitems') || !$ctrl->isvalidhours) ) { ?>
         <div class="errorbox" style="width:330px;"> <?
             if ($ctrl->varvalue('insufficientitems')) 
             { ?>
@@ -210,12 +232,12 @@
 		switch ($ctrl->status)
 		{
 			case $ctrl->sysparam['salesstatus']['paid']: ?>
-				<button type="button" onclick="setaction('ready');" style="width:80px;">Siap</button> <?
+				<button type="button" onclick="showPopUp('dialog');" style="width:80px;">Siap</button> <?
 				break;
 			case $ctrl->sysparam['salesstatus']['cancelled']: 
 				if (!$ctrl->iscleared)
                                 { ?>
-                                <button type="button" onclick="setaction('clear');" style="width:80px;">Hapus</button> <?
+                                <button type="button" onclick="showPopUp('dialog');" style="width:80px;">Hapus</button> <?
                                 }
 				break;
 			case $ctrl->sysparam['salesstatus']['ordered']: 
@@ -223,7 +245,7 @@
                                 <button type="button" onclick="<?if($ctrl->varvalue('productrevisi') == ''){?>setaction('validasi');<?} else {?>showPopUp('dialog');<?}?>" style="width:80px;">Validasi</button> <? }
 				break;
 			case $ctrl->sysparam['salesstatus']['ready']: ?>
-				<button type="button" onclick="setaction('delivered');" style="width:80px;">Delivered</button> <?
+				<button type="button" onclick="showPopUp('dialog');" style="width:80px;">Delivered</button> <?
 				break;		
 		}
 	?>

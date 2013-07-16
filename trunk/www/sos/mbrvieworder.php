@@ -133,7 +133,11 @@
 						{
 							echo "<td align=\"right\">" . $ctrl->valuenumber($item['qty']) . "</td>";
 						}	
-						if ($ctrl->pageview == 'confirmqtychange') { echo "<td align=\"right\">" . $ctrl->valuenumber($item['qtyavail']) . "</td>"; }
+						if ($ctrl->pageview == 'confirmqtychange') { 
+                                                    echo "<td align=\"right\"";
+                                                    if ($item['qtyavail'] != $item['qty']) echo " color=\"red\"";
+                                                    echo ">" . $ctrl->valuenumber($item['qtyavail']) . "</td>"; 
+                                                }
 						echo "<td align=\"right\">" . $ctrl->valuenumber($item['totalorder']) . "</td>";
 						echo "</tr>";
 					}
