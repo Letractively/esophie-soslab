@@ -173,23 +173,25 @@
 			
 			if ($dataupdate)
 			{			
-				$sql = 'select top 1 name, phone, email from membertable where kodemember = ' . $this->queryvalue($this->userid());
+				$sql = 'select top 1 name, phone, email, address from membertable where kodemember = ' . $this->queryvalue($this->userid());
 				$rs = $this->db->query($sql);
 				if ($rs->fetch()) 
 				{
 					$namamember = $rs->value('name');
 					$mobilemember = $rs->value('phone');
 					$emailmember = $rs->value('email');
+                                        $addressmember = $rs->value('address');
 				}
 				$rs->close();
 					
 				$sql = 'insert into salesTable ';
-				$sql.= '(salesid, kodemember, namamember, telp, email, status, createddate) values (';
+				$sql.= '(salesid, kodemember, namamember, telp, email, alamat, status, createddate) values (';
 				$sql.= $this->queryvalue($this->salesid) . ',' ;
 				$sql.= $this->queryvalue($this->userid()) . ',' ;
 				$sql.= $this->queryvalue($namamember) . ',' ;		
 				$sql.= $this->queryvalue($mobilemember) . ',' ;		
-				$sql.= $this->queryvalue($emailmember) . ',' ;		
+				$sql.= $this->queryvalue($emailmember) . ',' ;	
+                                $sql.= $this->queryvalue($addressmember) . ',' ;	
 				$sql.= $this->sysparam['salesstatus']['openorder'] . ',getdate())' ;			
 				
 				$this->db->execute($sql);

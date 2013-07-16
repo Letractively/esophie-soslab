@@ -270,7 +270,8 @@ a.menuselect:visited{
 	clear:both;
 	margin-bottom:5px;
 	overflow:auto;	
-	text-align:left;	
+	text-align:left;
+        position:relative;
 	border-radius: 0px 10px 10px 0px;
 	-moz-border-radius: 0px 10px 10px 0px;
     -webkit-border-radius: 0px 10px 10px 0px;	
@@ -285,10 +286,12 @@ a.menuselect:visited{
 }
 
 .boxright2 {
-	float:right;
 	text-align:left;
 	width:210px;
 	height:480px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
 	background-color:red;
 	background-image:url('../images/rightpic.jpg');
 	background-repeat: no-repeat;	

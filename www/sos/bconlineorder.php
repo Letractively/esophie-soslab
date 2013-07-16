@@ -52,9 +52,9 @@
 			<td width="12px"><div class="color06"></div></td><td width="70"><a href="#followup" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['validated'])?> (<?=$ctrl->statuscount['belumbayar'] ?>)</a></td>
 		</tr>
 		<tr>
-			<td><div class="color08"></div></td><td><a href="#deliverorder" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['paid'])?> (<?=$ctrl->statuscount['telahbayar'] ?>)</a></td>
+			<td><div class="color07"></div></td><td><a href="#followup" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['confirmed'])?> (<?=$ctrl->statuscount['confirmed'] ?>)</a></td>
+                        <td><div class="color08"></div></td><td><a href="#deliverorder" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['paid'])?> (<?=$ctrl->statuscount['telahbayar'] ?>)</a></td>
 			<td><div class="color09"></div></td><td><a href="#deliverorder" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['ready'])?> (<?=$ctrl->statuscount['siap'] ?>)</a></td>
-			<td><div class="color10"></div></td><td><a href="#deliverorder" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['delivered'])?> (<?=$ctrl->statuscount['delivered'] ?>)</a></td>
 			<td><div class="color00"></div></td><td><a href="#followup" class="normal"><?=$ctrl->colorstatuslabel($ctrl->sysparam['salesstatus']['cancelled'])?> (<?=$ctrl->statuscount['batal'] ?>)</a></td>
 		</tr>
 	</table>
