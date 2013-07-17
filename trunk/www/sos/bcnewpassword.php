@@ -1,23 +1,26 @@
 <?include "bcheader.php";?>
 
-<br>
+<div class="boxcon" style="width:250px; margin:10px; padding:10px; text-align:center;">
 <?if ($ctrl->pageindex == 1) { ?>
-	Silahkan masukkan:
-	<table>
-		<tr><td width="110">Kode BC:</td></tr>
-		<tr><td width="110"><input type="text" name="userid" id="userid" value="<?=$ctrl->value("userid")?>" size="23"/></td></tr>
-		<tr><td width="110">Email:</td></tr>
-		<tr><td width="110"><input type="email" name="email" id="email" value="<?=$ctrl->value("email")?>" size="23"/></td></tr>
-		<tr><td align="center"><input type="button" value="Kirim password baru" onclick="setaction('ok');"></td></tr>
-		
-	</table>
-	<? if ($ctrl->varvalue("errmsg") != '') { ?>
-		<div class="errmsg"><?=$ctrl->varvalue("errmsg")?></div>
-	<? } ?>
+<b>Silahkan masukkan:</b>
+<br/><br/>
+<table style="width:230px; text-align:right;">
+    <tr><td>Kode BC:</td>
+    <td><div class="boxstyled1" style="width:100%"><input type="text" name="userid" id="userid" value="" placeholder="Kode BC" style="width:150px"/></div></td></tr>
+    <tr><td>Email:</td>
+    <td><div class="boxstyled1" style="width:100%"><input type="email" name="email" id="email" value="<?=$ctrl->value("email")?>" placeholder="Email address" style="width:150px"/></div></td></tr>
+</table>
+<br/>
+
+<button type="submit" onclick="setaction('ok');" style="width:180px;">Kirim password baru</button>
+<br/><br/>
+<? if ($ctrl->varvalue("errmsg") != '') { ?>
+        <div class="errormessage"><?=$ctrl->varvalue("errmsg")?></div>
+<? } ?>
+<a href="bclogin.php"><< kembali ke layar login</a>
 <? } else { ?>
 	Password baru sudah dikirimkan ke email anda.<br>
 	silahkan cek email anda beberapa menit kedepan.<br>
 <? } ?>
-<br><a href="bclogin.php">kembali ke layar login</a>
-<br><br>&nbsp;
+</div>
 <?include "bcfooter.php";?>

@@ -71,13 +71,13 @@
 			if (isset($this->param['sssm']))
                         {
                             $sssm = base64_decode($this->param['sssm']);
+                            
                             if (strlen($sssm) > 0)
                             {
                                 $sssm_array = explode(":", $sssm);
                                 if (sizeof($sssm_array) == 2 && strlen($sssm_array[0]) > 0)
                                 {
-                                    $kdmember = $sssm_array[0];
-                                    
+                                    $kdmember = trim($sssm_array[0]);
                                     $sql1 = "SELECT count(*) FROM memberTable";
                                     $sql1.= " WHERE kodemember = ". $this->queryvalue($kdmember);
                                     if ($this->db->executeScalar($sql1) == 0)
@@ -95,13 +95,14 @@
                                     }
                                     $rs->close();
                                       
+                                    
                                     if (strlen($nbrekening) > 4)
                                     {
                                         // sssm = md5([memberid]:[pwd(5)][pwd(2)][pwd(3)])
                                         $salt = substr($nbrekening,4,1) . substr($nbrekening,1,1) . substr($nbrekening,2,1);
-                                        $mysssm = md5($kdmember.":".$salt);
+                                        $salt = md5($kdmember.":".$salt);
 
-                                        if (strcmp($sssm,$mysssm) == 0)
+                                        if (strcmp($salt,$sssm_array[1]) == 0)
                                         {
                                             $_SESSION[$this->sysparam['session']['userid']] = $kdmember;
                                             $_SESSION[$this->sysparam['session']['usertype']] = $this->usertype;
@@ -121,7 +122,10 @@
                 function importmember($kdmember)
                 {
                     try
-                    {
+                    {   
+                        //warning: the member id is filled with blank spaces at the begining if shorter than 10 digits
+                        $kdmember = str_pad($kdmember, 10, ' ', STR_PAD_LEFT); 
+ 
                         // Create or update the BC mapping for this new member
                         $sql = "exec sp_sos_IMPORTMEMBER " . $this->queryvalue($kdmember);
                         //$sql = "INSERT INTO memberTable SELECT ". $this->queryvalue($kdmember) .
@@ -144,7 +148,6 @@
                         $sql = "SELECT count(bc.kodebc) FROM BCTable bc";
                         $sql.= " INNER JOIN mappingTable mt ON bc.kodebc = mt.kodebc";
                         $sql.= " WHERE mt.kodemember = ". $this->queryvalue($this->userid());
-                        //echo $sql; exit;
                         $nb = $this->db->executeScalar($sql);
                         if ($nb == 0)
                         {

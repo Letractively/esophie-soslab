@@ -78,14 +78,24 @@
 		}
 
 		function nextpage()
-		{
-			$this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['inprogress']);
-			$this->gotopage('onlineorder');
+		{                        
+                        $sql0 = "select top 1 status from salestable where salesid = " . $this->queryvalue($this->param['salesid']);
+                        $sql0.= " and status <> ". $this->sysparam['salesstatus']['ordered'];
+                        $rs = $this->db->query($sql0);        
+                        if ($rs->fetch())
+                        {
+                            $this->gotopage('vieworder', 'salesid='.urlencode($this->param['salesid']));
+                        }
+                        else 
+                        {
+                            $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['inprogress']);
+                            $this->gotopage('onlineorder');
+                        }
 		}
 		
 		function bcorder()
 		{
-			$this->gotopage('vieworder', 'salesid='.$this->param['salesid']);
+			$this->gotopage('vieworder', 'salesid='.urlencode($this->param['salesid']));
 		}
 		
 		function kembali()

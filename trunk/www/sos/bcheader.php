@@ -22,12 +22,24 @@
             ga('send', 'pageview');
 
         </script>
+        <script type="text/javascript">
+            function checkchrome() {
+                if (!window.chrome) {
+                    document.getElementById('chromewarning').style.display = 'block';
+                }
+            }
+        </script>
 	</head>
-	<body>
-	<form id="frmmain" name="frmmain" action="<?=$ctrl->filename()?>" method="post">
+	<body onload="checkchrome();">
+        <div id="chromewarning" class="chromewarning" style="">This website works best with a Chrome browser! Please download it there : <a href="http://www.google.com/chrome/">www.google.com/chrome</a></div>
+	<form id="frmmain" name="frmmain" action="<?=$ctrl->filename()?>" method="post" accept-charset="utf-8">
 		<center>		
 		<img src="images/logo.png" class="logo" alt="Sophie Online Shopping"/>
-		<input type="hidden" id="pageaction" name="pageaction">		
+		<input type="hidden" id="pageaction" name="pageaction"/>		
 		<div name="MyCalendar" id="MyCalendar"></div>	
 		<?include_once "bcmenu.php";?>
-		<div class="boxmain" <? if ($ctrl->filename() == 'bclogin.php') { echo 'style="width:325px;padding-right:0px;"'; } else { echo 'style="width:1000px;padding-right:0px;"';} ?> >
+		<div class="boxmain" <? if ($ctrl->filename() == 'bclogin.php' || $ctrl->filename() == 'bcnewpassword.php') {
+                            echo 'style="width:325px;padding-right:0px;"'; 
+                        } else { 
+                            echo 'style="width:1000px;padding-right:0px;"';   
+                        } ?> >

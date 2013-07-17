@@ -21,6 +21,7 @@
 			<? } else {?>
 				<div class="boxcon5">1 - Silahkan pilih BC yang akan proses order Anda</div>
 				<div class="boxcon">
+                                        
 					<div class="boxleft" style="width:150px">
 						<div class="boxstyled2"><select name="bc" id="bc" onchange="setaction('refreshbc')"><? $ctrl->getbc(); ?></select></div>
 						<input type="checkbox" name="defaultbc" id="defaultbc" value="1" <?if ($ctrl->defaultbc == '1') echo 'checked';?>> set sebagai <font class="pink">default BC</font>.
@@ -30,6 +31,7 @@
 						<br><?=$ctrl->varvalue('bcphone')?>
 					</div>
 				</div>
+                                <div style="text-align:right;"><em>Jika Anda ingin belanja dari BC yang belum ada di listnya,<br/>silahkan hubungi Customer Care.</em></div>
 			<? } ?>
 			<div class="boxcon5">2 - Silahkan cek kembali order Anda</div>			
 <?			break;
@@ -41,7 +43,7 @@
 			</div>
 			<div class="boxcon5">Silahkan update data pribadi Anda</div>
 			<div style="text-align:left;">
-				Konfirmasi order yang sudah di validasi oleh BC atau pembayaran yang sudah diterima akan dikirimkan melalui SMS dan email. Silahkan merubah numer HP atau email address kalau perlu.
+				Konfirmasi order yang sudah di validasi oleh BC atau pembayaran yang sudah diterima akan dikirimkan melalui SMS dan email. Anda boleh merubah nomor HP dan email address di bawah ini.
 			</div>
 			<?=$ctrl->printerrors();?>
 			<div class="boxstyled1" onclick="document.getElementById('handphone').focus(); return false;"><div>Handphone (ex: 081234567890)</div><input type="textbox" name="handphone" id="handphone" maxlength="50" placeholder="Handphone Number" value="<?=$ctrl->mbrphone?>"></div>
@@ -74,6 +76,7 @@
 		<div class="boxright" style="width:160px">
 			<div class="boxcon5" style="text-align:left">Untuk BC</div>
 			<b><?=$ctrl->varvalue('bcname')?>&nbsp(<?=$ctrl->varvalue('bcno')?>)</b>
+                        <br>Tel: <?=$ctrl->varvalue('bcphone')?>
 			<br><?=$ctrl->varvalue('bcaddress')?>
 		</div>
 	</div>
@@ -135,7 +138,7 @@
 						}	
 						if ($ctrl->pageview == 'confirmqtychange') { 
                                                     echo "<td align=\"right\"";
-                                                    if ($item['qtyavail'] != $item['qty']) echo " color=\"red\"";
+                                                    if ($item['qtyavail'] != $item['qty']) echo " style=\"color:red;\"";
                                                     echo ">" . $ctrl->valuenumber($item['qtyavail']) . "</td>"; 
                                                 }
 						echo "<td align=\"right\">" . $ctrl->valuenumber($item['totalorder']) . "</td>";
@@ -151,7 +154,7 @@
 				{
 					echo $i++%2?'<tr class="pinkrow"':'<tr';
 					echo ' style="cursor:pointer" onclick="setaction(\'tambah\');">';
-					echo '<td colspan="5" align="center">Tambah item</td>';
+					echo '<td colspan="5" align="center">[+] <span style="text-decoration: underline;">Tambah item</span></td>';
 					echo '</tr>';		
 				}
 			?>

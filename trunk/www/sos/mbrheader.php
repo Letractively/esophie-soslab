@@ -4,7 +4,7 @@
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 	<title>Sophie Mobile - Online Orders</title>
-	<meta name="viewport" content="width=360;"/> 
+	<meta name="viewport" content="width=360"/> 
 	<link rel="icon" type="image/ico" href="images/favicon.ico"/>
         <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png" />
         <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
@@ -22,8 +22,8 @@
         </script>  
 	</head>
 	<body class="mobile">     
-	<form id="frmexec" method="post"></form>
-	<form id="frmmain" action="<?=$ctrl->filename()?>" method="post">
+	<form id="frmexec" method="post" accept-charset="utf-8"></form>
+	<form id="frmmain" action="<?=$ctrl->filename()?>" method="post" accept-charset="utf-8">
 		<center>
                 <a href="mbrviewhistory.php"><img src="images/logo.png" class="logo" alt="Sophie Online Shopping"/></a>
 		<div class="boxmain" style="width:340px;">
