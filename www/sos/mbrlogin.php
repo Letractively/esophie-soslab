@@ -3,9 +3,11 @@
     include "mbrheader.php";
 ?>
 <br/>Silahkan masukan kode member dan nomor rekening Anda:<br/><br/>
-<div>
-        <div class="boxstyled1" style='width:250px;' onclick="document.getElementById('username').focus(); return false;"><div style='width:90px;'>Kode Member :</div><input placeholder="Ex: 5000752130" type="text" name="username" id="username" value="" style='width:150px; -wap-input-format: "*N"'/></div>
-        <div class="boxstyled1" style='width:250px;' onclick="document.getElementById('norekening').focus(); return false;"><div style='width:90px;'>Nomor Rekening :</div><input placeholder="Ex: 8004621385" type="text" name="norekening" id="norekening" value="" style='width:150px; -wap-input-format: "*N"'/></div>
+<div style="width:160px;text-align:left;">
+    <div>Kode Member :</div>    
+    <div class="boxstyled1" style="width:150px;"><input placeholder="Kode member" type="text" name="username" id="username" value="" style='width:135px; -wap-input-format: "*N"'/></div>
+    <div>Nomor Rekening :</div>
+    <div class="boxstyled1" style="width:150px;"><input placeholder="Nomor rekening" type="text" name="norekening" id="norekening" value="" style='width:135px; -wap-input-format: "*N"'/></div>
 </div>
 
 <br/><?= $ctrl->printerrors(); ?>

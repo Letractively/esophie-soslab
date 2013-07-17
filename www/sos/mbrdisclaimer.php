@@ -12,8 +12,11 @@
             <li>Member wajib mengisi nama BC untuk pengiriman barang online order 
             <em>(Members must fill in the BC's name for online orders deliveries.)</em></li>
 
-            <li>Member berhak atas point bonus atas barang yang dibeli via online order 
+            <li>Member berhak atas point bonus atas barang yang dibeli via online order.
             <em>(Members are entitled to bonus points gained from purchasing items online.)</em></li>
+            
+            <li>Point bonus hanya bisa dilaporkan setelah faktur untuk order online telah diterima dari BC.
+            <em>(Bonus points can only be reported after the order invoice has been delivered by the BC to the member)</em></li>
 
             <li>Member berhak atas after sales service sesuai ketentuan yang berlaku 
             <em>(Members are entitled to an after sales service corresponding to the applicable rules.)</em></li>

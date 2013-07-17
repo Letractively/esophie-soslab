@@ -1,16 +1,19 @@
 <?include "bcheader.php";?>
-<br/><b><p>Online Orders - Backoffice BC</p></b>
-<table>
-	<tr><td width="110">Kode BC:</td></tr>
-	<tr><td width="110"><input type="text" name="userid" id="userid" value="" size="23"/></td></tr>
-	<tr><td width="110">Password:</td></tr>
-	<tr><td width="110"><input type="password" name="password" id="password" value="" size="23"/></td></tr>
-	<tr><td align="center"><button type="submit" onclick="setaction('ok');" style="width:60px;">Login</button></td></tr>
+<div class="boxcon" style="width:250px; margin:10px; padding:10px; text-align:center;">
+<b>Backoffice BC</b>
+<br/><br/>
+<table style="width:230px; text-align:right;">
+    <tr><td>Kode BC:</td>
+    <td><div class="boxstyled1" style="width:100%"><input type="text" name="userid" id="userid" value="" placeholder="Kode BC" style="width:150px"/></div></td></tr>
+    <tr><td>Password:</td>
+    <td><div class="boxstyled1" style="width:100%"><input type="password" name="password" id="password" value="" placeholder="BC password" style="width:150px"/></div></td></tr>
 </table>
+<br/>
 <? if ($ctrl->varvalue("errmsg") != '') { ?>
-	<div class="errmsg"><?=$ctrl->varvalue("errmsg")?></div>
+	<div class="errormessage"><?=$ctrl->varvalue("errmsg")?></div>
 <? } ?>
-<br><a href="bcnewpassword.php">Lupa password</a> 
-<br><br>&nbsp;
+<button type="submit" onclick="setaction('ok');" style="width:60px;">Login</button>
+<br/><br/><a href="bcnewpassword.php">Lupa password</a>
+</div>
 
 <?include "bcfooter.php";?>

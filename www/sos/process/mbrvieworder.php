@@ -485,7 +485,8 @@
 				$sql = "select kodebc from vw_BCMapping where KodeMember = " . $this->queryvalue($this->userid());
 				$sql.= " and defaultbc = 1";
 				$this->param["bc"] = $this->db->executeScalar($sql);
-                $this->defaultbckode = $this->param["bc"];
+                                $this->defaultbckode = $this->param["bc"];
+                                $this->choosebc = $this->defaultbckode;
 			}
 			
 			$sql = "select* from vw_BCMapping ";

@@ -479,6 +479,19 @@ table.dataview tr:last-child td:last-child {
     border-radius: 0 0 10px 0;
 }
 
+.chromewarning {
+        border-bottom: 1px solid #903; 
+	padding: 15px; 
+	margin: 0; 
+        text-align: center;
+        vertical-align: central;
+	background: #fcc; 
+	color: #903;
+        height: 20px;
+        width:100%;
+        display:none;
+}
+
 .boxerr1 {
 	color:red;
 	font-size: 12px;
@@ -609,16 +622,16 @@ table.dataview tr:last-child td:last-child {
 
 .boxstyled1 {
 	color: #7a7a7a;
-    background-color: #FFFFFF;
+        background-color: #FFFFFF;
 	text-align:left;
 	padding:1px 0px 1px 8px;
 	margin:2px 0px 2px 0px;
 	box-shadow: 1px 2px 3px #c8c8c8;
 	-webkit-box-shadow: 1px 2px 3px #c8c8c8;
-    -moz-box-shadow: 1px 2px 3px #c8c8c8; 
+        -moz-box-shadow: 1px 2px 3px #c8c8c8; 
 	border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
-    -webkit-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
 }
 
 .boxstyled1 div {	

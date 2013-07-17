@@ -295,32 +295,43 @@
 		function nextpage()
 		{
 			if (!$this->isvalidhours) return;
-                    
-                        $sql = "select count(*) as total from PurchLine where purchid = " . $this->queryvalue($this->param['salesid']);
-			$sql.= " and qty > 0";
-			if ($this->db->executescalar($sql))
-			{
-				$this->gotopage('ordertambahan','salesid='.urlencode($this->param['salesid']));
-			}
-			else
-			{
-                                $sql = "select sum(shortageqty) as shortqty, sum(qtyedited) as totalqty from vw_salesline where salesid = " . $this->queryvalue($this->param['salesid']);
-                                $rs = $this->db->query($sql);
-                                
-                                if ($rs->fetch())
-                                {
-                                    if ($rs->value('shortqty') > 0) 
-                                    {                                
-                                        if ($rs->value('qtyedited') == 0) 
-                                            $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['cancelled'], $this->sysparam['cancelcode']['emptystock']);
-                                        else $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['edited']);
+                        
+                        // Check that the order has not been updated since the page was displayed
+                        $sql0 = "select top 1 status from salestable where salesid = " . $this->queryvalue($this->param['salesid']);
+                        $sql0.= " and status <> ". $this->sysparam['salesstatus']['ordered'];
+                        $rs = $this->db->query($sql0);        
+                        if ($rs->fetch())
+                        {
+                            $this->gotopage('vieworder', 'salesid='.urlencode($this->param['salesid']));
+                        }
+                        else 
+                        {
+                            $sql = "select count(*) as total from PurchLine where purchid = " . $this->queryvalue($this->param['salesid']);
+                            $sql.= " and qty > 0";
+                            if ($this->db->executescalar($sql))
+                            {
+                                    $this->gotopage('ordertambahan','salesid='.urlencode($this->param['salesid']));
+                            }
+                            else
+                            {
+                                    $sql = "select sum(shortageqty) as shortqty, sum(qtyedited) as totalqty from vw_salesline where salesid = " . $this->queryvalue($this->param['salesid']);
+                                    $rs = $this->db->query($sql);
+
+                                    if ($rs->fetch())
+                                    {
+                                        if ($rs->value('shortqty') > 0) 
+                                        {                                
+                                            if ($rs->value('totalqty') == 0) 
+                                                $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['cancelled'], $this->sysparam['cancelcode']['emptystock']);
+                                            else $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['edited']);
+                                        }
+                                        else $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['validated']);
                                     }
-                                    else $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['validated']);
-                                }
-                                $rs->close();
-                                
-                                $this->gotopage('onlineorder');
-			}
+                                    $rs->close();
+
+                                    $this->gotopage('onlineorder');
+                            }
+                        }
 		}
 		
 		function delivered()

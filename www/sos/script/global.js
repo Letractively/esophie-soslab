@@ -1,12 +1,14 @@
 function setaction(value) {
-	frmmain.pageaction.value = value;
-	frmmain.submit();
+        var formobj = document.getElementById('frmmain');
+	formobj.pageaction.value = value;
+	formobj.submit();
 }
 
 function seturl(value) {
-	frmmain.action = value;
-        frmmain.method = 'get';
-	frmmain.submit();
+        var formobj = document.getElementById('frmmain');
+	formobj.action = value;
+        formobj.method = 'get';
+	formobj.submit();
 }
 
 function checkfailed(msg)
@@ -47,7 +49,8 @@ function checkdate(d,m,y) {
 
 function gotopage(filename,param)
 {
-	frmexec.action = filename;
+	var formobj = document.getElementById('frmexec');
+        formobj.action = filename;
 	arr1 = param.split(';');
 	for (var i=0; i < arr1.length; i++) 
 	{
@@ -57,9 +60,9 @@ function gotopage(filename,param)
 		oHid.name = arr2[0];
 		oHid.id = arr2[0];
 		oHid.value = arr2[1];
-		frmexec.appendChild(oHid);
+		formobj.appendChild(oHid);
 	}	
-	frmexec.submit();
+	formobj.submit();
 }
 
 function showPopUp(el) {
