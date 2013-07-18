@@ -185,7 +185,7 @@
                                             $totaldiscount = 0;
                                             $totalbayar = 0;
                                             $varLine = "";
-                                            $sqlline = "select itemid, itemname, qty, price, totalorder, discount, totalbayar, qtyedited, totalorderedited, discountedited, totalbayaredited from vw_salesline where salesid ='" .  $salesid . "'";
+                                            $sqlline = "select itemid, itemname, qty, price, totalorder, discount, totalbayar, qtyedited, totalorderedited, discountedited, totalbayaredited from vw_salesline where qty > 0 and salesid ='" .  $salesid . "'";
                                             $rs3 = $this->db->query($sqlline);
                                             while ( $rs3->fetch() )
                                             {

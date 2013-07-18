@@ -42,8 +42,7 @@
 			$this->salesid = $this->param['salesid'];
 			if ($this->salesid == '') $this->gotohomepage();
 			
-			if ( isset($this->param['bc']) )
-				$this->choosebc = $this->param['bc'];
+			if ( isset($this->param['bc']) ) $this->choosebc = $this->param['bc'];
 			
 			switch($this->action)
 			{	
@@ -154,8 +153,10 @@
 				$this->bcname 			= $rs->value('namabc'); 
 				$this->bcaddress 		= $rs->value('alamatbc');
 				$this->bcphone 			= $rs->value('telpbc');
+                                
+                                if (!$this->choosebc) $this->choosebc = $this->bcno;
+                                
 				$this->validatesameday 	= $rs->value('validatesameday'); 
-				$this->param["bc"]		= $this->bcno;
 				
 				$this->orderdate 	= $this->valuedatetime($rs->value('orderdate')); 
 				$this->createddate 	= $this->valuedatetime($rs->value('createddate')); 
@@ -163,7 +164,7 @@
 				$this->status 		= $rs->value('userstatus'); 
 				$this->statuscode 	= $rs->value('status'); 
 				
-				$sql = "select * from vw_salesline where salesid = " . $this->queryvalue($this->salesid);
+				$sql = "select * from vw_salesline where qty > 0 and salesid = " . $this->queryvalue($this->salesid);
 				$rs1 = $this->db->query($sql);			
 				$i = 0;
 				while ($rs1->fetch()) 
@@ -362,12 +363,12 @@
 				
 				$sql = "update mappingTable set ";
 				$sql.= " defaultbc = 1 where kodemember = " . $this->queryvalue($this->userid());
-				$sql.= " and kodebc = " . $this->queryvalue($this->param["bc"]);
+				$sql.= " and kodebc = " . $this->queryvalue($this->choosebc);
 				$this->db->execute($sql);
 			}
 						
 			$sql = "update salesTable set ";			
-			$sql.= " kodebc = " . $this->queryvalue($this->param["bc"]);
+			$sql.= " kodebc = " . $this->queryvalue($this->choosebc);
 			$sql.= " where salesid = " . $this->queryvalue($this->salesid);			
 
 			$this->db->execute($sql);	
@@ -474,34 +475,50 @@
 			    $this->errmsg = 'Minimum order harus diatas IDR ' . $this->valuenumber($mintotalsales) . ' dan maximum order IDR ' . $this->valuenumber($maxtotalsales);
                             $ret = false;    
 			}
+                        
+                        if ( $this->totalorder > $maxtotalsales || $this->totalorder < $mintotalsales )
+			{
+			    $this->errmsg = 'Minimum order harus diatas IDR ' . $this->valuenumber($mintotalsales) . ' dan maximum order IDR ' . $this->valuenumber($maxtotalsales);
+                            $ret = false;    
+			}
+                        
+                        if ( !isset($this->choosebc) || $this->choosebc == '' )
+			{
+			    $this->errmsg = 'BC harus dipilih dahulu';
+                            $ret = false;    
+			}
 			
 			return $ret;			
 		}
 		
 		function getbc()
 		{
-			if (!isset($this->param["bc"]) || $this->param["bc"] == '') 
+			if (!isset($this->choosebc) || $this->choosebc == '') 
 			{	
 				$sql = "select kodebc from vw_BCMapping where KodeMember = " . $this->queryvalue($this->userid());
 				$sql.= " and defaultbc = 1";
-				$this->param["bc"] = $this->db->executeScalar($sql);
-                                $this->defaultbckode = $this->param["bc"];
-                                $this->choosebc = $this->defaultbckode;
+                                $rs = $this->db->query($sql);
+                                if ($rs && $rs->fetch())
+                                {
+                                    $this->defaultbckode = $rs->value('kodebc');
+                                    $this->choosebc = $this->defaultbckode;
+                                    $this->defaultbc = '1';
+                                }
 			}
 			
 			$sql = "select* from vw_BCMapping ";
 			$sql.= "where KodeMember = " . $this->queryvalue($this->userid());
 			
-			$this->setselectoption('bc', $sql, 'kodebc', 'label', $this->choosebc);
+			$this->setselectoption('kode BC', $sql, 'kodebc', 'label', $this->choosebc);
 		}
 		
 		function setselectedoption($name,$rs) 
 		{	
 			switch($name) 
 			{
-				case "bc":
-					if (!isset($this->param["bc"]) || $this->param["bc"] == '')
-						$this->param["bc"] = $rs->value('kodebc');
+				case "kode BC":
+					if (!isset($this->choosebc) || $this->choosebc == '')
+						$this->choosebc = $rs->value('kodebc');
 						
 					$this->bcno = $rs->value('kodebc');
 					$this->bcname = $rs->value('namabc');
@@ -525,15 +542,12 @@
 	
 		function refreshbc ( ) 
 		{
-			if ( isset($this->choosebc) )
+			$this->defaultbc = '0';
+                        if ( isset($this->choosebc) )
 			{
-				$sql = "select isnull(defaultbc,0) as defaultbc from mappingTable where kodebc ='".$this->choosebc."' and kodemember = '".$this->mbrno."'";
-				if ( $this->db->executeScalar($sql) )
-					$this->defaultbc = '1';
-				else
-					$this->defaultbc = '0';
-				
-				
+				$sql = "select 1 from mappingTable where defaultbc = 1 and kodebc ='".$this->choosebc."' and kodemember = '".$this->userid()."'";
+				$rs = $this->db->query($sql);
+                                if ( $rs && $rs->fetch()) $this->defaultbc = '1';
 			}
 		}
 		
