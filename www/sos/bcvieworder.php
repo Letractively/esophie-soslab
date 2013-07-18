@@ -202,7 +202,7 @@
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:145px">Total Order</div>
 			<div class="boxright1" style="margin-left:5px"><?=$ctrl->valuenumber($ctrl->varvalue('totalorderbc'));?></div>
-			<div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('totalorderedited'));?></div>
+			<div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('totalorder'));?></div>
 		</div>
 		<div class="boxcon1">
 			<div class="boxleft1" style="width:145px">Discount</div>

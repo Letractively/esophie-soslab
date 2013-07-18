@@ -148,60 +148,58 @@
                                 
 				$this->cancelcode			= $rs->value('cancelcode');
 				$this->userstatus			= $rs->value('userstatus');
-				$this->userstatusinfo		= $rs->value('statusinfo'); 
+				$this->userstatusinfo                   = $rs->value('statusinfo'); 
 				$this->status				= $rs->value('status'); 
 				$this->totalorder 			= $rs->value('totalorder'); 
 				$this->discount 			= $rs->value('discount'); 
 				$this->totalbayar 			= $rs->value('totalorder') + $rs->value('discount'); //$rs->value('totalbayar');
-				$this->paymentcharge 		= $rs->value('paymentcharge'); 
+				$this->paymentcharge                    = $rs->value('paymentcharge'); 
 				$this->paymentname 			= $rs->value('paymentname'); 
-				$this->totalorderbc 		= $rs->value('totalorderbc'); 
+				$this->totalorderbc                     = $rs->value('totalorderbc'); 
 				$this->discountbc 			= $rs->value('discountbc'); 
-				$this->totalbayarbc 		= $rs->value('totalbayarbc'); 
+				$this->totalbayarbc                     = $rs->value('totalbayarbc'); 
 				
-				$sql = "select * from vw_salesline where salesid = " . $this->queryvalue($this->param['salesid']);
+				$sql = "select * from vw_salesline where qty > 0 and salesid = " . $this->queryvalue($this->param['salesid']);
 				$rs1 = $this->db->query($sql);			
 				$i = 0;
 				$this->productrevisi = '';
-				if ($this->status == $this->sysparam['salesstatus']['edited'] ||
-					$this->status == $this->sysparam['salesstatus']['ordered'])
+				if ($this->status >= $this->sysparam['salesstatus']['openorder'] &&
+					$this->status <= $this->sysparam['salesstatus']['edited'])
 				{
-					$this->totalorderedited		= 0;
-					$this->discount 			= 0;
-					$this->totalbayar 			= 0;
+					$this->totalorder		= 0;
+					$this->discount 		= 0;
+					$this->totalbayar 		= 0;
 				}
 				$this->insufficientitems = '';
 				while ($rs1->fetch()) 
 				{
-					$this->items[$i]['itemid'] 				= $rs1->value('itemid');
+					$this->items[$i]['itemid'] 			= $rs1->value('itemid');
 					$this->items[$i]['itemname'] 			= $rs1->value('itemname');
-					$this->items[$i]['price'] 				= $rs1->value('price');
+					$this->items[$i]['price'] 			= $rs1->value('price');
 					$this->items[$i]['salesqty'] 			= $rs1->value('qty');
-					if ($this->status == $this->sysparam['salesstatus']['edited'] ||
-					    $this->status == $this->sysparam['salesstatus']['ordered'])
-						$this->items[$i]['totalordermember']	= $rs1->value('totalorderedited');
-					else
-						$this->items[$i]['totalordermember']	= $rs1->value('totalorder');
-					
-					$this->items[$i]['totalbayarmember']	= $rs1->value('totalbayar');
-					$this->items[$i]['qtybc']				= $rs1->value('qtybc');
+					$this->items[$i]['totalordermember']            = $rs1->value('totalorder');					
+					$this->items[$i]['totalbayarmember']            = $rs1->value('totalbayar');
+					$this->items[$i]['qtybc']                       = $rs1->value('qtybc');
 					$this->items[$i]['purchqty'] 			= $rs1->value('purchqty');
 					$this->items[$i]['shortageqty'] 		= $rs1->value('shortageqty');
 					$this->items[$i]['totalorderbc'] 		= $rs1->value('totalorderbc');					
 					$this->items[$i]['totalbayarbc'] 		= $rs1->value('totalbayarbc');
 					
 					if ($this->items[$i]['shortageqty'])
+                                        {
 						$this->insufficientitems .= ($this->insufficientitems?', ':'') . $this->items[$i]['itemid'] ;
-					
+                                        }
+                                        
 					if ($this->items[$i]['salesqty'] > $this->items[$i]['purchqty'] + $this->items[$i]['qtybc'])
 					{
 						$this->productrevisi .= ($this->productrevisi != ''? ', ' : '') . $this->items[$i]['itemid'];
 					}
 					
-					if ($this->status == $this->sysparam['salesstatus']['edited'] ||
-					    $this->status == $this->sysparam['salesstatus']['ordered'])
-					{
-						$this->totalorderedited	+= $rs1->value('totalorderedited'); 
+					if ($this->status >= $this->sysparam['salesstatus']['openorder'] &&
+                                                $this->status <= $this->sysparam['salesstatus']['edited'])
+                                        {
+						$this->items[$i]['totalordermember']	= $rs1->value('totalorderedited');
+                                                $this->totalorder               += $rs1->value('totalorderedited'); 
 						$this->discount 		+= $rs1->value('discountedited'); 
 						$this->totalbayar 		+= $rs1->value('totalbayaredited');					
 					}

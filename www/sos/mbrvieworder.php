@@ -22,18 +22,25 @@
 				<div class="boxcon5">1 - Silahkan pilih BC yang akan proses order Anda</div>
 				<div class="boxcon">
                                         
-					<div class="boxleft" style="width:150px">
-						<div class="boxstyled2"><select name="bc" id="bc" onchange="setaction('refreshbc')"><? $ctrl->getbc(); ?></select></div>
-						<input type="checkbox" name="defaultbc" id="defaultbc" value="1" <?if ($ctrl->defaultbc == '1') echo 'checked';?>> set sebagai <font class="pink">default BC</font>.
-					</div>
-					<div class="boxright" style="width:150px">
-						<?=$ctrl->varvalue('bcaddress')?>
-						<br><?=$ctrl->varvalue('bcphone')?>
+					<div class="boxleft" style="width:150px; margin-left:5px;">
+                                            <div class="boxstyled2"><select name="bc" id="bc" onchange="setaction('refreshbc')"><? $ctrl->getbc(); ?></select></div>
+                                            <? if (isset($ctrl->choosebc) && strlen($ctrl->choosebc) > 0) {  
+                                                if(!isset($ctrl->defaultbc)) $ctrl->refreshbc();
+                                                ?>
+                                            <input type="checkbox" name="defaultbc" id="defaultbc" style="margin:0;padding:0;" value="1" <?if ($ctrl->defaultbc == '1') echo 'checked';?>/>
+                                            <label for="defaultbc">set sebagai <font class="pink">default BC</font></label>
+                                            <? } ?>
+                                        </div>
+                                        <div class="boxright" style="width:150px; margin-right:5px;">
+                                            <? if (isset($ctrl->choosebc) && strlen($ctrl->choosebc) > 0) {  ?>
+                                                <?=$ctrl->varvalue('bcaddress');?><br/><?=$ctrl->varvalue('bcphone');?>
+                                            <? } else { ?>
+                                                <em>Jika Anda ingin belanja dari BC yang belum bisa dipilih, silahkan hubungi Sophie Care.</em>
+                                            <? } ?>
 					</div>
 				</div>
-                                <div style="text-align:right;"><em>Jika Anda ingin belanja dari BC yang belum ada di listnya,<br/>silahkan hubungi Customer Care.</em></div>
 			<? } ?>
-			<div class="boxcon5">2 - Silahkan cek kembali order Anda</div>			
+			<div class="boxcon5" style="clear:both;">2 - Silahkan cek kembali order Anda</div>			
 <?			break;
 
 		case "orderconfirm" : ?>

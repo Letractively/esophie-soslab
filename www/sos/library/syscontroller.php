@@ -119,8 +119,12 @@
 				
 				if ($rs->value($colNameValue)== $selectedvalue || ($first && $selectedvalue == ''))
 				{					
-					$selected = true;
-					$this->setselectedoption($name,$rs);
+                                        if ($selectedvalue == '') echo "<option value=\"\" selected >Pilih ". $name ."</option>";
+					else 
+                                        {
+                                            $selected = true;;
+                                            $this->setselectedoption($name,$rs);
+                                        }
 				}				
 				echo "<option value=" . $this->htmlvalue($rs->value($colNameValue)) . ($selected ? " selected " : "") .">" . $this->htmlvalue($rs->value($colNameLabel));
 				$first = false;
