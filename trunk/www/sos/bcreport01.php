@@ -27,8 +27,8 @@
 			</td></tr>
 		</table>
 		<br>
-		<button type="button" onclick="setaction('search');" style="width:60px;">Search</button>&nbsp;&nbsp;
-		<button type="button" onclick="setaction('reset');" style="width:60px;">Clear</button>	
+		<input type="submit" onclick="setaction('search');" class="buttongo" style="width:60px;" value="Search"/>&nbsp;&nbsp;
+		<input type="reset" onclick="setaction('reset');" class="buttonback" style="width:60px;" value="Clear"/>
 	</div>
 	<div class="boxright">
 		<div class="boxcon5" style="width:300px;margin-right:25px;">

@@ -1,6 +1,5 @@
 <?include "bcheader.php";?>
-<div class="boxcon" style="width:250px; margin:10px; padding:10px; text-align:center;">
-<b>Backoffice BC</b>
+<br/><b>Backoffice BC</b>
 <br/><br/>
 <table style="width:230px; text-align:right;">
     <tr><td>Kode BC:</td>
@@ -12,8 +11,7 @@
 <? if ($ctrl->varvalue("errmsg") != '') { ?>
 	<div class="errormessage"><?=$ctrl->varvalue("errmsg")?></div>
 <? } ?>
-<button type="submit" onclick="setaction('ok');" style="width:60px;">Login</button>
-<br/><br/><a href="bcnewpassword.php">Lupa password</a>
-</div>
+<input type="submit" onclick="setaction('ok');" class="buttongo" value="Login" />
+<br/><br/><a href="bcnewpassword.php">Lupa password</a><br/><br/>
 
 <?include "bcfooter.php";?>

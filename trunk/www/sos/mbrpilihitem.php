@@ -15,6 +15,6 @@
                 </tr>
 	<? } ?>	
         </table><br/>
-	<!--<button type="button" onclick="setaction('back');" style="width:60px;">Back</button>-->
-	<button type="reset" style="width:60px;" onclick="setaction('reset');" class="back">Reset</button>&nbsp;<button type="button" onclick="setaction('save');" style="width:60px;">OK</button>	
+	<input type="reset" onclick="setaction('reset');" class="buttonback" value="Reset" style="width:80px;"/>&nbsp;
+        <input type="submit" onclick="setaction('save');" class="buttongo" value="OK" style="width:80px;"/>	
 <?include "mbrfooter.php";?>

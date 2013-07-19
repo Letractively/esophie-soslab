@@ -11,8 +11,7 @@
     <td><div class="boxstyled1" style="width:100%"><input type="email" name="email" id="email" value="<?=$ctrl->value("email")?>" placeholder="Email address" style="width:150px"/></div></td></tr>
 </table>
 <br/>
-
-<button type="submit" onclick="setaction('ok');" style="width:180px;">Kirim password baru</button>
+<input type="submit" onclick="setaction('ok');" class="buttongo" style="width:180px;" value="Kirim password baru" />
 <br/><br/>
 <? if ($ctrl->varvalue("errmsg") != '') { ?>
         <div class="errormessage"><?=$ctrl->varvalue("errmsg")?></div>

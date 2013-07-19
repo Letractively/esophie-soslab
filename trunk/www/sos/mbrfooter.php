@@ -63,10 +63,9 @@
                 <br/>
                 <? } ?>
                 <div>Sophie Care: (021) 2922-7777 | Sen-Sab 08:00-20:00 WIB</div>
-                <div>Email: sophie.care@sophieparis.com | FB: <a href="http://www.facebook.com/sophieparisindonesia">Sophie Paris Indonesia</a></div>
+                <div>sophie.care@sophieparis.com | FB: <a href="http://www.facebook.com/sophieparisindonesia">Sophie Paris Indonesia</a></div>
             </div>
         </div>
-        </center>
     </form>
     </body>
 </html>

@@ -21,8 +21,8 @@
 					</div>
 			</td></tr>
 		</table><br>
-		<button type="button" onclick="if (validsearch()){setaction('search');};" style="width:60px;">Search</button>&nbsp;&nbsp;
-		<button type="button" onclick="setaction('reset');" style="width:60px;">Clear</button>	
+		<input type="submit" onclick="if (validsearch()){setaction('search');};" class="buttongo" style="width:60px;" value="Search"/>&nbsp;&nbsp;
+                <input type="reset" onclick="setaction('reset');" class="buttonback" style="width:60px;" value="Clear"/>
 <? /* 
 <table>
 	<tr><td>Online order #</td><td><input type="text" id="search_salesid" name="search_salesid" value="<?=$ctrl->value("search_salesid")?>"></td></tr>

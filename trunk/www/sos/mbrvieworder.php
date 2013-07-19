@@ -49,7 +49,7 @@
 				Anda dapat melanjutkan ke pembayaran setelah Anda meneriama konfirmasi dar BC.
 			</div>
 			<div class="boxcon5">Silahkan update data pribadi Anda</div>
-			<div style="text-align:left;">
+			<div class="boxfont2"  style="text-align:left">
 				Konfirmasi order yang sudah di validasi oleh BC atau pembayaran yang sudah diterima akan dikirimkan melalui SMS dan email. Anda boleh merubah nomor HP dan email address di bawah ini.
 			</div>
 			<?=$ctrl->printerrors();?>
@@ -170,7 +170,7 @@
 	
 	<?if ($ctrl->pageview == 'orderedit') { ?>
 	<div class="boxcon" style="text-align:right;">
-		<button type="button" onclick="setaction('refresh');">Refresh</button>
+		<input type="submit" onclick="setaction('refresh');" value="Refresh" class="buttongo" style="width:80px;"/>
 	</div>
 	<? } ?>
 	<div class="boxcon1">
@@ -183,7 +183,7 @@
 		<div class="boxleft1">Total Setelah Diskon</div><div class="boxright1-1"><?=$ctrl->valuenumber($ctrl->varvalue('totalorder')+$ctrl->varvalue('discount'));?></div>
 	</div>
 
-	<?if ($ctrl->varvalue('paymentmode') != '' && ($ctrl->statuscode > 1 || $ctrl->pageview == 'orderconfirm')) { ?>
+	<?if ($ctrl->varvalue('paymentmode') != '' && ($ctrl->statuscode != 1 || $ctrl->pageview == 'orderconfirm')) { ?>
 	<div class="boxcon1">
 		<div class="boxleft1">Biaya administrasi</div><div class="boxright1"><?=$ctrl->valuenumber($ctrl->varvalue('paymentcharge'));?></div>
 	</div>
@@ -203,7 +203,7 @@
 	{ 
 		case "view" :
 		case "waiting" :?>
-			<div align="right"><button type="button" onclick="window.location.href='mbrviewhistory.php';" class="back" style="width:100px">&lt;&lt; Kembali</button></div>
+			<div align="right"><input type="button" value="&lt;&lt; Kembali" onclick="window.location.href='mbrviewhistory.php';" class="buttonback"/></div>
 <?		break;
 
 		case "orderedit" : ?>
@@ -211,15 +211,14 @@
 			<tr>
 			<td>
 				<? if ( $ctrl->errorbcmsg != "" ) { ?>
-					<button type="button" onclick="setaction('orderhistory');" class="back">&lt;&lt; Kembali</button>
+                                    <input type="button" onclick="setaction('orderhistory');" value="&lt;&lt; Kembali" class="buttonback" /></div>
 				<? } else { ?>
-					<button type="button" onclick="setaction('neworder');" class="back" style="width:100px">&lt;&lt; Order Baru</button>
+                                    <input type="button" onclick="setaction('neworder');" value="&lt;&lt; Order Baru" class="buttonback" /></div>
 				<? } ?>
 			</td>
 			<td align="right">
 				<? if ( $ctrl->errorbcmsg == "" ) { ?>
-					<button type="button" onclick="setaction('confirmorder');" class="buttonbig">Konfirmasi Order &gt;&gt;</button>
-				<? } else { ?>
+					<input type="button" onclick="setaction('confirmorder');" class="buttongo" value="Konfirmasi Order &gt;&gt;" /><? } else { ?>
 					&nbsp;
 				<? } ?>
 			</td>
@@ -231,10 +230,10 @@
 			<table border="0" width="100%">
 			<tr>
 			<td>
-				<button type="button" onclick="setaction('back');" class="back">&lt;&lt; Kembali</button>
+				<input type="button" onclick="setaction('back');" class="buttonback" value="&lt;&lt; Kembali"/>
 			</td>
 			<td align="right">
-				<button type="button" onclick="setaction('sendordertobc');"  style="width:100px">Kirim ke BC &gt;&gt;</button>
+				<input type="button" onclick="setaction('sendordertobc');"  class="buttongo" value="Kirim ke BC &gt;&gt;" />
 			</td>
 			</tr>
 			</table>
@@ -244,12 +243,12 @@
 			<table border="0" width="100%">
 			<tr>
 			<td>
-				<button type="button" onclick="setaction('back');" class="back">&lt;&lt; Kembali</button>
+				<input type="button" onclick="setaction('back');" class="buttonback" value="&lt;&lt; Kembali" />
 			</td>
 			<td align="right">
-				<button type="button" onclick="setaction('cancel');">Batal</button>
+				<input type="button" onclick="setaction('cancel');" class="buttonback" value="Batal"/>
 	<? 		if ( $ctrl->varvalue('isanyitemsold') > 0 ) { ?>
-				<button type="button" onclick="setaction('confirmqtychange');" class="buttonbig" >Konfirm dan bayar &gt;&gt;</button>
+				<input type="button" onclick="setaction('confirmqtychange');" class="buttongo" value="Konfirm dan bayar &gt;&gt;" />
 	<? 		} ?>
 			</td>
 			</tr>
@@ -261,10 +260,10 @@
 			<table border="0" width="100%">
 			<tr>
 			<td>
-				<button type="button" onclick="setaction('back');" class="back" >&lt;&lt; Kembali</button>
+				<input type="button" onclick="setaction('back');" class="buttonback" value="&lt;&lt; Kembali" />
 			</td>
 			<td align="right">
-				<button type="button" onclick="setaction('pembayaran');">Bayar &gt;&gt;</button>
+				<input type="button" onclick="setaction('pembayaran');" class="buttongo" value="Bayar &gt;&gt;" />
 			</td>
 			</tr>
 			</table>
