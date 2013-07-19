@@ -78,7 +78,8 @@
 		</div>
 	</div>
 	<div style="width:695px;text-align:right">
-		<button class="back" type="button" onclick="setaction('cancel');" style="width:80px" >Kembali</button>
+            
+		<input class="buttonback" type="button" onclick="setaction('cancel');" value="Kembali"/>
 	</div>
 </div>
 <?include "bcfooterright.php";?>

@@ -111,7 +111,7 @@
                                         $url = ($orders['timeleft'] <= 0) ? "" : "bcvieworder.php?backpage=1&salesid=" . urlencode($orders['salesid']);
 					$ret.= $i%2?"<tr class=\"pinkrow\">":"<tr>";
 					$ret.= '<td align="center"><a href="' . $url . '"><div class="color' . $this->colorstatus($orders['statuscode']) . '"></a></td>';
-					$ret.= '<td align="left"><a ' . ($i%2?'class="grid"':'') . ' href="' . $url . '">'. $orders['salesid'] . '</a></td>';
+					$ret.= '<td align="left"><a href="' . $url . '">'. $orders['salesid'] . '</a></td>';
 					$ret.= '<td align="left">' . $orders['orderdate'] . '</td>';
 					$ret.= '<td align="left">' . $orders['member'] . '</td>';
 					$ret.= '<td align="right">' . $this->valuenumber($orders['totalbayar']) . '</td>';
@@ -135,12 +135,12 @@
 				{
 					$ret.= $i%2?"<tr class=\"pinkrow\">":"<tr>";		
 					$ret.= '<td align="center"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '"><div class="color' . $this->colorstatus($orders['statuscode']) . '"></a></td>';
-					$ret.= '<td align="left"><a ' . ($i%2?'class="grid"':'') . ' href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';
+					$ret.= '<td align="left"><a href="bcvieworder.php?salesid=' . urlencode($orders['salesid']) . '">'. $orders['salesid'] . '</a></td>';
 					$ret.= "<td align=\"left\">" . $orders['orderdate'] . "</td>";
 					$ret.= "<td align=\"left\">" . $orders['member'] . "</td>";
 					$ret.= "<td align=\"right\">" . $this->valuenumber($orders['totalbayar']) . "</td>";
 					$ret.= "<td align=\"center\"";
-					if ( $orders['statuscode'] == 0 ) $ret.= " class=\"red\"";
+					if ( $orders['statuscode'] == 0 ) $ret.= " class=\"pink\"";
 					$ret.= ">" . $orders['userstatus'] . "</td>";
 					$ret.= "</tr>";
 					

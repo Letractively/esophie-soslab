@@ -74,9 +74,8 @@
 		</div>
 	</div>
 </div>
-
-<button type="button" onclick="if (validsearch()){setaction('search');};" style="width:60px;">Search</button>&nbsp;&nbsp;
-<button type="button" onclick="setaction('reset');" style="width:60px;">Clear</button>	
+<input type="submit" onclick="if (validsearch()){setaction('search');};" class="buttongo" style="width:60px;" value="Search"/>&nbsp;&nbsp;
+<input type="reset" onclick="setaction('reset');" class="buttonback" style="width:60px;" value="Clear"/>	
 <br><br>
 <table class="dataview" width ="955">
 	<tr>

@@ -20,7 +20,10 @@
 </table>
 <br>
 
-<? if ($ctrl->paymentmode == "ATM") { ?>
+<? if (strlen($ctrl->trxref)>0) { ?>
+<div class="boxfont2">Silahkan tunggu 2-3 menit untuk initialisasi pembayaran...</div>
+
+<? } else if ($ctrl->paymentmode == "ATM") { ?>
 <br>
 <div class="boxfont2">Silahkan transfer <b><font class="pink">IDR <?=$ctrl->valuenumber($ctrl->varvalue('totalbayar'))?></font></b> ke virtual account:</div>
 <div class="boxfont1"><?=$ctrl->varvalue('virtualaccount')?></div>
@@ -44,11 +47,19 @@ if (strlen($ctrl->trxref)>0)
     <div class="boxfont2">Untuk informasi pembayaran yang lebih lengkap, silahkan clik di button <em>Lanjut >></em> bahwa ini.</div>
     <? } else { ?>
     <div class="boxfont2">Setelah clik button <em>Lanjut >></em>, Anda akan diredireksi ke checkout Faspay untuk melakukan online payment...</div>
-    <? } //<button type="button" onclick="setaction('simulate');" class="buttonbig" >Simulate</button> ?>
 <br>
-<button type="button" onclick="setaction('forward')" class="buttonbig" >Lanjut >></button>
-<? } else { ?>
-    <div class="boxfont2">Silahkan tunggu 2-3 menit untuk initialisasi pembayaran...</div>
 <? } ?>
+<table border="0" width="100%">
+    <tr>
+    <td><input type="button" class="buttonback" onclick="setaction('back')" value="&lt;&lt; Kembali"/></td>
+    <td align="right"><?
+        if (strlen($ctrl->trxref)>0) { ?>
+        <input type="button" class="buttongo" onclick="setaction('forward')" value="Lanjut &gt;&gt;" />
+        <? } else { ?>&nbsp;<? } ?>
+    </td></tr>
+</table>
+
+    
+
 
 <?include "mbrfooter.php";?>

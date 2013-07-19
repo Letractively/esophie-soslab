@@ -1,7 +1,7 @@
 <?include "bcheaderright.php";?>
 <input type="hidden" name="salesid" id ="salesid" value="<?=$ctrl->value('salesid')?>">
 
-<div class="boxcon" style="border-bottom:1px solid black;">
+<div class="boxcon" style="padding-bottom:5px; border-bottom:1px solid #d1d1d1;">
 	<div class="boxleft" style="width:480px">
 		<a href="bconlineorder.php" >Online Orders</a> > <a href="#" onclick="setaction('bcorder');" > Order #<?=$ctrl->value('salesid')?> </a> > Tambahan Order BC
 	</div>
@@ -13,14 +13,14 @@
 
 <div class="boxcon">	
 	<div class="boxcon">
-		<div class="boxleft" style="width:330px;">
+                <div class="boxleft">
 			<b>TAMBAHAN ORDER BC</b>
 			<br>PT. Sophie Paris Indonesia
 			<br>Telp. 021 8312389
 		</div>
-		<div class="boxright" style="width:300px;align:right;">
-			<table>
-				<tr><td width="150"><b>No. Request</b></td><td  width="150" align="right">Belum Ada</td></tr>
+		<div class="boxright" style="text-align:right;">
+			<table style="margin:0;">
+				<tr><td><b>No. Request</b></td><td align="right">Belum Ada</td></tr>
 				<tr><td><b>No. Online Number</b></td><td align="right"><?=$ctrl->value('salesid')?></td></tr>
 				<tr><td><b>ID</b></td><td align="right"><?=$ctrl->varvalue('bcno')?></td></tr>
 				<tr><td><b>Name</b></td><td align="right"><?=$ctrl->varvalue('bcname')?></td></tr>
@@ -79,8 +79,8 @@
 	</div>
 	
 	<div style="width:705px;text-align:right">
-		<button type="button" class="back" onclick="setaction('kembali');" style="width:80px;">Kembali</button>
-		<button type="button" onclick="setaction('setuju');" style="width:80px;">Setuju</button>
+		<input type="button" class="buttonback" onclick="setaction('kembali');" value="Kembali" />
+		<input type="button" class="buttongo" onclick="setaction('setuju');" value="Setuju" />
 	</div>
 </div>
 

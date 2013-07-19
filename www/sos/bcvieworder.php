@@ -32,8 +32,8 @@
     <div>
             <div class="boxleft">Anda ingin melanjutkan ?</div>
             <div class="boxright" style="padding-right:5px">
-                    <button type="button" onclick="closePopUp('dialog');" style="width:80px;">Kembali</button>
-                    <button type="button" onclick="setaction('<?= $popupaction ?>');" style="width:80px;">Lanjut</button>
+                    <input type="button" onclick="closePopUp('dialog');" value="Kembali" class="buttonback"/>
+                    <input type="button" onclick="setaction('<?= $popupaction ?>');" value="Lanjut" class="buttongo"/>
             </div>
     </div>
 </div>
@@ -42,7 +42,7 @@
 <input type="hidden" name="backpage" id ="backpage" value="<?=$ctrl->value('backpage')?>">
 <input type="hidden" name="salesid" id ="salesid" value="<?=$ctrl->value('salesid')?>">
 	 
-<div class="boxcon" style="padding-bottom:5px; border-bottom:1px solid #9b9b9b;">
+<div class="boxcon" style="padding-bottom:5px; border-bottom:1px solid #d1d1d1;">
 	<div class="boxleft" style="width:330px">
 		<a href="bconlineorder.php">Online Orders</a> > Order #<?=$ctrl->value('salesid')?>
 	</div>
@@ -53,8 +53,8 @@
 </div>
 
 <div class="boxcon">
-	<div class="boxleft" style="width:330px">
-		<table>
+	<div class="boxleft" style="width:330px;">
+		<table style="margin:0;">
 			<tr><td width="100"><b>Member ID</b></td><td><?=$ctrl->varvalue('mbrno')?></td></tr>
 			<tr><td><b>Name</b></td><td><?=$ctrl->varvalue('mbrname')?></td></tr>
 			<tr><td><b>Mobile</b></td><td><?=$ctrl->varvalue('mbrmobile')?></td></tr>
@@ -227,25 +227,25 @@
 	</div>
 </div>
 <div style="width:703px;text-align:right">	
-	<button class="back" type="button" onclick="setaction('cancel');" style="width:80px" >Kembali</button>
+	<input class="buttonback" type="button" onclick="setaction('cancel');" value="Kembali"/>
 	<?
 		switch ($ctrl->status)
 		{
 			case $ctrl->sysparam['salesstatus']['paid']: ?>
-				<button type="button" onclick="showPopUp('dialog');" style="width:80px;">Siap</button> <?
+				<input type="button" class="buttongo" onclick="showPopUp('dialog');" value="Siap" /> <?
 				break;
 			case $ctrl->sysparam['salesstatus']['cancelled']: 
 				if (!$ctrl->iscleared)
                                 { ?>
-                                <button type="button" onclick="showPopUp('dialog');" style="width:80px;">Hapus</button> <?
+                                <input type="button" class="buttongo" onclick="showPopUp('dialog');" value="Hapus"/> <?
                                 }
 				break;
 			case $ctrl->sysparam['salesstatus']['ordered']: 
                                 if ($ctrl->isvalidhours) { ?>
-                                <button type="button" onclick="<?if($ctrl->varvalue('productrevisi') == ''){?>setaction('validasi');<?} else {?>showPopUp('dialog');<?}?>" style="width:80px;">Validasi</button> <? }
+                                <input type="button" class="buttongo" onclick="<?if($ctrl->varvalue('productrevisi') == ''){?>setaction('validasi');<?} else {?>showPopUp('dialog');<?}?>" value="Validasi" /><? }
 				break;
 			case $ctrl->sysparam['salesstatus']['ready']: ?>
-				<button type="button" onclick="showPopUp('dialog');" style="width:80px;">Delivered</button> <?
+				<input type="button" class="buttongo" onclick="showPopUp('dialog');" value="Delivered"/> <?
 				break;		
 		}
 	?>

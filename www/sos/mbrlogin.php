@@ -2,16 +2,16 @@
     $footer_params = "nolinks"; 
     include "mbrheader.php";
 ?>
-<br/>Silahkan masukan kode member dan nomor rekening Anda:<br/><br/>
-<div style="width:160px;text-align:left;">
-    <div>Kode Member :</div>    
-    <div class="boxstyled1" style="width:150px;"><input placeholder="Kode member" type="text" name="username" id="username" value="" style='width:135px; -wap-input-format: "*N"'/></div>
-    <div>Nomor Rekening :</div>
-    <div class="boxstyled1" style="width:150px;"><input placeholder="Nomor rekening" type="text" name="norekening" id="norekening" value="" style='width:135px; -wap-input-format: "*N"'/></div>
-</div>
+<br/><em>Silahkan masukan kode member<br/>dan nomor rekening Anda:</em><br/><br/>
+<table style="text-align: right;">
+    <tr><td>Kode Member :</td>
+    <td><div class="boxstyled1" style="width:160px"><input placeholder="Kode member" type="text" name="username" id="username" value="" style="width:150px"/></div></td></tr>
+    <tr><td>Nomor Rekening :</td>
+    <td><div class="boxstyled1" style="width:160px"><input placeholder="Nomor rekening" type="text" name="norekening" id="norekening" value="" style="width:150px"/></div></td></tr>
+</table>
 
 <br/><?= $ctrl->printerrors(); ?>
 
 <input type="hidden" name="redirect" value="login" />
-<button type="submit" onclick="setaction('save');" style="width:60px;">OK</button>
+<input type="submit" class="buttongo" onclick="setaction('save');" value="OK"/>
 <?include "mbrfooter.php";?>

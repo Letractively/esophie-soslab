@@ -14,7 +14,7 @@
 		<? } ?>
 	</div>
 	<div class="boxcon">
-		<table class="dataview" width="340">
+		<table class="dataview">
 			<tr>
 				<th>&nbsp;</th>
 				<th>Order #</th>

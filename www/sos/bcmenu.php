@@ -1,6 +1,6 @@
 <? if ($ctrl->login()) { ?>
 <input type="hidden" id="menuselect" name="menuselect" value="<?=$ctrl->value('menuselect')?>">
-<div class="boxcon" style="width:980px;margin-bottom:0px;">
+<div class="boxcon" style="width:980px;margin:0 auto;">
 	<div class="boxleft" style="width:530px;">
 		<div class="boxmenu"><a href="bconlineorder.php" class="menuselect">ONLINE ORDERS</a></div><div class="boxmenu" style="padding-right:10px;"><img src="images/menuright.jpg"/></div>
 		<div class="boxmenu"><a href="bcreport02.php" class="menuselect">ORDER HISTORY</a></div><div class="boxmenu" style="padding-right:10px;"><img src="images/menuright.jpg"/></div>

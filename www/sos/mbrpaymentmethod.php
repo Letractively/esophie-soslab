@@ -36,10 +36,10 @@
 	<table border="0" width="100%">
 		<tr>
 		<td>
-			<button type="button" class="back" onclick="setaction('back');" class="back">&lt;&lt; Kembali</button>
+			<input type="button" class="buttonback" onclick="setaction('back');" value="&lt;&lt; Kembali"/>
 		</td>
 		<td align="right">
-			<button type="button" onclick="setaction('confirm');" style="width:80px">Validasi &gt;&gt;</button>
+			<input type="button" class="buttongo" onclick="setaction('confirm');" value="Validasi &gt;&gt" />
 		</td>
 		</tr>
 	</table>
