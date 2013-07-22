@@ -47,7 +47,8 @@ if (strlen($ctrl->trxref)>0)
     <div class="boxfont2">Untuk informasi pembayaran yang lebih lengkap, silahkan clik di button <em>Lanjut >></em> bahwa ini.</div>
     <? } else { ?>
     <div class="boxfont2">Setelah clik button <em>Lanjut >></em>, Anda akan diredireksi ke checkout Faspay untuk melakukan online payment...</div>
-<br>
+    <? } ?>
+    <br>
 <? } ?>
 <table border="0" width="100%">
     <tr>
