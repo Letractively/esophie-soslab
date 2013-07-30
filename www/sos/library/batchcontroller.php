@@ -124,6 +124,7 @@
                                     echo "[BATCH][". date("Y-m-d H:i:s") ."][syncchecking][". $row['salesid'] ."] Not initialized\n";
                             }
                         }
+                        
                     } 			
 		}
 		
@@ -159,9 +160,10 @@
                                     $mail = new PHPMailer(true); 	// the true param means it will throw exceptions on errors, which we need to catch
                                     $mail->IsSMTP();                    // telling the class to use SMTP
 
+                                    
                                     // mail property
                                     $mail->Host       = $this->sysparam['email']['host']; 	// SMTP server
-                                    //$mail->SMTPAuth   = true;                                 // enable SMTP authentication
+                                    $mail->SMTPAuth   = false;                                  // disable SMTP authentication
                                     $mail->Port       = $this->sysparam['email']['port'];       // set the SMTP port 
                                     $mail->Username   = $this->sysparam['email']['fromemail']; 	// SMTP account username
 
@@ -176,8 +178,9 @@
 
                                     // Mail Message
                                     // List item
-
+                                    $varBody = $row['body'];
                                     $salesid = trim($row['salesid']);  
+                                    $paymmode = '';
                                     if ( $salesid !=  "" )
                                     {
                                             $idx = 0;
@@ -215,16 +218,35 @@
                                                     $varLine .=  '</tr>';
                                             }
                                             $rs3->close();
+                                            
+                                            // Payment instructions
+                                            if ($row['salesstatus'] == '6' && strpos($varBody, '[payminstruksi]'))
+                                            {
+                                                $sql0 = "select paymentmode, paymentname, totalbayar, virtualaccount,trxref";
+                                                $sql0.= " from vw_paymtable where salesid = " . $this->queryvalue($salesid);
+                                                $rs0  = $this->db->query($sql0);
+                                                $payminstruksi = "";
+                                                if ($rs0->fetch())
+                                                {
+                                                    $paymmode = $rs0->value('paymentmode');
+                                                    $payminstruksi.= "Rp ".$this->valuenumber($rs0->value('totalbayar'));
+                                                    if (strcasecmp($paymmode, 'ATM') == 0 && strlen($rs0->value('trxref')) > 0 )
+                                                        $payminstruksi .= " ke virtual account " . $rs0->value('trxref');
+                                                    else
+                                                        $payminstruksi .= " di " . $rs0->value('paymentname');
+                                                }
+                                                $varBody = str_replace('[payminstruksi]', $payminstruksi, $varBody);
+                                                //echo $message;
+                                            }
                                     }
 
                                     $colspan = ($row['salesstatus'] == '5' ? 6 : 5);
-
                                     $varBody = '<span id="wrapper" style="font-family: helvetica, sans-serif, arial; font-size: 12px; color:#727274;">'
-                                            . $row['body'] . '</span>';
-                                    
+                                            . $varBody . '</span>';
+
                                     if ( $salesid !=  "" )
                                     {
-                                            $varBody .= "<br><br><table cellspacing='1' cellpadding='1' style='width:100%;'>
+                                            $varBody .= "<hr><table cellspacing='1' cellpadding='1' style='width:100%;'>
                                                     <tbody style='font-family: helvetica, sans-serif, arial; font-size: 12px; color:#727274;'>
                                                             <tr>
                                                                     <td style='background-color:#d0d0d0'>Order</td>
@@ -301,6 +323,13 @@
                                                             </tr>
                                                     </tbody>
                                             </table>";
+                                    }
+                                                                        
+                                    if (strlen($paymmode)>0) {
+                                        $varBody .= '<hr/><br/><span id="wrapper" style="font-family: helvetica, sans-serif, arial; font-size: 12px; color:#727274;">';
+                                        $varBody .= '<p><strong>Payment instructions:</strong></p>';
+                                        $varBody .= file_get_contents('../include/paymode_' . strtolower($paymmode) . '.php');
+                                        $varBody .= '</span>';  
                                     }
 
                                     $mail->Subject = $row['subject'];

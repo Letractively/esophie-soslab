@@ -37,7 +37,7 @@
 
 <br><div class="boxcon3" style="text-align:left;padding: 10px 10px 10px 10px;">
     <img style="float:right;" src="images/logo-payment-<?= strtolower($ctrl->paymentmode)?>.png"/>
-    Instruksi pembayaran <?=$ctrl->paymentname?>:<br><br><? include 'include/paymode_' . strtolower($ctrl->paymentmode) . '.php'; ?>
+    <p class="pink">Instruksi pembayaran <?=$ctrl->paymentname?>:</p><? include 'include/paymode_' . strtolower($ctrl->paymentmode) . '.php'; ?>
 </div>
 
 <? 
