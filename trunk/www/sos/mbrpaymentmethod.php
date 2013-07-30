@@ -1,6 +1,6 @@
 <?include "mbrheader.php";?>
 <center>
-	<div class="boxcon5">Pilih salah satu <font class="pink">cara pembayaran</font>:</div>
+	<div class="boxcon5">Pilih salah satu <font class="pink"><a id="top">cara pembayaran</a></font>:</div>
 	<?=$ctrl->printerrors()?>
 	<div class="boxcon">
 		<?
@@ -24,14 +24,14 @@
 						<div id="description" name="description" class="boxcon2">
 						<?=$item['fee']?>
 						<?=($item['mobilenumber'] != '0' ? '<br> Mobile number : <input type="text" id="mobilenumber" name="mobilenumber"></input> ex: 08111234567' : '')?>
-						<br><br><? include 'include/paymode_' . strtolower($item['paymentmode']) . '.php'; ?></a>
+						<br><br><a href="#<?=$item['paymentmode']?>">Klik di sini untuk instruksi pembayaran</a></a>
 						</div>
 					<?
 					$i++;
 				}
 			}
 		?>
-	</div>
+        </div>
 		
 	<table border="0" width="100%">
 		<tr>
@@ -43,6 +43,25 @@
 		</td>
 		</tr>
 	</table>
+        <br/><br/>
+        
+        
+        <?
+            if (is_array($ctrl->items))
+            {
+                foreach ($ctrl->items as $item)
+                {
+                    ?>
+                    <div class="boxcon3" style="text-align:left;padding: 10px 10px 10px 10px;">
+                    <div class="pink"><a id="<?= $item['paymentmode'] ?>"><?= $item['name'] ?></a> :</div>
+                    <? include 'include/paymode_' . strtolower($item['paymentmode']) . '.php'; ?>
+                    <a href="#top">Balik ke atas</a>
+                    </div>
+                    <?
+                }
+            }
+        ?>
+	</div>
 
 </center>
 <?include "mbrfooter.php";?>
