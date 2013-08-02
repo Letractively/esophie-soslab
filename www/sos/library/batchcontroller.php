@@ -38,6 +38,68 @@
                         case "autobypass":
                             $this->autobypass();
                             break;
+                        case "monitor":
+                            $this->monitor();
+                            break;
+                    }
+                }
+                
+                function monitor()
+                {
+                    $sql = "select sales.salesid,  ";
+                    $sql.= "sales.kodemember, (select name from membertable where kodemember = sales.kodemember) AS namemember, ";
+                    $sql.= "sales.kodebc, (select namabc from bctable where kodebc = sales.kodebc) AS namebc, ";
+                    $sql.= "sales.orderdate, sales.maxvalidatedate, sr.requestid, ISNULL(st.force,0) AS force, ";
+                    $sql.= "CASE WHEN sr.[timestamp] IS NULL THEN 0  ";
+                    $sql.= "ELSE (dbo.Date2UnixTimeStamp(GETDATE()) - sr.[timestamp]) ";
+                    $sql.= "END AS overtime ";
+                    $sql.= "from salestable sales with (nolock) ";
+                    $sql.= "inner join syncrequest sr with (nolock) ";
+                    $sql.= "on sr.[sessionid] = sales.[salesid]  ";
+                    $sql.= "inner join syncordertable st with (nolock) ";
+                    $sql.= "on st.[sessionid] = sr.[sessionid] ";
+                    $sql.= "and st.[timestamp] = sr.[timestamp] ";
+                    $sql.= "where sr.[status] = 0 ";
+                    $sql.= "and (dbo.Date2UnixTimeStamp(GETDATE()) - sr.[timestamp]) > 180 ";
+        
+                    $counter = 0;
+                    $body = "";
+                    $rs	= $this->db->query($sql);
+                    while ($rs && $rs->fetch())
+                    {
+                        $counter++;
+                        $body .= "<tr>";
+                        $body .= "<td>".$rs->value('salesid')."</td>";
+                        $body .= "<td>".$this->valuedatetime($rs->value('orderdate'))."</td>";
+                        $body .= "<td>".$rs->value('namemember'). " (".$rs->value('kodemember').")</td>";
+                        $body .= "<td>".$rs->value('namebc'). " (".$rs->value('kodebc').")</td>";
+                        $body .= "<td>".$this->valuedatetime($rs->value('maxvalidatedate'))."</td>";
+                        $body .= "<td>".$rs->value('requestid')."</td>";
+                        $body .= "<td>".$rs->value('force')."</td>";
+                        $body .= "<td>".$rs->value('overtime')."</td></tr>";
+                    }
+                    
+                    echo $counter;
+                    if ($counter > 0)
+                    {
+                        // Send alert to IT
+                        $subject = "[ALERT] Online Orders: " . $counter . " order(s) not processed yet!";
+                        $body = "<strong>Server ORDER could be down or the Axapta services down...</strong> Try the following:<ul>
+                            <li>Remote to ORDER server</li>
+                            <li>Check for errors in Event Viewer/Application</li>
+                            <li>Stop the services in the following order: AxCom1 & AxCom2 services > Axapta AOS service > Shutdown COM+ Navision AX</li>
+                            <li>Start Axapta AOS service and try to open AX client to test</li>
+                            <li>Start AxCom1 & AxCom2 services</li>
+                            <li>Verify there is no error in EventViewer/Application</li></ul><br/><br/>
+                            <hr><table cellspacing=''1'' cellpadding=''1'' style=''width:100%;''>
+                            <tbody style=''font-family: helvetica, sans-serif, arial; font-size: 12px; color:#727274;''>
+                            <tr><th>Order</th><th>Date</th><th>Member</th><th>BC</th><th>Max Validate</th><th>Request</th><th>Force</th><th>Overtime</th></tr>"  . $body . "</tbody></table>";
+                        $sql2 = "insert into emailtable ";
+                        $sql2.= "([from],[to], cc, bcc, subject,body,createdDate,[toname], salesid) values ";
+                        $sql2.= "('onlineorders@sophie.com', 'victor@sophieparis.com', 'ITInfra&Opsteam@sophieparis.com', 'onlineorderfollowup@sophieparis.com', ";
+                        $sql2.= "'" . $subject . "', '" .$body . "', GETDATE(), 'IT', '') ";
+                        echo $sql2;
+                        $this->db->execute($sql2);
                     }
                 }
 		
@@ -179,7 +241,7 @@
                                     // Mail Message
                                     // List item
                                     $varBody = $row['body'];
-                                    $salesid = trim($row['salesid']);  
+                                    if (isset($row['salesid'])) $salesid = trim($row['salesid']);  
                                     $paymmode = '';
                                     if ( $salesid !=  "" )
                                     {
@@ -240,12 +302,12 @@
                                             }
                                     }
 
-                                    $colspan = ($row['salesstatus'] == '5' ? 6 : 5);
                                     $varBody = '<span id="wrapper" style="font-family: helvetica, sans-serif, arial; font-size: 12px; color:#727274;">'
                                             . $varBody . '</span>';
 
                                     if ( $salesid !=  "" )
                                     {
+                                            $colspan = ($row['salesstatus'] == '5' ? 6 : 5);
                                             $varBody .= "<hr><table cellspacing='1' cellpadding='1' style='width:100%;'>
                                                     <tbody style='font-family: helvetica, sans-serif, arial; font-size: 12px; color:#727274;'>
                                                             <tr>
@@ -340,14 +402,20 @@
                                     $sqlUpdate = "update emailtable set sendDate=getdate() where noseq =" . $row['noseq'];
                                     $this->db->execute($sqlUpdate);
                                     
-                                    echo "[BATCH][".date("Y-m-d H:i:s")."][sendemail][".$row['salesid']."][" . trim($row['userstatus']). "] Email sent\n";
+                                    if (strlen($salesid) > 0)
+                                        echo "[BATCH][".date("Y-m-d H:i:s")."][sendemail][".$row['salesid']."][" . trim($row['userstatus']). "] Email sent\n";
+                                    else
+                                        echo "[BATCH][".date("Y-m-d H:i:s")."][sendemail][to:" . trim($row['to']). "][" . $row['subject'] . "] Email sent\n";
                             } 
                             catch (Exception $e) 
                             {
                                     $sqlUpdate = "update emailtable set retrynumber = isnull(retrynumber,0) + 1 where noseq =" . $row['noseq'];
                                     $this->db->execute($sqlUpdate);
                                     
-                                    echo "[BATCH][".date("Y-m-d H:i:s")."][sendemail][".$row['salesid']."] Email not sent! Exception ". $e->getMessage() ."\n";
+                                    if (strlen($salesid) > 0)
+                                        echo "[BATCH][".date("Y-m-d H:i:s")."][sendemail][".$row['salesid']."] Email not sent! Exception ". $e->getMessage() ."\n";
+                                    else
+                                        echo "[BATCH][".date("Y-m-d H:i:s")."][sendemail][to:" . trim($row['to']). "][" . $row['subject'] . "] Email not sent! Exception ". $e->getMessage() ."\n"; 
                             }
                         }
                     }
