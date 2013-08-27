@@ -79,7 +79,6 @@
                         $body .= "<td>".$rs->value('overtime')."</td></tr>";
                     }
                     
-                    echo $counter;
                     if ($counter > 0)
                     {
                         // Send alert to IT
@@ -98,8 +97,8 @@
                         $sql2.= "([from],[to], cc, bcc, subject,body,createdDate,[toname], salesid) values ";
                         $sql2.= "('onlineorders@sophie.com', 'victor@sophieparis.com', 'ITInfra&Opsteam@sophieparis.com', 'onlineorderfollowup@sophieparis.com', ";
                         $sql2.= "'" . $subject . "', '" .$body . "', GETDATE(), 'IT', '') ";
-                        echo $sql2;
                         $this->db->execute($sql2);
+                        echo "[BATCH][".date("Y-m-d H:i:s")."][monitor] ALERT FOR ". $counter ." ORDERS! \n";
                     }
                 }
 		
@@ -284,7 +283,7 @@
                                             // Payment instructions
                                             if ($row['salesstatus'] == '6' && strpos($varBody, '[payminstruksi]'))
                                             {
-                                                $sql0 = "select paymentmode, paymentname, totalbayar, virtualaccount,trxref";
+                                                $sql0 = "select paymentmode, paymentname, totalbayar, virtualaccount,trxref,maxpaiddate, getdate() as datenow";
                                                 $sql0.= " from vw_paymtable where salesid = " . $this->queryvalue($salesid);
                                                 $rs0  = $this->db->query($sql0);
                                                 $payminstruksi = "";
@@ -296,6 +295,10 @@
                                                         $payminstruksi .= " ke virtual account " . $rs0->value('trxref');
                                                     else
                                                         $payminstruksi .= " di " . $rs0->value('paymentname');
+                                                    $maxpaiddate = strtotime($rs0->value('maxpaiddate'));
+                                                    $datenow = strtotime($rs0->value('datenow'));
+                                                    if ($maxpaiddate > $datenow)
+                                                        $payminstruksi .= " sebelum pkl " . date("g.i a", $maxpaiddate);  
                                                 }
                                                 $varBody = str_replace('[payminstruksi]', $payminstruksi, $varBody);
                                                 //echo $message;
@@ -456,7 +459,7 @@
                                             
                                             if (strpos($message, '[payminstruksi]'))
                                             {
-                                                $sql0 = "select paymentmode, paymentname, totalbayar, virtualaccount,trxref";
+                                                $sql0 = "select paymentmode, paymentname, totalbayar, virtualaccount,trxref, maxpaiddate, getdate() as datenow";
                                                 $sql0.= " from vw_paymtable where salesid = " . $this->queryvalue($salesid);
                                                 $rs0  = $this->db->query($sql0);
                                                 $payminstruksi = "";
@@ -467,6 +470,10 @@
                                                         $payminstruksi .= " ke rek " . $rs0->value('trxref');
                                                     else
                                                         $payminstruksi .= " di " . $rs0->value('paymentname');
+                                                    $maxpaiddate = strtotime($rs0->value('maxpaiddate'));
+                                                    $datenow = strtotime($rs0->value('datenow'));
+                                                    if ($maxpaiddate > $datenow)
+                                                        $payminstruksi .= " sebelum pkl " . date("g.i a", $maxpaiddate);  
                                                 }
                                                 $message = str_replace('[payminstruksi]', urlencode($payminstruksi), $message);
                                                 //echo $message;
