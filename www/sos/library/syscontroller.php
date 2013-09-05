@@ -7,7 +7,7 @@
 		var $checklogin;
                 
                 // Environment PROD/DEV
-                const _ENV_ = 'DEV';
+                const _ENV_ = 'PROD';
 		
 		function __construct() 
 		{	
