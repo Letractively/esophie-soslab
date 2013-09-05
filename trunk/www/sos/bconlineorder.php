@@ -1,7 +1,11 @@
 <?include "bcheaderleft.php";?>
 
-<div class="title">NEW ORDERS<a id="neworder">&nbsp;</a></div>
-<table class="dataview">
+<div class="title" <? 
+    if (!$ctrl->showneworders) { ?> style="display: none"<? } 
+    ?>>NEW ORDERS<a id="neworder">&nbsp;</a></div>
+<table class="dataview"<? 
+    if (!$ctrl->showneworders) { ?> style="display: none"<? } 
+    ?>>
 	<tr>
 		<th width="20">&nbsp;</th>
 		<th width="100" align="left">Order #</th>

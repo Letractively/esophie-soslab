@@ -100,7 +100,10 @@
                     $return = false;
                     $this->isvalidhours = false;
                     
-                    $sql = "select sp.bcstartwork, sp.bcendwork from sysparamtable sp with (nolock)";
+                    $sql = "select bcstartwork, bcendwork from bctable with (nolock)
+                        inner join salestable with (nolock) on salestable.kodebc = bctable.kodebc
+                        where salestable.salesid = " . $this->queryvalue($this->param['salesid']);
+                            
                     $rs = $this->db->query($sql);
                     if ($rs && $rs->fetch())
                     {

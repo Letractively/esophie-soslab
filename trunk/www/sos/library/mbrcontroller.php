@@ -192,7 +192,7 @@
 										
 			if ($this->salesid != '')
 			{
-				$sql = 'select * from vw_salestable where salesid = ' . $this->queryvalue($this->salesid);
+				$sql = 'select *, getdate() as datenow from vw_salestable where salesid = ' . $this->queryvalue($this->salesid);
 				$rs = $this->db->query($sql);			
 				$rs->fetch();
 				
@@ -236,21 +236,29 @@
 					case $this->sysparam['salesstatus']['ordered'] : 
 					case $this->sysparam['salesstatus']['bypassed'] : 
 					case $this->sysparam['salesstatus']['inprogress'] :
-						$this->mbrmsg['title'] = 'Order #' . $this->salesid . ' dikirim ke BC untuk di validasi...';  
-						$this->mbrmsg['body'] = 'Validasi order anda sedang diproses oleh BC #' . $rs->value('kodebc') . '.';
+						$this->mbrmsg['title'] = 'Order #' . $this->salesid . ' dikirim ke BC#' . $rs->value('kodebc');  
+						$this->mbrmsg['body'] = 'Order anda sedang diproses oleh BC #' . $rs->value('kodebc') . '.';
 						$this->mbrmsg['body'].= ' Anda akan menerima confirmation order ';
 						
-						$todaydate = date_parse(date('Y-m-d'));
-						$maxvalidate = date_parse($rs->value('maxvalidatedate'));
+						$todaydate = strtotime($rs->value('datenow'));
+						$maxvalidate = strtotime($rs->value('maxvalidatedate'));
 						
-						if ($maxvalidate['year'] == $todaydate['year'] &&
-						    $maxvalidate['month'] == $todaydate['month'] &&
-							$maxvalidate['day'] == $todaydate['day'])
-						{
-							$this->mbrmsg['body'].= 'dalam waktu 30-60 menit...';
-						} else {
-							$this->mbrmsg['body'].= ' besok sebelum jam ' . $maxvalidate['hour'] .':'. $maxvalidate['minute'];
-						}
+						if ($maxvalidate < $todaydate + 60)
+                                                {
+                                                    $this->mbrmsg['body'].= 'dalam waktu 5 menit...';
+                                                }
+                                                else {
+                                                    $maxvalidate = date_parse($rs->value('maxvalidatedate'));
+                                                
+                                                    if ($maxvalidate['year'] == $todaydate['year'] &&
+                                                        $maxvalidate['month'] == $todaydate['month'] &&
+                                                            $maxvalidate['day'] == $todaydate['day'])
+                                                    {
+                                                            $this->mbrmsg['body'].= 'dalam waktu 30-60 menit...';
+                                                    } else {
+                                                            $this->mbrmsg['body'].= ' besok sebelum jam ' . $maxvalidate['hour'] .':'. $maxvalidate['minute'];
+                                                    }
+                                                }
 						
 						break;
 						

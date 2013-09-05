@@ -5,6 +5,7 @@
 		var $orderstodeliver;
 		var $orderstofollowup;
 		var $statuscount;
+                var $showneworders;
 		
 		function run() 
 		{	
@@ -38,6 +39,13 @@
 				$this->statuscount['delivered'] 	= $rs->value('delivered');
 			}
 			$rs->close();
+                        
+                        $sql = 'select bcvalidate from BCTable with (nolock)';
+			$sql.= ' where kodebc = ' . $this->queryvalue($this->userid());  
+			$rs = $this->db->query($sql);
+			$this->showneworders = ($rs->fetch() && $rs->value('bcvalidate') > 0);  
+                        $rs->close();
+                        
 			
 			$sql = 'select * from vw_onlineorder ';
 			$sql.= ' where kodebc = ' . $this->queryvalue($this->userid());  
