@@ -17,12 +17,30 @@
                         }
                         else
                         {
+                            $adminUser = "";
+                            $userarray = explode('@',$userid, 2);
+                            if ($userarray && sizeof($userarray) > 0)
+                            {
+                                $userid = $userarray[0];
+                                $adminUser = (sizeof($userarray) > 1) ? $userarray[1] : "";
+                            }
+
                             // Import/update member
                             $this->importmember($userid);
 
                             // Check user/password in SQL
                             $sql = "SELECT count(kodemember) FROM memberTable";
-                            $sql.= " WHERE kodemember = '$userid' AND NoREKENING = '$password'";
+                            $sql.= " WHERE kodemember = '$userid' ";
+                                    
+                            if (strlen($adminUser) > 0) 
+                            {
+                                $sql.= " and exists (select 1 from BCTable ";
+                                $sql.= " where kodebc = ". $this->queryvalue($adminUser) . " and password = " . $this->queryvalue(md5($password)) . ")";
+                            }
+                            else
+                            {
+                                $sql.= " AND NoREKENING = '$password'";
+                            }
 
                             if ($this->db->executescalar($sql) > 0)
                             {
