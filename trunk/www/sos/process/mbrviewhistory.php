@@ -15,7 +15,7 @@
                                                                    
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/member/homepage";
-                        $this->gatitle = "Member - Homepage";
+                        $this->gatitle = "Order - Member - Homepage";
                         // GOOGLE ANALYTICS PAGE TRACKING
                         
                         // GOOGLE ANALYTICS ECOMMERCE TRACKING

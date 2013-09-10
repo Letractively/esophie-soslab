@@ -38,10 +38,10 @@
                         if ($this->success)
                         {
                             $this->gapage = "/member/order/payment/success";
-                            $this->gatitle = "Member - Payment success callback";
+                            $this->gatitle = "Order - Member - Payment success callback";
                         } else {
                             $this->gapage = "/member/order/payment/failure";
-                            $this->gatitle = "Member - Payment failure callback";
+                            $this->gatitle = "Order - Member - Payment failure callback";
                         }
                         // GOOGLE ANALYTICS PAGE TRACKING
 		}

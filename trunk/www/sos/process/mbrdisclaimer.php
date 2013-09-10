@@ -37,12 +37,12 @@
                         if ($this->firstlogin)
                         {
                             $this->gapage = "/member/disclaimer/accept";
-                            $this->gatitle = "Member - Disclaimer validation page";
+                            $this->gatitle = "Order - Member - Disclaimer validation page";
                         }
                         else
                         {
                             $this->gapage = "/member/disclaimer";
-                            $this->gatitle = "Member - Disclaimer page";
+                            $this->gatitle = "Order - Member - Disclaimer page";
                         }
                         // GOOGLE ANALYTICS PAGE TRACKING
 			

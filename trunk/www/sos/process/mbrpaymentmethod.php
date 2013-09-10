@@ -14,7 +14,7 @@
                         
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/member/order/payment/select";
-                        $this->gatitle = "Member - Select order mode of payment";
+                        $this->gatitle = "Order - Member - Select order mode of payment";
                         // GOOGLE ANALYTICS PAGE TRACKING
 
 			switch($this->action)

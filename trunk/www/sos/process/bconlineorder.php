@@ -13,7 +13,7 @@
                         
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/bc/homepage";
-                        $this->gatitle = "BC - Homepage";
+                        $this->gatitle = "Order - BC - Homepage";
                         // GOOGLE ANALYTICS PAGE TRACKING
                         
 			$this->loaddata();
