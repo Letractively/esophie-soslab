@@ -12,7 +12,7 @@ include_once "bccontroller.php";?>
 	<link type="text/css" rel="stylesheet" href="css/global.css"/>
 	<link type="text/css" rel="stylesheet" href="css/calendar.css"/>
         <? include_once "bcanalytics.php"; ?> 
-        <script type="text/javascript" src="script/global.js"></script>
+        <script type="text/javascript" src="script/global.js?v3"></script>
 	<script type="text/javascript" src="script/calendar.js"></script>
         <script type="text/javascript">
             function checkchrome() {
