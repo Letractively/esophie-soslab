@@ -445,5 +445,53 @@
 			}
 			return $ret;
 		}
+                
+                function gaecommerce($salesid)
+                {
+                    $found = false;
+                    $gaecommerce = "ga('require', 'ecommerce', 'ecommerce.js');";
+                    
+                    $sql = "select top 1 kodebc, totalbayar, paymentcharge from salestable with (nolock)
+                        where salesid = " . $this->queryvalue($salesid) . "
+                        and status = " . $this->sysparam['salesstatus']['ordered'];
+                    $rs = $this->db->query($sql);			
+                    if ($rs->fetch()) 
+                    {						
+                        $gaecommerce .= "ga('ecommerce:addTransaction', {";
+                        $gaecommerce .= "'id': '" . $salesid . "',";                            // Transaction ID. Required.
+                        $gaecommerce .= "'affiliation': '" . $rs->value('kodebc'). "',";        // Affiliation or store name.
+                        $gaecommerce .= "'revenue': '" . number_format($rs->value('totalbayar'), 2, '.', '') . "',";       // Grand Total.
+                        $gaecommerce .= "'shipping': '" . number_format($rs->value('paymentcharge'), 2, '.', '') . "',";   // Admin fee.
+                        $gaecommerce .= "});";
+                        $found = true;
+                    }
+                    $rs->close();
+                    
+                    if ($found)
+                    {
+                        $sql2 = "select line.itemid, itm.itemname, itm.dimension, line.qty, line.price 
+                            from salesline line with (nolock)
+                            left outer join inventtablemaster itm with (nolock)
+                            on itm.itemid = line.itemid
+                            where salesid = " . $this->queryvalue($salesid);
+                        $rs = $this->db->query($sql2);			
+                        while ($rs->fetch()) 
+                        {						
+                            $gaecommerce .= "ga('ecommerce:addItem', {";
+                            $gaecommerce .= "'id': '" . $salesid . "',";                                            // Transaction ID. Required.
+                            $gaecommerce .= "'name': '". $rs->value('itemname') . "',";                             // Product name. Required.
+                            $gaecommerce .= "'sku': '". $rs->value('itemid') . "', ";                               // SKU/code.
+                            $gaecommerce .= "'category': '". $rs->value('dimension') . "', ";                       // Category or variation.
+                            $gaecommerce .= "'price': '" . number_format($rs->value('price'), 2, '.', '') ."',";    // Unit price.
+                            $gaecommerce .= "'quantity': '" . number_format($rs->value('qty'), 0, '.', ''). "' ";   // Quantity.
+                            $gaecommerce .= "});";
+                        }
+                        $rs->close();
+                    }
+                    
+                    $gaecommerce .= "ga('ecommerce:send');";
+                    
+                    return ($found) ? $gaecommerce : "";
+                }
 	}
 ?>

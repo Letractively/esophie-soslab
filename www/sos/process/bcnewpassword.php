@@ -7,6 +7,11 @@
 		{	
 			$this->checklogin = false;			
 			parent::run();
+                        
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        $this->gapage = "/bc/newpassword";
+                        $this->gatitle = "BC - Change password page";
+                        // GOOGLE ANALYTICS PAGE TRACKING
 			
 			$this->errmsg = '';
 			$this->pageindex = 1;

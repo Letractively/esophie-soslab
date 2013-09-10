@@ -16,6 +16,8 @@
                     
                         parent::run ();
                         
+                        
+                        
                         $this->checksalesid();
 			$this->salesid = $this->param['salesid'];
                         
@@ -31,6 +33,17 @@
 					$this->load();
 					break;
 			}
+                        
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        if ($this->success)
+                        {
+                            $this->gapage = "/member/order/payment/success";
+                            $this->gatitle = "Member - Payment success callback";
+                        } else {
+                            $this->gapage = "/member/order/payment/failure";
+                            $this->gatitle = "Member - Payment failure callback";
+                        }
+                        // GOOGLE ANALYTICS PAGE TRACKING
 		}
                 
                 function callback_success()

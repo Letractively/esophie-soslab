@@ -5,6 +5,9 @@
 		var $sysparam;
 		var $action;
 		var $checklogin;
+                var $gapage;
+                var $gatitle;
+                var $gaecommerce;
                 
                 // Environment PROD/DEV
                 const _ENV_ = 'PROD';
@@ -22,7 +25,10 @@
 			}
 			
 			$this->checklogin = true; 			
-			$this->setsysparam();					
+			$this->setsysparam();	
+                        $this->gapage = "";
+                        $this->gatitle = "";
+                        $this->gaecommerce = "";
 			$this->action = (isset($this->param["pageaction"]) ? $this->param["pageaction"] : "none");
 		}
 		

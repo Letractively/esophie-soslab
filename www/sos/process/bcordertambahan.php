@@ -14,6 +14,11 @@
 		function run() 
 		{	
 			parent::run();	
+                        
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        $this->gapage = "/bc/order/orderbc";
+                        $this->gatitle = "BC - Order BC ";
+                        // GOOGLE ANALYTICS PAGE TRACKING
 			
 			//if (!isset($this->param['salesid']) || $this->param['salesid'] == '')
 			//	$this->gotopage('onlineorder');

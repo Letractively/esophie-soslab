@@ -43,7 +43,7 @@
 			if ($this->salesid == '') $this->gotohomepage();
 			
 			if ( isset($this->param['bc']) ) $this->choosebc = $this->param['bc'];
-			
+                     			
 			switch($this->action)
 			{	
 				//orderedit
@@ -107,6 +107,31 @@
                                         break;
 			}
 			$this->loaddata();
+                        
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        switch($this->pageview )
+			{
+                                case 'orderedit':
+                                    $this->gapage = "/member/order/edit";
+                                    $this->gatitle = "Member - Order edition page";
+                                    break;		
+				case 'orderconfirm':
+                                    $this->gapage = "/member/order/confim";
+                                    $this->gatitle = "Member - Order confirmation page";
+                                    break;
+				case 'confirmqtychange':
+                                    $this->gapage = "/member/order/revision";
+                                    $this->gatitle = "Member - Order revision page";
+                                    break;
+				case 'pembayaran':
+                                    $this->gapage = "/member/order/payment";
+                                    $this->gatitle = "Member - Order payment page";
+                                    break;
+				default: 
+                                    $this->gapage = "/member/order/view";
+                                    $this->gatitle = "Member - View order";
+			}
+                        // GOOGLE ANALYTICS PAGE TRACKING
 		}		
 		
 		function loaddata() 
@@ -283,7 +308,7 @@
 
 			$status = $this->sysparam['salesstatus']['ordered'];
 			$this->updatesalesstatus($this->salesid,$status);
-			$this->gotopage('orderhistory','salesid='.urlencode($this->salesid));
+			$this->gotopage('orderhistory','status=placed&salesid='.urlencode($this->salesid));
 		}
 		
 		function batalorder()
@@ -306,7 +331,7 @@
 			$this->updatesalesstatus($this->salesid,$this->sysparam['salesstatus']['validated']);
                         $this->initfaspay($this->salesid);
 		
-			$this->gotopage('paymentconfirm','salesid='.urlencode($this->salesid));
+			$this->gotopage('paymentconfirm','status=validated&salesid='.urlencode($this->salesid));
 		}
 
 		function cancel()

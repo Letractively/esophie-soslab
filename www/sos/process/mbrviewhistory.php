@@ -12,6 +12,20 @@
 				case "none" :
 					break;
 			}
+                                                                   
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        $this->gapage = "/member/homepage";
+                        $this->gatitle = "Member - Homepage";
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        
+                        // GOOGLE ANALYTICS ECOMMERCE TRACKING
+                        if (isset($this->param['status']) && isset($this->param['salesid']) 
+                                && strlen($this->param['salesid']) > 0 
+                                && $this->param['status'] == "placed") {
+                            $this->gaecommerce = $this->gaecommerce($this->param['salesid']);
+                        }
+                        // GOOGLE ANALYTICS ECOMMERCE TRACKING
+                        
 			$this->loaddata();
 		}		
 		
