@@ -7,6 +7,12 @@
 		function run() 
 		{				
 			parent::run();
+                        
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        $this->gapage = "/bc/report/creditbc";
+                        $this->gatitle = "BC - Report Credit BC";
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        
 			switch($this->action)
 			{
 				case 'none':

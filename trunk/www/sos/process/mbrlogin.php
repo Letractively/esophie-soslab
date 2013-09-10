@@ -7,6 +7,11 @@
                     
                     parent::run();
                     
+                    // GOOGLE ANALYTICS PAGE TRACKING
+                    $this->gapage = "/member/login";
+                    $this->gatitle = "Member - Login page";
+                    // GOOGLE ANALYTICS PAGE TRACKING
+                    
                     if($this->action == "save")
                     {
                         $userid = trim($this->param["username"]);

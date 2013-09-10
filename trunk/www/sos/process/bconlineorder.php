@@ -9,7 +9,13 @@
 		
 		function run() 
 		{	
-			parent::run();			
+			parent::run();	
+                        
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        $this->gapage = "/bc/homepage";
+                        $this->gatitle = "BC - Homepage";
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        
 			$this->loaddata();
 		}		
 		

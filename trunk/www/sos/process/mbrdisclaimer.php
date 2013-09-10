@@ -8,7 +8,8 @@
 		function run() 
 		{						
 			$this->disclaimercheck = false;
-			parent::run();					  
+			parent::run();                                        
+                        
 			switch($this->action)
 			{			
 				case "setuju" :
@@ -31,6 +32,19 @@
 					$this->firstlogin = ($this->disclaimerchecking() == 'disclaimer');
 					break;
 			}
+                        
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        if ($this->firstlogin)
+                        {
+                            $this->gapage = "/member/disclaimer/accept";
+                            $this->gatitle = "Member - Disclaimer validation page";
+                        }
+                        else
+                        {
+                            $this->gapage = "/member/disclaimer";
+                            $this->gatitle = "Member - Disclaimer page";
+                        }
+                        // GOOGLE ANALYTICS PAGE TRACKING
 			
 		}
 		

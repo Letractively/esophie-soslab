@@ -9,6 +9,12 @@
 			$this->salesid = isset($this->param['salesid']) ? $this->param['salesid'] : '';
 			
 			parent::run();
+                        
+                                                                   
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        $this->gapage = "/member/order/newlines";
+                        $this->gatitle = "Member - Add order lines";
+                        // GOOGLE ANALYTICS PAGE TRACKING
 
 			switch($this->action)
 			{			
@@ -28,7 +34,12 @@
 						$sql.= ' and status = ' . $this->queryvalue($this->sysparam['salesstatus']['openorder']);
 						$sql.= ' and salesid = ' . $this->queryvalue($this->salesid);
 						
-						if(!$this->db->executeScalar($sql)) $this->gotohomepage();					
+						if(!$this->db->executeScalar($sql)) $this->gotohomepage();
+                                                
+                                                // GOOGLE ANALYTICS PAGE TRACKING
+                                                $this->gapage = "/member/order/new";
+                                                $this->gatitle = "Member - Create new order";
+                                                // GOOGLE ANALYTICS PAGE TRACKING
 					}
 					else
 					{

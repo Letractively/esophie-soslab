@@ -33,6 +33,10 @@
 		{
 			parent::run();	
                         
+                        // GOOGLE ANALYTICS PAGE TRACKING
+                        $this->gapage = "/member/order/payment/checkout";
+                        $this->gatitle = "Member - Order checkout page";
+                        // GOOGLE ANALYTICS PAGE TRACKING
                         
 			$this->salesid = $this->param['salesid'];
 			if ($this->salesid == '') $this->gotohomepage();

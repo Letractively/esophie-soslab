@@ -12,7 +12,7 @@
 					?>
 						<div class="boxcon">
 							<div class="boxleft" style="width:150px">
-								<input type="radio" id="mop" name="mop" value="<?=$item['paymentmode']?>" onclick="opendescription(<?=$i?>)" <?=($ctrl->selectedpaymentmode == $item['paymentmode']?'checked':'')?>><?=$item['name']?><br>
+								<input type="radio" id="mop" name="mop" value="<?=$item['paymentmode']?>" onclick="opendescription(<?=$i?>,'<?=$item['name']?>')" <?=($ctrl->selectedpaymentmode == $item['paymentmode']?'checked':'')?>><?=$item['name']?><br>
 							</div>
 							<div class="boxright" style="width:140px;text-align:right;margin-right:10px;">
                                                             <img style="float:right;margin-left:15px;" src="images/logo-payment-<?= strtolower($item['paymentmode'])?>.png"/>
@@ -39,7 +39,7 @@
 			<input type="button" class="buttonback" onclick="setaction('back');" value="&lt;&lt; Kembali"/>
 		</td>
 		<td align="right">
-			<input type="button" class="buttongo" onclick="setaction('confirm');" value="Validasi &gt;&gt" />
+			<input type="button" class="buttongo" id="actionconfirmpaymmode" value="Validasi &gt;&gt" />
 		</td>
 		</tr>
 	</table>
@@ -67,9 +67,19 @@
 <?include "mbrfooter.php";?>
 
 <script language="javascript">	
-	function opendescription(idx)
+    
+        var gRadioValue = '';
+        var buttonconfirmpaymmode = document.getElementById('actionconfirmpaymmode');
+        
+        addListener(buttonconfirmpaymmode, 'click', function() {
+          ga('send', 'event', 'Order', 'Payment mode selected', gRadioValue);
+          setaction('confirm');
+        });
+    
+	function opendescription(idx,paymname)
 	{	
 		var obj = document.getElementsByName('description');
+                gRadioValue = paymname;
 		var i = 0;
 		for (i = 0; i<obj.length;i++)
 		{

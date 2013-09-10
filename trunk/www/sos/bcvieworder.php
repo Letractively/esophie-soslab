@@ -33,7 +33,7 @@
             <div class="boxleft">Anda ingin melanjutkan ?</div>
             <div class="boxright" style="padding-right:5px">
                     <input type="button" onclick="closePopUp('dialog');" value="Kembali" class="buttonback"/>
-                    <input type="button" onclick="setaction('<?= $popupaction ?>');" value="Lanjut" class="buttongo"/>
+                    <input type="button" id="actionbutton" value="Lanjut" class="buttongo"/>
             </div>
     </div>
 </div>
@@ -264,4 +264,10 @@
 	{
 		setaction('refresh');
 	}
+        
+        var actionbutton = document.getElementById('actionbutton');
+        addListener(actionbutton, 'click', function() {
+          ga('send', 'event', 'Order', 'Status Changed', '<?=$popupaction?>');
+          setaction('<?= $popupaction ?>');
+        });
 </script>

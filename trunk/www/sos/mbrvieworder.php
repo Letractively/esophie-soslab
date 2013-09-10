@@ -233,7 +233,7 @@
 				<input type="button" onclick="setaction('back');" class="buttonback" value="&lt;&lt; Kembali"/>
 			</td>
 			<td align="right">
-				<input type="button" onclick="setaction('sendordertobc');"  class="buttongo" value="Kirim ke BC &gt;&gt;" />
+				<input type="button" id="actionsendtobc" class="buttongo" value="Kirim ke BC &gt;&gt;" />
 			</td>
 			</tr>
 			</table>
@@ -248,7 +248,7 @@
 			<td align="right">
 				<input type="button" onclick="setaction('cancel');" class="buttonback" value="Batal"/>
 	<? 		if ( $ctrl->varvalue('isanyitemsold') > 0 ) { ?>
-				<input type="button" onclick="setaction('confirmqtychange');" class="buttongo" value="Konfirm dan bayar &gt;&gt;" />
+				<input type="button" id="actionconfirmrevision" class="buttongo" value="Konfirm dan bayar &gt;&gt;" />
 	<? 		} ?>
 			</td>
 			</tr>
@@ -270,5 +270,24 @@
 
 <?		break; 		
 	}
-?>	
+?>
+<script language="javascript">
+        if (document.getElementById('actionsendtobc') !== null)
+        {
+            var actionsendtobc = document.getElementById('actionsendtobc');       
+            addListener(actionsendtobc, 'click', function() {
+              ga('send', 'event', 'Order', 'Status Changed', 'Placed');
+              setaction('sendordertobc');
+            });
+        }
+        
+        if (document.getElementById('actionconfirmrevision') !== null)
+        {
+            var actionconfirmrevision = document.getElementById('actionconfirmrevision');
+            addListener(actionconfirmrevision, 'click', function() {
+              ga('send', 'event', 'Order', 'Status Changed', 'Accepted');
+              setaction('confirmqtychange');
+            });
+        }
+</script>                        
 <?include "mbrfooter.php";?>
