@@ -11,7 +11,7 @@ include_once "mbrcontroller.php";?>
         <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
 	<link type="text/css" rel="stylesheet" href="css/globalmobile.css"/>
         <? include_once "mbranalytics.php"; ?> 
-        <script type="text/javascript" src="script/global.js"></script>
+        <script type="text/javascript" src="script/global.js?v3"></script>
 	</head>
 	<body class="mobile">     
 	<form id="frmexec" method="post" accept-charset="utf-8"></form>
