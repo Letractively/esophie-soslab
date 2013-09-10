@@ -276,7 +276,7 @@
         {
             var actionsendtobc = document.getElementById('actionsendtobc');       
             addListener(actionsendtobc, 'click', function() {
-              ga('send', 'event', 'Order', 'Status Changed', 'Placed');
+              ga('send', 'event', 'Order', 'Status = placed', '<?=$ctrl->varvalue('salesid')?>');
               setaction('sendordertobc');
             });
         }
@@ -285,7 +285,7 @@
         {
             var actionconfirmrevision = document.getElementById('actionconfirmrevision');
             addListener(actionconfirmrevision, 'click', function() {
-              ga('send', 'event', 'Order', 'Status Changed', 'Accepted');
+              ga('send', 'event', 'Order', 'Status = revision accepted', '<?=$ctrl->varvalue('salesid')?>');
               setaction('confirmqtychange');
             });
         }
