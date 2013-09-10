@@ -1,4 +1,5 @@
 <?include "mbrheader.php";?>
+<? $eventordercreation = (isset($ctrl) && strlen($ctrl->value("salesid")) > 0) ? "no" : "yes"; ?>
 	<br/><div class="boxfont2">Silahkan <font class="pink">pilih items</font> dari katalog Sophie:</div>
         <table>
         <tr>
@@ -16,5 +17,16 @@
 	<? } ?>	
         </table><br/>
 	<input type="reset" onclick="setaction('reset');" class="buttonback" value="Reset" style="width:80px;"/>&nbsp;
-        <input type="submit" onclick="setaction('save');" class="buttongo" value="OK" style="width:80px;"/>	
+        <input type="submit" id="actionsubmit" class="buttongo" value="OK" style="width:80px;"/>	
 <?include "mbrfooter.php";?>
+
+<script language="javascript">
+    var actionsubmit = document.getElementById('actionsubmit');       
+    addListener(actionsubmit, 'click', function() {
+        if ('<?= $eventordercreation ?>' === 'yes') 
+        {
+            ga('send', 'event', 'Order', 'Status Changed', 'Created');
+        }
+        setaction('save');
+    });
+</script>   
