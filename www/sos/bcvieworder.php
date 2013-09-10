@@ -267,7 +267,7 @@
         
         var actionbutton = document.getElementById('actionbutton');
         addListener(actionbutton, 'click', function() {
-          ga('send', 'event', 'Order', 'Status Changed', '<?=$popupaction?>');
+          ga('send', 'event', 'Order', 'Status = <?=$popupaction?>', '<?=$ctrl->value('salesid')?>');
           setaction('<?= $popupaction ?>');
         });
 </script>

@@ -25,7 +25,7 @@
     addListener(actionsubmit, 'click', function() {
         if ('<?= $eventordercreation ?>' === 'yes') 
         {
-            ga('send', 'event', 'Order', 'Status Changed', 'Created');
+            ga('send', 'event', 'Order', 'Status = created', '<?=$ctrl->value("salesid")?>');
         }
         setaction('save');
     });
