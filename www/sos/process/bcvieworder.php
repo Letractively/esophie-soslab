@@ -98,10 +98,10 @@
                         if ($this->status == $this->sysparam['salesstatus']['ordered'])
                         {
                             $this->gapage = "/bc/order/new";
-                            $this->gatitle = "BC - View new member order";
+                            $this->gatitle = "Order - BC - View new member order";
                         } else {
                             $this->gapage = "/bc/order/view";
-                            $this->gatitle = "BC - View existing member order";
+                            $this->gatitle = "Order - BC - View existing member order";
                         }
                         // GOOGLE ANALYTICS PAGE TRACKING
 		}

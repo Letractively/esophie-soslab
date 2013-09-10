@@ -18,7 +18,7 @@
 					
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/bc/report/stockbc";
-                        $this->gatitle = "BC - Report Stock BC";
+                        $this->gatitle = "Order - BC - Report Stock BC";
                         // GOOGLE ANALYTICS PAGE TRACKING
                         
 			$this->loaddata();

@@ -13,7 +13,7 @@
                                                                    
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/member/order/newlines";
-                        $this->gatitle = "Member - Add order lines";
+                        $this->gatitle = "Order - Member - Add order lines";
                         // GOOGLE ANALYTICS PAGE TRACKING
 
 			switch($this->action)
@@ -38,7 +38,7 @@
                                                 
                                                 // GOOGLE ANALYTICS PAGE TRACKING
                                                 $this->gapage = "/member/order/new";
-                                                $this->gatitle = "Member - Create new order";
+                                                $this->gatitle = "Order - Member - Create new order";
                                                 // GOOGLE ANALYTICS PAGE TRACKING
 					}
 					else

@@ -113,23 +113,23 @@
 			{
                                 case 'orderedit':
                                     $this->gapage = "/member/order/edit";
-                                    $this->gatitle = "Member - Order edition page";
+                                    $this->gatitle = "Order - Member - Order edition page";
                                     break;		
 				case 'orderconfirm':
                                     $this->gapage = "/member/order/confim";
-                                    $this->gatitle = "Member - Order confirmation page";
+                                    $this->gatitle = "Order - Member - Order confirmation page";
                                     break;
 				case 'confirmqtychange':
                                     $this->gapage = "/member/order/revision";
-                                    $this->gatitle = "Member - Order revision page";
+                                    $this->gatitle = "Order - Member - Order revision page";
                                     break;
 				case 'pembayaran':
                                     $this->gapage = "/member/order/payment";
-                                    $this->gatitle = "Member - Order payment page";
+                                    $this->gatitle = "Order - Member - Order payment page";
                                     break;
 				default: 
                                     $this->gapage = "/member/order/view";
-                                    $this->gatitle = "Member - View order";
+                                    $this->gatitle = "Order - Member - View order";
 			}
                         // GOOGLE ANALYTICS PAGE TRACKING
 		}		

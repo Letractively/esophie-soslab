@@ -20,7 +20,7 @@
                         
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/bc/order/orderbc/view";
-                        $this->gatitle = "BC - View order BC";
+                        $this->gatitle = "Order - BC - View order BC";
                         // GOOGLE ANALYTICS PAGE TRACKING
 			
 			if (!isset($this->param['purchid']) || $this->param['purchid'] == '')

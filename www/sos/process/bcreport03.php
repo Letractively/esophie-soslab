@@ -10,7 +10,7 @@
                         
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/bc/report/creditbc";
-                        $this->gatitle = "BC - Report Credit BC";
+                        $this->gatitle = "Order - BC - Report Credit BC";
                         // GOOGLE ANALYTICS PAGE TRACKING
                         
 			switch($this->action)

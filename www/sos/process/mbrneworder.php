@@ -7,7 +7,7 @@
                         
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/member/order/new";
-                        $this->gatitle = "Member - Create new order";
+                        $this->gatitle = "Order - Member - Create new order";
                         // GOOGLE ANALYTICS PAGE TRACKING
                         
 			$sql = 'select salesid from salestable ';

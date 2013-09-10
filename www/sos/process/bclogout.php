@@ -9,7 +9,7 @@
                         
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/bc/logout";
-                        $this->gatitle = "BC - Logout page";
+                        $this->gatitle = "Order - BC - Logout page";
                         // GOOGLE ANALYTICS PAGE TRACKING
                         
 			$this->gotopage('login');
