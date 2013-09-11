@@ -292,9 +292,9 @@
                                                     $paymmode = $rs0->value('paymentmode');
                                                     $payminstruksi.= "Rp ".$this->valuenumber($rs0->value('totalbayar'));
                                                     if (strcasecmp($paymmode, 'ATM') == 0 && strlen($rs0->value('trxref')) > 0 )
-                                                        $payminstruksi .= " ke virtual account " . $rs0->value('trxref');
+                                                        $payminstruksi .= " melalui virtual account " . $rs0->value('trxref');
                                                     else
-                                                        $payminstruksi .= " di " . $rs0->value('paymentname');
+                                                        $payminstruksi .= " melalui " . $rs0->value('paymentname');
                                                     $maxpaiddate = strtotime($rs0->value('maxpaiddate'));
                                                     $datenow = strtotime($rs0->value('datenow'));
                                                     if ($maxpaiddate > $datenow)
@@ -469,7 +469,7 @@
                                                     if (strcasecmp($rs0->value('paymentmode'), 'ATM') == 0 && strlen($rs0->value('trxref')) > 0 )
                                                         $payminstruksi .= " ke rek " . $rs0->value('trxref');
                                                     else
-                                                        $payminstruksi .= " di " . $rs0->value('paymentname');
+                                                        $payminstruksi .= " melalui " . $rs0->value('paymentname');
                                                     $maxpaiddate = strtotime($rs0->value('maxpaiddate'));
                                                     $datenow = strtotime($rs0->value('datenow'));
                                                     if ($maxpaiddate > $datenow)
