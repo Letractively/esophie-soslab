@@ -1,56 +1,7 @@
             <div class="footer">
-                <?if (!isset($footer_params) || $footer_params == 'nofooter') { ?>
+                <?if (!isset($footer_params) || $footer_params != 'nolinks') { ?>
                 <div> 
-                    <?if ($ctrl->filename() == 'mbrcekdata.php' || $ctrl->filename() == 'mbrpilihitem.php' || $ctrl->filename() == 'mbrordercheck.php' || $ctrl->filename() == 'mbrpaymentconfirm.php' ) { ?>
-                            Pesan Online 
-                    <? } else { 
-                            if ($ctrl->filename() == 'mbrviewhistory.php' || isset($ctrl->lastorderstatus) ) 
-                            {
-                                    if ( isset($ctrl->lastorderstatus) )
-                                    {
-                                            if ( $ctrl->lastorderstatus >= 1 && $ctrl->lastorderstatus <= 6 )
-                                            {
-                    ?>
-                                                    Pesan Online
-                    <?
-                                            }
-                                            else
-                                            {
-                    ?>
-                                                    <a href="mbrpilihitem.php">Pesan Online</a>
-                    <?
-                                            }
-                                    }
-                                    else
-                                    {
-                    ?>
-                                            Pesan Online
-                    <?
-                                    }
-                            }
-                            else if ( isset($ctrl->statuscode) )
-                            {
-                                    if ($ctrl->statuscode == $ctrl->sysparam['salesstatus']['openorder'] || 
-                                        $ctrl->statuscode == $ctrl->sysparam['salesstatus']['ordered'] )
-                                    {
-                    ?>
-                            Pesan Online
-                    <?		
-                                    }
-                                    else
-                                    {
-                    ?>
-                            <a href="mbrpilihitem.php">Pesan Online</a>
-                    <?		
-                                    }
-                            }
-                            else
-                            {
-                    ?>
-                            <a href="mbrpilihitem.php">Pesan Online</a>
-                    <?  }
-                       }
-                    ?>
+                    <a href="http://sophiemobile.com">Sophie Mobile</a>
                     &nbsp;&nbsp;|&nbsp;&nbsp; 
                     <?if ($ctrl->filename() == 'mbrdisclaimer.php') { ?>
                             Terms and Conditions 

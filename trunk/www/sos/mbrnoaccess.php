@@ -1,7 +1,4 @@
-<? 
-    $footer_params = "nolinks";  
-    include_once "mbrheader.php";
-?>
+<? include_once "mbrheader.php"; ?>
 <br/>Segera Hadir !!<br/>
 <p class="pink">Sophie Online Order</p>
 
