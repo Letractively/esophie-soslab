@@ -249,7 +249,7 @@
                                                 }
                                                 else {
                                                     $maxvalidate = date_parse($rs->value('maxvalidatedate'));
-                                                
+                                                    $todaydate = date_parse($rs->value('datenow'));
                                                     if ($maxvalidate['year'] == $todaydate['year'] &&
                                                         $maxvalidate['month'] == $todaydate['month'] &&
                                                             $maxvalidate['day'] == $todaydate['day'])
