@@ -294,21 +294,30 @@
 				return;
 			}
 			
-			$sql = 'update salestable set ';
-			$sql.= 'telp = ' . $this->queryvalue($mobile);
-			$sql.= ',email = ' . $this->queryvalue(trim($this->param['email']));
-			$sql.= 'from salestable where salesid=' . $this->queryvalue($this->salesid);			
-			$this->db->execute($sql);
+                        $sql = "select * from vw_salestable where salesid = " . $this->queryvalue($this->salesid);
+			$rs = $this->db->query($sql);			
+			if ($rs->fetch()) 
+			{	
+                            if ($rs->value("status") == $this->sysparam['salesstatus']['openorder'])
+                            {
+                                $sql = 'update salestable set ';
+                                $sql.= 'telp = ' . $this->queryvalue($mobile);
+                                $sql.= ',email = ' . $this->queryvalue(trim($this->param['email']));
+                                $sql.= 'from salestable where salesid=' . $this->queryvalue($this->salesid);			
+                                $this->db->execute($sql);
 
-			$sql = 'update membertable set ';
-			$sql.= 'phone = ' . $this->queryvalue($mobile);
-			$sql.= ',email = ' . $this->queryvalue(trim($this->param['email']));
-			$sql.= 'where kodemember=(select top 1 kodemember from salesTable where salesid=' . $this->queryvalue($this->salesid). ')';
-			$this->db->execute($sql);
+                                $sql = 'update membertable set ';
+                                $sql.= 'phone = ' . $this->queryvalue($mobile);
+                                $sql.= ',email = ' . $this->queryvalue(trim($this->param['email']));
+                                $sql.= 'where kodemember=(select top 1 kodemember from salesTable where salesid=' . $this->queryvalue($this->salesid). ')';
+                                $this->db->execute($sql);
 
-			$status = $this->sysparam['salesstatus']['ordered'];
-			$this->updatesalesstatus($this->salesid,$status);
-			$this->gotopage('orderhistory','status=placed&salesid='.urlencode($this->salesid));
+                                $status = $this->sysparam['salesstatus']['ordered'];
+                                $this->updatesalesstatus($this->salesid,$status);
+                                $this->gotopage('orderhistory','status=placed&salesid='.urlencode($this->salesid));
+                            }
+                            else $this->gotohomepage();
+                        }
 		}
 		
 		function batalorder()
@@ -326,13 +335,22 @@
 		//confirmqtychange-------------------------------------------------------
 		function confirmqtychange()
 		{
-			$sql = " exec sp_SalesConfirmQtyChange " . $this->queryvalue($this->salesid);			
-			$this->db->execute($sql);			
-			$this->updatesalesstatus($this->salesid,$this->sysparam['salesstatus']['validated']);
-                        $this->initfaspay($this->salesid);
-		
-			$this->gotopage('paymentconfirm','status=validated&salesid='.urlencode($this->salesid));
-		}
+			
+                        $sql = "select * from vw_salestable where salesid = " . $this->queryvalue($this->salesid);
+			$rs = $this->db->query($sql);			
+			if ($rs->fetch()) 
+			{					
+				if ($rs->value("status") == $this->sysparam['salesstatus']['edited'])
+                                {
+                                    $sql = " exec sp_SalesConfirmQtyChange " . $this->queryvalue($this->salesid);			
+                                    $this->db->execute($sql);			
+                                    $this->updatesalesstatus($this->salesid,$this->sysparam['salesstatus']['validated']);
+                                    $this->initfaspay($this->salesid);
+                                    $this->gotopage('paymentconfirm','status=validated&salesid='.urlencode($this->salesid));
+                                }
+                                else $this->pembayaran();                             
+                        }
+                }
 
 		function cancel()
 		{
