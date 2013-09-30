@@ -46,21 +46,7 @@
                 
                 function monitor()
                 {
-                    $sql = "select sales.salesid,  ";
-                    $sql.= "sales.kodemember, (select name from membertable where kodemember = sales.kodemember) AS namemember, ";
-                    $sql.= "sales.kodebc, (select namabc from bctable where kodebc = sales.kodebc) AS namebc, ";
-                    $sql.= "sales.orderdate, sales.maxvalidatedate, sr.requestid, ISNULL(st.force,0) AS force, ";
-                    $sql.= "CASE WHEN sr.[timestamp] IS NULL THEN 0  ";
-                    $sql.= "ELSE (dbo.Date2UnixTimeStamp(GETDATE()) - sr.[timestamp]) ";
-                    $sql.= "END AS overtime ";
-                    $sql.= "from salestable sales with (nolock) ";
-                    $sql.= "inner join syncrequest sr with (nolock) ";
-                    $sql.= "on sr.[sessionid] = sales.[salesid]  ";
-                    $sql.= "inner join syncordertable st with (nolock) ";
-                    $sql.= "on st.[sessionid] = sr.[sessionid] ";
-                    $sql.= "and st.[timestamp] = sr.[timestamp] ";
-                    $sql.= "where sr.[status] = 0 ";
-                    $sql.= "and (dbo.Date2UnixTimeStamp(GETDATE()) - sr.[timestamp]) > 180 ";
+                    $sql = "select * from vw_sossyncmonitor";
         
                     $counter = 0;
                     $body = "";
@@ -71,6 +57,7 @@
                         $body .= "<tr>";
                         $body .= "<td>".$rs->value('salesid')."</td>";
                         $body .= "<td>".$this->valuedatetime($rs->value('orderdate'))."</td>";
+                        $body .= "<td>".$rs->value('status')."</td>";
                         $body .= "<td>".$rs->value('namemember'). " (".$rs->value('kodemember').")</td>";
                         $body .= "<td>".$rs->value('namebc'). " (".$rs->value('kodebc').")</td>";
                         $body .= "<td>".$this->valuedatetime($rs->value('maxvalidatedate'))."</td>";
@@ -92,10 +79,10 @@
                             <li>Verify there is no error in EventViewer/Application</li></ul><br/><br/>
                             <hr><table cellspacing=''1'' cellpadding=''1'' style=''width:100%;''>
                             <tbody style=''font-family: helvetica, sans-serif, arial; font-size: 12px; color:#727274;''>
-                            <tr><th>Order</th><th>Date</th><th>Member</th><th>BC</th><th>Max Validate</th><th>Request</th><th>Force</th><th>Overtime</th></tr>"  . $body . "</tbody></table>";
+                            <tr><th>Order</th><th>Date</th><th>Status</th><th>Member</th><th>BC</th><th>Max Validate</th><th>Request</th><th>Force</th><th>Overtime(m)</th></tr>"  . $body . "</tbody></table>";
                         $sql2 = "insert into emailtable ";
                         $sql2.= "([from],[to], cc, bcc, subject,body,createdDate,[toname], salesid) values ";
-                        $sql2.= "('onlineorders@sophie.com', 'victor@sophieparis.com', 'ITInfra&Opsteam@sophieparis.com', 'onlineorderfollowup@sophieparis.com', ";
+                        $sql2.= "('onlineorders@sophie.com', 'victor@sophieparis.com', 'ITInfra&Opsteam@sophieparis.com', '', ";
                         $sql2.= "'" . $subject . "', '" .$body . "', GETDATE(), 'IT', '') ";
                         $this->db->execute($sql2);
                         echo "[BATCH][".date("Y-m-d H:i:s")."][monitor] ALERT FOR ". $counter ." ORDERS! \n";
@@ -106,7 +93,7 @@
 		{ 
 			$sql = "exec sp_salesByPassed" ;
 			$this->db->execute($sql);
-                        //echo "[BATCH][".date("Y-m-d H:i:s")."][autobypass] OK\n";
+                        echo "[BATCH][".date("Y-m-d H:i:s")."][autobypass] OK\n";
 		}
                 
                 function paymchecking()
