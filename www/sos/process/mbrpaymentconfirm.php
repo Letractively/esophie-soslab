@@ -78,7 +78,7 @@
                                     $this->gotohomepage();
                                 
                                 // init payment first if not yet initialized
-                                if (($this->paymstatus == 0 || $this->paymstatus == 3) && $this->timeleftinit > 0)
+                                if ($this->paymstatus == 0 && $this->timeleftinit > 0)
                                     $this->initfaspay ($this->salesid);
                         }
                         

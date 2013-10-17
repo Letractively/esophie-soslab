@@ -151,10 +151,10 @@
                     
                     // Execute payment initialization for faspay
                     // Loop through all salestable with status validated (6) 
-                    // and paymenttable.paymstatus = none / failed (0/3) and payment still possible
+                    // and paymenttable.paymstatus = none (0) and payment still possible
                     $sql = "select t1.salesid from salestable t1 with (nolock)";
                     $sql.= " inner join paymenttable t2 with (nolock) on t1.salesid = t2.salesid";
-                    $sql.= " where t1.status = 6 and t2.maxpaymdate > GETDATE() and t2.paymstatus in (0,3)";
+                    $sql.= " where t1.status = 6 and t2.maxpaymdate > GETDATE() and t2.paymstatus = 0";
                     $rs	= $this->db->query($sql);
                     if ($rs)
                     {
