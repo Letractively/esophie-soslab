@@ -259,7 +259,10 @@
 				case $this->sysparam['salesstatus']['bypassed']		:
 				case $this->sysparam['salesstatus']['inprogress']	: $this->pageview = 'waiting'; break;
 				case $this->sysparam['salesstatus']['edited']		: $this->pageview = 'confirmqtychange'; break;
-				case $this->sysparam['salesstatus']['validated']	: $this->pageview = 'pembayaran'; break;
+				case $this->sysparam['salesstatus']['validated']	: 
+                                        if (strlen($this->pageview) == 0 || $this->pageview != 'paymfailure')
+                                                $this->pageview= 'pembayaran';
+                                        break;
 				default: $this->pageview = 'view';
 			}
 			
