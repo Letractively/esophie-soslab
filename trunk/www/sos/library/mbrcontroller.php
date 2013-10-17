@@ -272,10 +272,19 @@
 						
 					case $this->sysparam['salesstatus']['validated'] : 
 						$this->mbrmsg['title'] = 'Order #' . $this->salesid . ' anda telah divalidasi oleh BC!';  
-						$this->mbrmsg['body'] = 'Silahkan lanjut ke pembayaran. Jika pembayaran belum diterima pukul ' . $this->valuedatetime($rs->value('maxpaiddate')) . 'WIB maka order andal otomatis batal.';
-						$this->mbrmsg['link1label'] = 'BAYAR';
-						$this->mbrmsg['link1'] = 'mbrpaymentconfirm.php?salesid=' . $this->salesid;
-						break;
+                                                $todaydate = strtotime($rs->value('datenow'));
+                                                $maxpaiddate = strtotime($rs->value('maxpaiddate'));
+                                                if ($maxpaiddate <= $todaydate)
+                                                {
+                                                    $this->mbrmsg['body'] = 'Maaf, waktunya sudah habis untuk melakukan pembayaran (max pkl. ' . $this->valuedatetime($rs->value('maxpaiddate')) . 'WIB). Order anda akan otomatis ditolak dalam 2-3 menit...';
+                                                }
+                                                else
+                                                {
+                                                    $this->mbrmsg['body'] = 'Silahkan lanjut ke pembayaran. Jika pembayaran belum diterima pukul ' . $this->valuedatetime($rs->value('maxpaiddate')) . 'WIB maka order andal otomatis batal.';
+                                                    $this->mbrmsg['link1label'] = 'BAYAR';
+                                                    $this->mbrmsg['link1'] = 'mbrpaymentconfirm.php?salesid=' . $this->salesid;
+                                                }
+                                                break;
 					
 					case $this->sysparam['salesstatus']['confirmed'] :
 						$this->mbrmsg['title'] = 'Terima kasih atas pembayaran anda!';  
