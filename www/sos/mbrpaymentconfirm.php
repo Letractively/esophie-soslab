@@ -1,6 +1,12 @@
 <?include "mbrheader.php";?>
+<?
+    $overtime = (substr($ctrl->varvalue('timeleft'), 0, 1) == "-");
+?>
 <br>
-<div style="color:red">Tinggal <?=$ctrl->varvalue('timeleft')?> untuk melakukan pembayaran online.</div>
+<div style="color:red"><? 
+    if ($overtime) { ?>Maaf waktunya sudah habis untuk melakukan pembayaran...<? 
+    } else { ?>Tinggal <?=$ctrl->varvalue('timeleft')?> untuk melakukan pembayaran online.<? 
+    } ?></div>
 <br>
 <table class="dataview" width="340">
 	<tr>
@@ -20,6 +26,7 @@
 </table>
 <br>
 
+<? if (!$overtime) { ?>
 <? if (strlen($ctrl->trxref) == 0) { ?>
 <div class="boxfont2">Silahkan tunggu 2-3 menit untuk initialisasi pembayaran...</div>
 
@@ -34,6 +41,7 @@
 <div class="boxfont1">Kirim SMS ke <b><?=$ctrl->paymentto?></b> dengan format:</div>
 <div class="boxfont1">BAYAR <?=$ctrl->merchantid?> <?=$ctrl->salesid?> <?=$ctrl->totalbayar?> [PIN]</div>
 <? } ?>
+<? } ?>
 
 <br><div class="boxcon3" style="text-align:left;padding: 10px 10px 10px 10px;">
     <img style="float:right;" src="images/logo-payment-<?= strtolower($ctrl->paymentmode)?>.png"/>
@@ -41,7 +49,7 @@
 </div>
 
 <? 
-if (strlen($ctrl->trxref)>0)
+if (strlen($ctrl->trxref)>0 && !$overtime)
 {
     if ($ctrl->paymentmode == "ATM" || $ctrl->paymentmode == "SMSBRI") { ?>
     <div class="boxfont2">Untuk informasi pembayaran yang lebih lengkap, silahkan clik di button <em>Lanjut >></em> bahwa ini.</div>
@@ -50,12 +58,13 @@ if (strlen($ctrl->trxref)>0)
     <? } ?>
     <br>
 <? } ?>
+    
 <table border="0" width="100%">
     <tr>
-    <td><input type="button" class="buttonback" onclick="setaction('back')" value="&lt;&lt; Kembali"/></td>
+    <td><input type="button" class="buttonback" onclick="setaction('back');" value="&lt;&lt; Kembali"/></td>
     <td align="right"><?
-        if (strlen($ctrl->trxref)>0) { ?>
-        <input type="button" class="buttongo" onclick="setaction('forward')" value="Lanjut &gt;&gt;" />
+        if (strlen($ctrl->trxref)>0 && !$overtime) { ?>
+        <input type="button" class="buttongo" onclick="setaction('forward');" value="Lanjut &gt;&gt;" />
         <? } else { ?>&nbsp;<? } ?>
     </td></tr>
 </table>

@@ -65,7 +65,7 @@
 			break;
                 
                 case "paymfailure": ?>
-                        <div class="boxcon4" style="text-align:left">
+                        <div class="boxcon4" style="text-align:left;color:#ff0000">
                                 Mohon maaf, pembayaran anda telah gagal! Silahkan coba lagi.
                         </div>
 <?                      break;
