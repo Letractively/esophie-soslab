@@ -62,7 +62,7 @@
                         
                         else if ($this->action == 'back')
                         {
-                           $this->gotopage('checkitem', 'salesid=' . $this->salesid);
+                           $this->gotopage('confirm', 'salesid=' . $this->salesid);
                         }
                         
                         $sql = "select status, paymstatus, timeleftinit, trxref from vw_paymtable where salesid = " . $this->queryvalue($this->salesid);

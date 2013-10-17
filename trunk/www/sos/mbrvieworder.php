@@ -13,7 +13,7 @@
 	<? } ?>
 
 <? 
-	switch ($ctrl->pageview) 
+        switch ($ctrl->pageview) 
 	{ 
 		case "orderedit" : ?>
 			<? if ( $ctrl->errorbcmsg != "" ) { ?>
@@ -64,7 +64,7 @@
 <?			} 
 			break;
                 
-                case 'paymfailure': ?>
+                case "paymfailure": ?>
                         <div class="boxcon4" style="text-align:left">
                                 Mohon maaf, pembayaran anda telah gagal! Silahkan coba lagi.
                         </div>
@@ -255,7 +255,12 @@
 			</table>
 <?		break;
 
-		case "pembayaran" : ?>
+		case "paymfailure" :
+                case "pembayaran" :
+                    if ($ctrl->timeleft <= 0) { ?>
+                        <div class="boxerr1" style="text-align:center;padding-left:9px">Maaf, waktunya sudah habis untuk melakukan pembayaran. Order anda akan otomatis ditolak dalam 2-3 menit...</div><br>
+			<div align="right"><input type="button" onclick="setaction('back');" class="buttonback" value="&lt;&lt; Kembali" /></div>
+                    <? } else { ?>
 			<div class="boxerr1" style="text-align:center;padding-left:9px">Waktu anda tinggal <? echo $ctrl->varvalue("timeleft"); ?> untuk melakukan pembayaran online</div><br>
 			<table border="0" width="100%">
 			<tr>
@@ -267,6 +272,7 @@
 			</td>
 			</tr>
 			</table>
+                    <? } ?>
 
 <?		break; 		
 	}

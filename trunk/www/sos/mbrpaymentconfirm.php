@@ -20,7 +20,7 @@
 </table>
 <br>
 
-<? if (strlen($ctrl->trxref)>0) { ?>
+<? if (strlen($ctrl->trxref) == 0) { ?>
 <div class="boxfont2">Silahkan tunggu 2-3 menit untuk initialisasi pembayaran...</div>
 
 <? } else if ($ctrl->paymentmode == "ATM") { ?>
