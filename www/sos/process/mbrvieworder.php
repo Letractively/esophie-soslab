@@ -39,7 +39,7 @@
 		{	
 			parent::run();				
 			
-			$this->salesid = $this->param['salesid'];
+			$this->salesid = (isset($this->param['salesid'])) ? $this->param['salesid'] : '';
 			if ($this->salesid == '') $this->gotohomepage();
 			
 			if ( isset($this->param['bc']) ) $this->choosebc = $this->param['bc'];

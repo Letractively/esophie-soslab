@@ -103,7 +103,7 @@
                     $sql = "select t1.salesid, t1.status, t2.paymstatus from salestable t1 with (nolock)";
                     $sql.= " inner join paymenttable t2 with (nolock) on t2.salesid = t1.salesid";
                     $sql.= " where (t2.maxpaiddate IS NULL OR t2.maxpaiddate < GETDATE()) AND ";
-                    $sql.= " ((t1.status IN (5,6,7) AND t2.paymstatus IN (0,1,3))";
+                    $sql.= " ((t1.status IN (5,6,7) AND t2.paymstatus IN (0,3))";
                     $sql.= " OR (t1.status = 6 AND t2.paymstatus = 2)";
                     $sql.= " OR (t1.status IN (6,7) AND t2.paymstatus = 4))";
                     

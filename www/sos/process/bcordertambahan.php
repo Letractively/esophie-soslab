@@ -77,7 +77,7 @@
 			else
 			{
 				$rs->close();
-				$this-gotopage('onlineorder');
+				$this->gotopage('onlineorder');
 			}
 			$rs->close();
 		}
