@@ -30,7 +30,7 @@ include_once "bccontroller.php";?>
                 <div class="header">
                     <img src="images/logo.png" class="logo" alt="Sophie Online Shopping"/>	
                     <?include_once "bcmenu.php";?></div>
-		<div class="boxmain" <? if ($ctrl->filename() == 'bclogin.php' || $ctrl->filename() == 'bcnewpassword.php') {
+		<div class="boxmain" <? if ($ctrl->filename() == 'bclogin.php' || $ctrl->filename() == 'bcnewpassword.php' || $ctrl->filename() == 'bcchangepassword.php') {
                             echo 'style="width:325px;padding-right:0px;"'; 
                         } else { 
                             echo 'style="width:1000px;padding-right:0px;"';   
