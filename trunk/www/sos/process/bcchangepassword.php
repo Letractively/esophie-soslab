@@ -1,5 +1,5 @@
 <?
-	class bcnewpassword extends controller
+	class bcchangepassword extends controller
 	{	
 		var $errmsg;
 		var $pageindex;
@@ -15,11 +15,25 @@
 			
 			$this->errmsg = '';
 			$this->pageindex = 1;
-			if ($this->action == "ok")
+                        
+                        if ($this->action == "ok")
 			{
-				$sql = "select email,suspend from BCTable ";
+                            if (!isset($this->param["userid"])) 
+                                $this->errmsg = 'Kode BC harus diinput';
+                            else if (!isset($this->param["email"])) 
+                                $this->errmsg = 'Email harus diinput';
+                            else if (!isset($this->param["oldpwd"])) 
+                                $this->errmsg = 'Password lama harus diinput';
+                            else if (!isset($this->param["newpwd1"]) || strlen($this->param["newpwd1"]) < 6) 
+                                $this->errmsg = 'Password baru harus lebih dari 6 char';
+                            else if (!isset($this->param["newpwd2"]) || $this->param["newpwd2"] != $this->param["newpwd1"]) 
+                                $this->errmsg = 'Password baru kedua bedah dari password baru pertama';
+                            else {
+
+                                $sql = "select email,suspend from BCTable ";
 				$sql.= " where kodebc = " . $this->queryvalue($this->param["userid"]);
 				$sql.= " and email = " . $this->queryvalue($this->param["email"]);
+                                $sql.= " and password = " . $this->queryvalue(md5($this->param["oldpwd"]));
 				
 				$rs = $this->db->query($sql);
 				if($rs->fetch())
@@ -31,7 +45,7 @@
 					}
 					else
 					{
-						$newpass = $this->getRandomPassword();
+						$newpass = $this->param["newpwd1"];
 						
 						$sql = "update BCTable set password = " . $this->queryvalue(md5($newpass));
 						$sql.= " where kodebc = " . $this->queryvalue($this->param["userid"]); 
@@ -48,9 +62,10 @@
 				}
 				else
 				{
-					$this->errmsg = 'Kode BC dan/atau email yang anda masukkan salah';
+					$this->errmsg = 'Kode BC / email / password yang anda masukkan salah';
 				}
 				$rs->close();
+                            }
 			}
 		}		
 	}

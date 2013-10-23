@@ -12,6 +12,6 @@
 	<div class="errormessage"><?=$ctrl->varvalue("errmsg")?></div>
 <? } ?>
 <input type="submit" onclick="setaction('ok');" class="buttongo" value="Login" />
-<br/><br/><a href="bcnewpassword.php">Lupa password</a><br/><br/>
+<br/><br/><a href="bcnewpassword.php">Lupa password</a> | <a href="bcchangepassword.php">Rubah password</a><br/><br/>
 
 <?include "bcfooter.php";?>
