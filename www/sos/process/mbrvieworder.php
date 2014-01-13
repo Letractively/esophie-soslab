@@ -315,8 +315,6 @@
                                 $sql.= 'where kodemember=(select top 1 kodemember from salesTable where salesid=' . $this->queryvalue($this->salesid). ')';
                                 $this->db->execute($sql);
 
-                                $status = $this->sysparam['salesstatus']['ordered'];
-                                $this->updatesalesstatus($this->salesid,$status);
                                 $this->gotopage('orderhistory','pageaction=place&salesid='.urlencode($this->salesid));
                             }
                             else $this->gotohomepage();
