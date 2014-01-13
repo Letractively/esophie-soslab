@@ -12,6 +12,17 @@
 			
 			$this->checksalesid();
                         
+                        // If salesid is provided but the status is not open order => forward to homepage
+                        if (strlen($this->salesid) > 0)
+                        {
+                            $sql = 'select count(*) from salestable ';
+                            $sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
+                            $sql.= ' and status = ' . $this->sysparam['salesstatus']['openorder'];
+                            $sql.= ' and salesid = ' . $this->queryvalue($this->salesid);
+
+                            if(!$this->db->executeScalar($sql)) $this->gotohomepage();
+                        }
+                        
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/member/order/payment/select";
                         $this->gatitle = "Order - Member - Select order mode of payment";

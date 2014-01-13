@@ -317,7 +317,7 @@
 
                                 $status = $this->sysparam['salesstatus']['ordered'];
                                 $this->updatesalesstatus($this->salesid,$status);
-                                $this->gotopage('orderhistory','status=placed&salesid='.urlencode($this->salesid));
+                                $this->gotopage('orderhistory','pageaction=place&salesid='.urlencode($this->salesid));
                             }
                             else $this->gotohomepage();
                         }
