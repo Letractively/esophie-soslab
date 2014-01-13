@@ -41,6 +41,23 @@
 			$this->salesid = $this->param['salesid'];
 			if ($this->salesid == '') $this->gotohomepage();
                         
+                        // Get order status + payment info
+                        $sql = "select status, paymstatus, timeleftinit, trxref from vw_paymtable where salesid = " . $this->queryvalue($this->salesid);
+			$rs = $this->db->query($sql);			
+			if ($rs->fetch()) 
+			{					
+				$this->status			= $rs->value('status'); 
+                                $this->timeleftinit 		= $rs->value("timeleftinit");
+                                $this->paymstatus               = $rs->value('paymstatus');
+                                $this->trxref                   = $rs->value('trxref');
+                            
+                                // If status is not validated, go to homepage
+                                if ($this->status != $this->sysparam['salesstatus']['validated'])
+                                    $this->gotohomepage();
+                        }
+                        $rs->close();
+                        
+                        // Action=forward => Redirect to payment URL
                         if ($this->action == 'forward')
                         {
                             $urlpaygate = $this->sysparam['paygate']['urlforward'] . urlencode($this->salesid);
@@ -60,31 +77,18 @@
                             }
                         }
                         
+                        // Action=back => Redirect to view order url
                         else if ($this->action == 'back')
                         {
                            $this->gotopage('confirm', 'salesid=' . $this->salesid);
                         }
+                           
+                        // Otherwise init payment first if not yet initialized
+                        if ($this->paymstatus == 0 && $this->timeleftinit > 0)
+                            $this->initfaspay ($this->salesid);
                         
-                        $sql = "select status, paymstatus, timeleftinit, trxref from vw_paymtable where salesid = " . $this->queryvalue($this->salesid);
-			$rs = $this->db->query($sql);			
-			if ($rs->fetch()) 
-			{					
-				$this->status			= $rs->value('status'); 
-                                $this->timeleftinit 		= $rs->value("timeleftinit");
-                                $this->paymstatus               = $rs->value('paymstatus');
-                                $this->trxref                   = $rs->value('trxref');
-                            
-                                if ($this->status != $this->sysparam['salesstatus']['validated'])
-                                    $this->gotohomepage();
-                                
-                                // init payment first if not yet initialized
-                                if ($this->paymstatus == 0 && $this->timeleftinit > 0)
-                                    $this->initfaspay ($this->salesid);
-                        }
-                        
+                        // And load the page data
 			$this->load();
-                        
-                        //if ($this->action == "simulate") $this->SimulatePayment();
 		}		
 		
 		function load()

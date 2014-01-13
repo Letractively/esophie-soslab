@@ -7,25 +7,34 @@
 		function run() 
 		{	
                         parent::run();
-			switch($this->action)
-			{			
-				case "none" :
-					break;
-			}
-                                                                   
+                        
                         // GOOGLE ANALYTICS PAGE TRACKING
                         $this->gapage = "/member/homepage";
                         $this->gatitle = "Order - Member - Homepage";
                         // GOOGLE ANALYTICS PAGE TRACKING
                         
-                        // GOOGLE ANALYTICS ECOMMERCE TRACKING
-                        if (isset($this->param['status']) && isset($this->param['salesid']) 
-                                && strlen($this->param['salesid']) > 0 
-                                && $this->param['status'] == "placed") {
-                            $this->gaecommerce = $this->gaecommerce($this->param['salesid']);
-                        }
-                        // GOOGLE ANALYTICS ECOMMERCE TRACKING
-                        
+			switch($this->action)
+			{			
+				case "place" :
+                                    
+                                    // Place new order 
+                                    if (isset($this->param['salesid']) && strlen($this->param['salesid']) > 0 )
+                                    {
+                                        // Check if order is still on status openorder
+                                        $sql = 'select count(*) from salestable ';
+                                        $sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
+                                        $sql.= ' and status = ' . $this->sysparam['salesstatus']['openorder'];
+                                        $sql.= ' and salesid = ' . $this->queryvalue($this->param['salesid']);
+
+                                        if($this->db->executeScalar($sql)) 
+                                        {
+                                            $this->updatesalesstatus($this->salesid,$this->sysparam['salesstatus']['ordered']);
+                                            $this->gaecommerce = $this->gaecommerce($this->param['salesid']);
+                                        }
+                                    }
+                                    break;
+			}
+                                                                   
 			$this->loaddata();
 		}		
 		
