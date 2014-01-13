@@ -59,7 +59,7 @@
 				
 				$this->status = $rs->value('status'); 
 				
-				$sql = "select * from vw_purchline where purchid = " . $this->queryvalue($this->purchid);
+				$sql = "select * from vw_purchline where qty > 0 and purchid = " . $this->queryvalue($this->purchid);
 				
 				$rs1 = $this->db->query($sql);			
 				$i = 0;

@@ -15,6 +15,17 @@
                         $this->gapage = "/member/order/newlines";
                         $this->gatitle = "Order - Member - Add order lines";
                         // GOOGLE ANALYTICS PAGE TRACKING
+                        
+                        // If salesid is provided but the status is not open order => forward to homepage
+                        if (strlen($this->salesid) > 0)
+                        {
+                            $sql = 'select count(*) from salestable ';
+                            $sql.= ' and kodemember = ' . $this->queryvalue($this->userid());
+                            $sql.= ' and status = ' . $this->queryvalue($this->sysparam['salesstatus']['openorder']);
+                            $sql.= ' and salesid = ' . $this->queryvalue($this->salesid);
+
+                            if(!$this->db->executeScalar($sql)) $this->gotohomepage();
+                        }
 
 			switch($this->action)
 			{			
@@ -28,14 +39,6 @@
 				case "none" :
 					if (isset($this->param['salesid']))
 					{
-						$this->salesid = $this->param['salesid'];
-						$sql = 'select count(*) from salestable ';
-						$sql.= ' where kodemember = ' . $this->queryvalue($this->userid());
-						$sql.= ' and status = ' . $this->queryvalue($this->sysparam['salesstatus']['openorder']);
-						$sql.= ' and salesid = ' . $this->queryvalue($this->salesid);
-						
-						if(!$this->db->executeScalar($sql)) $this->gotohomepage();
-                                                
                                                 // GOOGLE ANALYTICS PAGE TRACKING
                                                 $this->gapage = "/member/order/new";
                                                 $this->gatitle = "Order - Member - Create new order";
@@ -43,13 +46,14 @@
 					}
 					else
 					{
-						$sql1 = 'select count(*) from salestable ';
+						// Forward to homepage if an order is still pending (placed but not yet paid)
+                                                $sql1 = 'select count(*) from salestable ';
 						$sql1.= ' where kodemember = ' . $this->queryvalue($this->userid());
 						$sql1.= ' and status < ' . $this->sysparam['salesstatus']['confirmed'];
 						$sql1.= ' and status > 1';
-
 						if($this->db->executeScalar($sql1)) $this->gotohomepage();		
-											
+						
+                                                // Otherwise forward to first openorder order found for the member
 						$sql2 = 'select salesid from salestable ';
 						$sql2.= ' where kodemember = ' . $this->queryvalue($this->userid());
 						$sql2.= ' and status = ' . $this->sysparam['salesstatus']['openorder'];
@@ -61,6 +65,7 @@
 							$this->salesid = $rs->value('salesid');
                                                         $this->gotopage('checkitem',"salesid=" . $this->salesid);
 						}
+                                                $rs->close();
 						//else $this->gotohomepage();
 					}
 					break;
