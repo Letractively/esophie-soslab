@@ -21,7 +21,7 @@
                         {
                             $sql = 'select count(*) from salestable ';
                             $sql.= ' and kodemember = ' . $this->queryvalue($this->userid());
-                            $sql.= ' and status = ' . $this->queryvalue($this->sysparam['salesstatus']['openorder']);
+                            $sql.= ' and status = ' . $this->sysparam['salesstatus']['openorder'];
                             $sql.= ' and salesid = ' . $this->queryvalue($this->salesid);
 
                             if(!$this->db->executeScalar($sql)) $this->gotohomepage();
