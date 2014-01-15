@@ -16,8 +16,7 @@
 			switch($this->action)
 			{			
 				case "place" :
-                                    
-                                    // Place new order 
+                                    // Place new order                                   
                                     if (isset($this->param['salesid']) && strlen($this->param['salesid']) > 0 )
                                     {
                                         // Check if order is still on status openorder
@@ -28,13 +27,13 @@
 
                                         if($this->db->executeScalar($sql)) 
                                         {
-                                            $this->updatesalesstatus($this->salesid,$this->sysparam['salesstatus']['ordered']);
+                                            $this->updatesalesstatus($this->param['salesid'],$this->sysparam['salesstatus']['ordered']);
                                             $this->gaecommerce = $this->gaecommerce($this->param['salesid']);
                                         }
                                     }
                                     break;
 			}
-                                                                   
+                          
 			$this->loaddata();
 		}		
 		
@@ -49,10 +48,10 @@
                                     ELSE 11
                                 END, salesid desc";
 			
-			$rs = $this->db->query($sql);			
+			$rs = $this->db->query($sql);	
 			while ($rs->fetch()) 
 			{						
-				$order['salesid'] = $rs->value('salesid');
+                                $order['salesid'] = $rs->value('salesid');
 				$order['orderdate'] = (is_null($rs->value('orderdate')) ? '-' : $this->valuedatetime($rs->value('orderdate')));
 				$order['bcid'] = $rs->value('kodebc');
 				$order['total'] = $rs->value('totalbayar');
